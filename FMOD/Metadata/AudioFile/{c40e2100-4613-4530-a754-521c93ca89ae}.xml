@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{c40e2100-4613-4530-a754-521c93ca89ae}">
+		<property name="assetPath">
+			<value>QP01 0051 Deciduous forest day songbirds 5.0.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>5</value>
+		</property>
+		<property name="length">
+			<value>96.130958333333339</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7146aea3-3139-4f54-bea8-4e0620922b0b}</destination>
+		</relationship>
+	</object>
+</objects>

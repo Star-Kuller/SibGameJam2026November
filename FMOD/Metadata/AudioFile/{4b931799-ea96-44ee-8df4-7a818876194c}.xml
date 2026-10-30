@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{4b931799-ea96-44ee-8df4-7a818876194c}">
+		<property name="assetPath">
+			<value>CC-CK Whoosh Leather Medium 01.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>192</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>9.0508593749999999</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7146aea3-3139-4f54-bea8-4e0620922b0b}</destination>
+		</relationship>
+	</object>
+</objects>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{fbd18100-52eb-4937-a3fd-bb28391474c8}">
+		<property name="assetPath">
+			<value>CC-CK Whoosh Leather Soft 05.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>192</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>10</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7146aea3-3139-4f54-bea8-4e0620922b0b}</destination>
+		</relationship>
+	</object>
+</objects>

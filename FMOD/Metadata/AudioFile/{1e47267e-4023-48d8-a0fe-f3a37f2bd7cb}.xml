@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{1e47267e-4023-48d8-a0fe-f3a37f2bd7cb}">
+		<property name="assetPath">
+			<value>BO01 M01DR - 01-59 - Heel 16.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>96</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.49233333333333335</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7146aea3-3139-4f54-bea8-4e0620922b0b}</destination>
+		</relationship>
+	</object>
+</objects>
