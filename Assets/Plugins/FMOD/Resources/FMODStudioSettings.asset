@@ -463,8 +463,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: FMOD/Name Game Project.fspro
-  sourceBankPath: FMOD/Build
+  sourceProjectPath: FMOD/Name Game Project/Name Game Project.fspro
+  sourceBankPath: FMOD/Name Game Project/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
