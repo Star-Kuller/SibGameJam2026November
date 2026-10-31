@@ -1,6 +1,5 @@
-using _Game.Code.Features.Counter.Controllers;
-using _Game.Code.Features.Counter.MonoBehaviours;
-using _Game.Code.Features.Counter.Systems;
+using _Game.Code.Features.Counter.View;
+using _Game.Code.Features.Counter.Models;
 using VContainer;
 using VContainer.Unity;
 
@@ -10,8 +9,7 @@ namespace _Game.Code.Features.Counter
     {
         protected override void Configure(IContainerBuilder builder)
         {
-            builder.Register<CounterSystem>(Lifetime.Scoped);
-            builder.Register<CounterController>(Lifetime.Scoped);
+            builder.Register<CounterModel>(Lifetime.Scoped);
 
             builder.RegisterComponentInHierarchy<CounterButton>();
             builder.RegisterComponentInHierarchy<CounterDisplay>();

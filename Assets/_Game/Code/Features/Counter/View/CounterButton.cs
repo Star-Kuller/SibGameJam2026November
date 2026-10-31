@@ -1,21 +1,21 @@
-using _Game.Code.Features.Counter.Controllers;
+using _Game.Code.Features.Counter.Models;
 using UnityEngine;
 using UnityEngine.UI;
 using VContainer;
 
-namespace _Game.Code.Features.Counter.MonoBehaviours
+namespace _Game.Code.Features.Counter.View
 {
     [RequireComponent(typeof(Button))]
     [DisallowMultipleComponent]
     public sealed class CounterButton : MonoBehaviour
     {
         private Button _button;
-        private CounterController _controller;
+        private CounterModel _model;
 
         [Inject]
-        public void Construct(CounterController controller)
+        public void Construct(CounterModel model)
         {
-            _controller = controller;
+            _model = model;
         }
 
         private void Awake()
@@ -23,12 +23,12 @@ namespace _Game.Code.Features.Counter.MonoBehaviours
             _button = GetComponent<Button>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             _button.onClick.AddListener(OnClick);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (_button != null)
                 _button.onClick.RemoveListener(OnClick);
@@ -36,7 +36,8 @@ namespace _Game.Code.Features.Counter.MonoBehaviours
 
         private void OnClick()
         {
-            _controller.Increment();
+            _model.Increment();
+            Debug.Log($"[demo] {_model.Count} increment");
         }
     }
 }

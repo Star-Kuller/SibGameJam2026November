@@ -238,8 +238,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000030279, y: -157}
-  m_SizeDelta: {x: 156.5403, y: 90.3869}
+  m_AnchoredPosition: {x: 72, y: 0}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &105444010
 MonoBehaviour:
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52c4bbef6a1a4f7f95a6ab8748ea1350, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.Counter.MonoBehaviours.CounterButton
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.Counter.View.CounterButton
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,8 +609,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 497.1616, y: 124.2904}
+  m_AnchoredPosition: {x: -72, y: 0}
+  m_SizeDelta: {x: 120, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705023073
 MonoBehaviour:
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97b4bff0929149ce8f1b30c916fe8e82, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.Counter.MonoBehaviours.CounterDisplay
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.Counter.View.CounterDisplay
 --- !u!1 &997723328
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,8 +737,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00045776367, y: -0.000076293945}
-  m_SizeDelta: {x: 0.0010376, y: 0.00021362}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1373689007
 MonoBehaviour:
@@ -849,7 +849,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1405813910}
-  - component: {fileID: 1405813909}
   - component: {fileID: 1405813908}
   m_Layer: 0
   m_Name: CounterScope
@@ -859,22 +858,6 @@ GameObject:
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!114 &1405813908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405813907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e493e65e55a4c7cb95dca0e933d436c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.Counter.CounterSceneScope
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
---- !u!114 &1405813909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1008,6 +991,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!1 &1700000000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1700000001}
+  - component: {fileID: 1700000002}
+  m_Layer: 0
+  m_Name: SceneGreeting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1700000001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700000000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1700000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfba8264bbf4764b427ea80a892d1d6, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Core.Diagnostics.SceneGreeting
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1017,3 +1044,4 @@ SceneRoots:
   - {fileID: 1405813910}
   - {fileID: 1600440937}
   - {fileID: 997723331}
+  - {fileID: 1700000001}
