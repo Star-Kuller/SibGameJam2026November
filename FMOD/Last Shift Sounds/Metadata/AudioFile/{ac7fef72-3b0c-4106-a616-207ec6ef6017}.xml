@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{ac7fef72-3b0c-4106-a616-207ec6ef6017}">
+		<property name="assetPath">
+			<value>Resources_Loading_Wood.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>31.133333333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7fc4677e-acde-48ae-89cd-089c5a0aa828}</destination>
+		</relationship>
+	</object>
+</objects>

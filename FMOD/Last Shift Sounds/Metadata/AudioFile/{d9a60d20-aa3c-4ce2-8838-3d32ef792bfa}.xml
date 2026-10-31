@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{d9a60d20-aa3c-4ce2-8838-3d32ef792bfa}">
+		<property name="assetPath">
+			<value>Sniper_Dry_Fire.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.8987708333333333</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{7fc4677e-acde-48ae-89cd-089c5a0aa828}</destination>
+		</relationship>
+	</object>
+</objects>
