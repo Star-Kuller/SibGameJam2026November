@@ -44,6 +44,7 @@ namespace _Game.Code.Editor
             var results = new List<object>
             {
                 CheckGateVisuals(game),
+                CheckWaveAnnouncement(game),
                 CheckFullShift(game),
                 CheckQueuedExpedition(game),
                 CheckDestroyedGate(game),
@@ -138,6 +139,28 @@ namespace _Game.Code.Editor
             }
 
             return new { scenario = "gate leaves move independently of walls and wall colliders" };
+        }
+
+        private static object CheckWaveAnnouncement(Harness game)
+        {
+            game.StartNewRun();
+            game.Session.AdvanceTime(180);
+            game.Zombies.Move(0);
+            var root = Object.FindFirstObjectByType<UnityEngine.UIElements.UIDocument>().rootVisualElement;
+            var label = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Label>(root, "wave-announcement");
+            Require(label.text == "ВОЛНА 1 НАЧАЛАСЬ"
+                && label.style.display == UnityEngine.UIElements.DisplayStyle.Flex,
+                "The actual first wave must show a dedicated large announcement.");
+            Require(label.resolvedStyle.fontSize >= 48
+                && label.pickingMode == UnityEngine.UIElements.PickingMode.Ignore,
+                "Wave announcement must be large and must not capture input.");
+
+            Object.FindFirstObjectByType<NotificationView>().Show("Другое уведомление");
+            Require(label.text == "ВОЛНА 1 НАЧАЛАСЬ", "Other notices must not replace the wave announcement.");
+            game.StartNewRun();
+            Require(label.style.display == UnityEngine.UIElements.DisplayStyle.None,
+                "Restart must clear the previous wave announcement.");
+            return new { scenario = "large wave announcement, input passthrough and restart cleanup" };
         }
 
         private static object CheckDestroyedGate(Harness game)

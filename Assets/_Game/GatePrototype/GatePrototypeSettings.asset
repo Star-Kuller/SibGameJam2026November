@@ -16,9 +16,9 @@ MonoBehaviour:
   mouseSensitivity: 0.12
   lookSpeed: 90
   initialPitch: 10
-  yawLimit: 60
-  minPitch: -7
-  maxPitch: 55
+  yawLimit: 31
+  minPitch: -3
+  maxPitch: 34
   shotsPerSecond: 3
   shotDamage: 1
   range: 150

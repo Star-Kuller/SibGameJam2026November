@@ -35,6 +35,7 @@ namespace _Game.Code.Editor
             RepairGateHierarchy();
             ScatterRocks();
             ConfigureBalance();
+            CameraPresentationSetup.Apply();
 
             var ui = GameObject.Find("UI");
 
@@ -96,7 +97,7 @@ namespace _Game.Code.Editor
         private static void PlaceTurret()
         {
             var rig = GameObject.Find("TurretRig").transform;
-            rig.position = new Vector3(0, 4.2f, -18.4f);
+            rig.position = new Vector3(0, 4.2f, -19.4f);
             var parts = rig.GetComponentsInChildren<Transform>();
             var pitch = parts.First(item => item.name == "PitchPivot");
             pitch.localPosition = new Vector3(0, -0.55f, 0.7f);
@@ -111,7 +112,7 @@ namespace _Game.Code.Editor
             mount.SetParent(parts.First(item => item.name == "YawPivot"), false);
             mount.localPosition = new Vector3(0, -0.9f, 0.25f);
             mount.localScale = new Vector3(0.42f, 0.45f, 0.4f);
-            rig.GetComponent<TurretView>().Camera.fieldOfView = 60;
+            rig.GetComponent<TurretView>().Camera.fieldOfView = 40;
 
             var support = GameObject.Find("TurretSupport");
 
@@ -134,15 +135,15 @@ namespace _Game.Code.Editor
             receiver.localPosition = new Vector3(0, -0.05f, -0.32f);
             receiver.localScale = new Vector3(0.34f, 0.22f, 0.65f);
             receiver.GetComponent<Renderer>().sharedMaterial = metal;
-            SupportPart(support.transform, "Footing", new Vector3(0, 2.3f, -18.3f),
+            SupportPart(support.transform, "Footing", new Vector3(0, 2.3f, -19.3f),
                 new Vector3(3.6f, 0.2f, 3.3f), metal);
-            SupportPart(support.transform, "Pedestal", new Vector3(0, 2.8f, -18.15f),
+            SupportPart(support.transform, "Pedestal", new Vector3(0, 2.8f, -19.15f),
                 new Vector3(0.35f, 0.8f, 0.35f), metal);
 
             for (var index = 0; index < 4; index++)
             {
                 var x = index % 2 == 0 ? -1.4f : 1.4f;
-                var z = index < 2 ? -19.5f : -18.2f;
+                var z = index < 2 ? -20.5f : -19.2f;
                 SupportPart(support.transform, "TowerLeg" + index, new Vector3(x, 1.1f, z),
                     new Vector3(0.22f, 2.2f, 0.22f), metal);
             }
@@ -212,6 +213,7 @@ namespace _Game.Code.Editor
             settings.shotsPerSecond = 3;
             settings.attackDamage = 3;
             settings.initialPitch = 10;
+            settings.yawLimit = 31;
             settings.minPitch = -7;
             settings.maxPitch = 55;
             settings.survivorWorkDuration = 50;

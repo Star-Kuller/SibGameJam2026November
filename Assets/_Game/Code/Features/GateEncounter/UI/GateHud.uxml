@@ -20,6 +20,7 @@
                 <ui:Label name="people-list" text="За воротами никого нет." class="people-list" />
             </ui:VisualElement>
             <ui:Label name="notification" text="" picking-mode="Ignore" />
+            <ui:Label name="wave-announcement" text="" picking-mode="Ignore" />
             <ui:VisualElement name="crosshair" picking-mode="Ignore">
                 <ui:VisualElement class="crosshair-horizontal" />
                 <ui:VisualElement class="crosshair-vertical" />

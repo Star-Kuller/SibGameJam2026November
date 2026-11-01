@@ -9,6 +9,7 @@ namespace _Game.Code.Features.Turret.View
         [SerializeField] private Transform yawPivot;
         [SerializeField] private Transform pitchPivot;
         [SerializeField] private Camera gameplayCamera;
+        [SerializeField] private float horizontalFieldOfView = 65.81f;
 
         [Header("Shot feedback")]
         [SerializeField] private Transform barrel;
@@ -25,12 +26,28 @@ namespace _Game.Code.Features.Turret.View
         private void Awake()
         {
             CaptureBarrelOrigin();
+            UpdateFraming();
+        }
+
+        private void LateUpdate()
+        {
+            UpdateFraming();
         }
 
         public void RenderAim(TurretModel model)
         {
+            UpdateFraming();
             yawPivot.localRotation = Quaternion.Euler(0, model.Yaw, 0);
             pitchPivot.localRotation = Quaternion.Euler(model.Pitch, 0, 0);
+        }
+
+        private void UpdateFraming()
+        {
+            if (gameplayCamera != null && gameplayCamera.aspect > 0)
+            {
+                gameplayCamera.fieldOfView = Camera.HorizontalToVerticalFieldOfView(
+                    horizontalFieldOfView, gameplayCamera.aspect);
+            }
         }
 
         public void ShowShot(Vector3 endPoint)

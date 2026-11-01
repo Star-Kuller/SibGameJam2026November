@@ -11,6 +11,26 @@
     right: 0;
     bottom: 0;
 }
+#hud {
+    -unity-font-definition: url("../../../../GatePrototype/Fonts/CameraOsd.asset");
+}
+#wave-announcement {
+    position: absolute;
+    left: 16%;
+    right: 16%;
+    top: 24%;
+    padding: 16px 24px;
+    font-size: 52px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    color: rgb(237, 206, 144);
+    background-color: rgba(10, 13, 12, 0.9);
+    border-top-width: 2px;
+    border-bottom-width: 2px;
+    border-top-color: rgb(152, 119, 64);
+    border-bottom-color: rgb(152, 119, 64);
+    display: none;
+}
 .topbar {
     position: absolute;
     left: 24px;

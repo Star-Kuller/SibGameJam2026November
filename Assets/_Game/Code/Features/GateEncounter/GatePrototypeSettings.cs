@@ -19,13 +19,13 @@ namespace _Game.Code.Features.GateEncounter
         public float lookSpeed = 90;
 
         [Tooltip("Starting downward angle of the turret camera.")]
-        public float initialPitch = 7;
+        public float initialPitch = 10;
 
         [Range(1, 85)]
-        public float yawLimit = 60;
+        public float yawLimit = 31;
 
-        public float minPitch = -20;
-        public float maxPitch = 40;
+        public float minPitch = -3;
+        public float maxPitch = 34;
 
         [Header("Weapon")]
         [Min(0.01f)]

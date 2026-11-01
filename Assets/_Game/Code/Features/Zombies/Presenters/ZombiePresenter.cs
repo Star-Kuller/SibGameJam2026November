@@ -296,6 +296,7 @@ namespace _Game.Code.Features.Zombies.Presenters
             if (_schedule.Advance(time, LivingCount < _settings.maxLivingZombies, livingWaveZombies))
             {
                 var label = _schedule.WaveNumber == 3 ? "Финальная волна" : "Волна " + _schedule.WaveNumber;
+                _notifications.ShowWave(label.ToUpperInvariant() + " НАЧАЛАСЬ");
                 _notifications.Show(label + ". Удерживайте периметр!", true);
 
                 if (_schedule.WaveNumber == 3)

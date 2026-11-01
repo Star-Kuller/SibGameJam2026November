@@ -8444,7 +8444,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 60, y: 0.5, z: 60}
+  m_Size: {x: 4000, y: 0.5, z: 4000}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &410846990
 GameObject:
@@ -11507,7 +11507,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 200
-  field of view: 60
+  field of view: 39.999695
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -12815,7 +12815,7 @@ Transform:
   m_GameObject: {fileID: 655457151}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -27269,6 +27269,7 @@ MonoBehaviour:
   yawPivot: {fileID: 1543751176}
   pitchPivot: {fileID: 1673043194}
   gameplayCamera: {fileID: 578984721}
+  horizontalFieldOfView: 65.81
   barrel: {fileID: 1271400225}
   muzzle: {fileID: 296665873}
   muzzleFlash: {fileID: 802298571}
@@ -27282,7 +27283,7 @@ Transform:
   m_GameObject: {fileID: 1428232994}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.2, z: -18.4}
+  m_LocalPosition: {x: 0, y: 4.2, z: -19.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43853,7 +43854,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710677, y: 0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 3011.2354, y: 3011.2354, z: 32509.115}
+  m_LocalScale: {x: 200000, y: 200000, z: 2159188}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 543450651645552078}
