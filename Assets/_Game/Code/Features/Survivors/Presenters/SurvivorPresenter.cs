@@ -136,14 +136,14 @@ namespace _Game.Code.Features.Survivors.Presenters
                 {
                     _colony.Admit(model.IsResident);
                     _notifications.Show(model.Name + (model.IsResident
-                        ? " вернулся в общину."
-                        : " спасена. В общине новый житель."));
-                    _audio.Play(_sounds.personSaved, model.Position);
+                        ? " снова в общине."
+                        : " теперь в безопасности. В общине новый житель."));
+                    _audio.Play(model.IsResident ? _sounds.personReturned : _sounds.personSaved, model.Position);
                     RemoveAt(index);
                 }
                 else if (model.State == SurvivorState.Left)
                 {
-                    _notifications.Show(model.Name + " не дождался открытия ворот и ушёл.");
+                    _notifications.Show(model.Name + " больше не ждёт у ворот.");
                     RemoveAt(index);
                 }
             }
@@ -243,8 +243,8 @@ namespace _Game.Code.Features.Survivors.Presenters
             _colony.RecordDeath(view.Model.IsResident, friendlyFire);
             view.Render(false, 0);
 
-            var reason = friendlyFire ? " погиб от вашего выстрела." : " погиб от атаки зомби.";
-            _notifications.Show(view.Model.Name + reason, true);
+            var reason = friendlyFire ? " Причина — ваш выстрел." : " Причина — атака зомби.";
+            _notifications.Show("Потеря: " + view.Model.Name + "." + reason, true);
             _audio.Play(_sounds.personDeath, view.Model.Position);
 
             if (friendlyFire)

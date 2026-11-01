@@ -89,6 +89,13 @@ MonoBehaviour:
       Data3: 0
       Data4: 0
     Path: 
+  personReturned:
+    Guid:
+      Data1: 1123094518
+      Data2: 1340265418
+      Data3: -2022510435
+      Data4: -1258506263
+    Path: event:/Sounds/P1/SFX/Sortie_Return
   friendlyFire:
     Guid:
       Data1: 1550192037

@@ -1,7 +1,8 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
-    <Style src="GateHud.uss" />
+    <ui:Style src="GateHud.uss" />
     <ui:VisualElement name="screen" picking-mode="Ignore">
         <ui:VisualElement name="hud" picking-mode="Ignore">
+            <ui:VisualElement name="cctv-overlay" picking-mode="Ignore" />
             <ui:VisualElement class="topbar" picking-mode="Ignore">
                 <ui:VisualElement class="camera-label" picking-mode="Ignore">
                     <ui:Label text="CAM 01" class="eyebrow" />
@@ -86,6 +87,7 @@
                     <ui:Label text="Мышь и звук" class="eyebrow settings-caption" />
                     <ui:Slider name="mouse-sensitivity" label="Чувствительность" low-value="0.02" high-value="0.5" show-input-field="true" />
                     <ui:Slider name="master-volume" label="Громкость" low-value="0" high-value="1" show-input-field="true" />
+                    <ui:Toggle name="cctv-enabled" label="Эффект CCTV" value="true" />
                     <ui:Label text="Нажмите на назначение, чтобы изменить его" class="settings-caption" />
                     <ui:VisualElement class="binding-row"><ui:Label text="Огонь" /><ui:Button name="bind-Attack" /></ui:VisualElement>
                     <ui:VisualElement class="binding-row"><ui:Label text="Пауза" /><ui:Button name="bind-Pause" /></ui:VisualElement>

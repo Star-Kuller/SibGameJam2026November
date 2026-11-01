@@ -17,6 +17,7 @@ namespace _Game.Code.Features.Audio
         public EventReference gateClose;
         public EventReference personDeath;
         public EventReference personSaved;
+        public EventReference personReturned;
         public EventReference friendlyFire;
         public EventReference personDanger;
         public EventReference order;

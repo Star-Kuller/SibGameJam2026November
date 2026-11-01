@@ -6,6 +6,7 @@ namespace _Game.Code.Features.Input.Models
     {
         public float MouseSensitivity { get; private set; }
         public float Volume { get; private set; } = 0.7f;
+        public bool CctvEnabled { get; private set; } = true;
 
         public PlayerSettingsModel(float sensitivity)
         {
@@ -20,6 +21,11 @@ namespace _Game.Code.Features.Input.Models
         public void SetVolume(float value)
         {
             Volume = Math.Clamp(value, 0, 1);
+        }
+
+        public void SetCctvEnabled(bool enabled)
+        {
+            CctvEnabled = enabled;
         }
     }
 }

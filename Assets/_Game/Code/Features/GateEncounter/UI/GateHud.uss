@@ -10,6 +10,18 @@
     right: 0;
     bottom: 0;
 }
+#cctv-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+#cctv-enabled {
+    height: 32px;
+    margin-top: 4px;
+    font-size: 19px;
+}
 .topbar {
     position: absolute;
     left: 32px;
@@ -381,6 +393,15 @@ Slider Label {
 }
 Slider TextField {
     min-width: 65px;
+}
+#settings-panel .unity-base-text-field__input {
+    color: rgb(235, 234, 217);
+    background-color: rgb(35, 51, 44);
+    border-width: 1px;
+    border-color: rgb(78, 100, 80);
+}
+#settings-panel .unity-base-slider__dragger {
+    background-color: rgb(218, 188, 118);
 }
 .binding-row {
     flex-direction: row;

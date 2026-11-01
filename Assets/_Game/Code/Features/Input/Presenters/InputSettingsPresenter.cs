@@ -16,6 +16,7 @@ namespace _Game.Code.Features.Input.Presenters
         private const string BindingsKey = "LastShift.Bindings.v1";
         private const string SensitivityKey = "LastShift.MouseSensitivity";
         private const string VolumeKey = "LastShift.MasterVolume";
+        private const string CctvKey = "LastShift.CctvEnabled";
 
         private static readonly string[] Actions = { "Attack", "Pause", "Gate", "Recall", "CommandCursor" };
 
@@ -57,12 +58,13 @@ namespace _Game.Code.Features.Input.Presenters
             _view.ResetRequested += Reset;
             _view.SensitivityChanged += SetSensitivity;
             _view.VolumeChanged += SetVolume;
+            _view.CctvChanged += SetCctv;
             _menu.SettingsClosed += CancelRebind;
             _input.BindingsChanged += RefreshBindings;
             _input.FocusChanged += OnFocusChanged;
 
             RefreshBindings();
-            _view.ShowValues(_model.MouseSensitivity, _model.Volume);
+            _view.ShowValues(_model.MouseSensitivity, _model.Volume, _model.CctvEnabled);
             _audio.SetVolume(_model.Volume);
         }
 
@@ -73,6 +75,7 @@ namespace _Game.Code.Features.Input.Presenters
             _view.ResetRequested -= Reset;
             _view.SensitivityChanged -= SetSensitivity;
             _view.VolumeChanged -= SetVolume;
+            _view.CctvChanged -= SetCctv;
             _menu.SettingsClosed -= CancelRebind;
             _input.BindingsChanged -= RefreshBindings;
             _input.FocusChanged -= OnFocusChanged;
@@ -83,6 +86,7 @@ namespace _Game.Code.Features.Input.Presenters
         {
             _model.SetSensitivity(PlayerPrefs.GetFloat(SensitivityKey, _defaults.mouseSensitivity));
             _model.SetVolume(PlayerPrefs.GetFloat(VolumeKey, 0.7f));
+            _model.SetCctvEnabled(PlayerPrefs.GetInt(CctvKey, 1) != 0);
 
             if (!PlayerPrefs.HasKey(BindingsKey))
             {
@@ -241,7 +245,8 @@ namespace _Game.Code.Features.Input.Presenters
 
             SetSensitivity(_defaults.mouseSensitivity);
             SetVolume(0.7f);
-            _view.ShowValues(_model.MouseSensitivity, _model.Volume);
+            SetCctv(true);
+            _view.ShowValues(_model.MouseSensitivity, _model.Volume, _model.CctvEnabled);
             _view.ShowRebinding(false, "Стандартные назначения восстановлены.");
             RefreshBindings();
         }
@@ -258,6 +263,13 @@ namespace _Game.Code.Features.Input.Presenters
             _model.SetVolume(value);
             _audio.SetVolume(_model.Volume);
             PlayerPrefs.SetFloat(VolumeKey, _model.Volume);
+            PlayerPrefs.Save();
+        }
+
+        private void SetCctv(bool enabled)
+        {
+            _model.SetCctvEnabled(enabled);
+            PlayerPrefs.SetInt(CctvKey, enabled ? 1 : 0);
             PlayerPrefs.Save();
         }
 

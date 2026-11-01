@@ -8,6 +8,7 @@ using _Game.Code.Features.Gates.View;
 using _Game.Code.Features.Input.Models;
 using _Game.Code.Features.Input.Presenters;
 using _Game.Code.Features.Input.View;
+using _Game.Code.Features.Presentation.View;
 using _Game.Code.Features.Survivors.Models;
 using _Game.Code.Features.Survivors.Presenters;
 using _Game.Code.Features.Survivors.View;
@@ -53,6 +54,7 @@ namespace _Game.Code.Features.GateEncounter
             builder.RegisterComponentInHierarchy<SessionMenuView>();
             builder.RegisterComponentInHierarchy<NotificationView>();
             builder.RegisterComponentInHierarchy<InputSettingsView>();
+            builder.RegisterComponentInHierarchy<CctvOverlayView>();
             builder.RegisterComponentInHierarchy<GateControlsView>();
             builder.RegisterComponentInHierarchy<GateWorldView>();
             builder.RegisterComponentInHierarchy<PopulationHudView>();

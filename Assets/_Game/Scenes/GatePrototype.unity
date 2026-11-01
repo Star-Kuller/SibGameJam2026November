@@ -43934,6 +43934,7 @@ GameObject:
   - component: {fileID: 995244250}
   - component: {fileID: 995244249}
   - component: {fileID: 995244248}
+  - component: {fileID: 995244253}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -44051,6 +44052,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b6dc952514b314e87162a165ec02b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.GateEncounter.View.SessionMenuView
+--- !u!114 &995244253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 995244244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 890d3a783a682074cb0fae1aa7233b97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.Presentation.View.CctvOverlayView
 --- !u!1 &1002474716
 GameObject:
   m_ObjectHideFlags: 0

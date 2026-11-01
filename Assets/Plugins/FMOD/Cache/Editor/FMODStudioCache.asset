@@ -1,5 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8328491387371653473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Surfaces/Parameter 2
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 2
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 96450753
+    data2: 1592181204
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - With Load
+  - Withot Load
+  Exists: 1
 --- !u!114 &-8256826460897096423
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54,6 +80,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1300
+--- !u!114 &-7783596585225564949
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Sortie_Return
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Sortie_Return
+  Guid:
+    Data1: 1123094518
+    Data2: 1340265418
+    Data3: -2022510435
+    Data4: -1258506263
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1094
 --- !u!114 &-6554464749389251235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -499,6 +552,35 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1200
+--- !u!114 &-2451097032137819728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Surfaces
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Surfaces
+  Guid:
+    Data1: 840144955
+    Data2: 1105259881
+    Data3: -1444475463
+    Data4: -589321176
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters:
+  - {fileID: 925499617439408033}
+  - {fileID: -8328491387371653473}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1550
 --- !u!114 &-2343139844968169342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,7 +608,7 @@ MonoBehaviour:
   - {fileID: -505632551823238865}
   MinDistance: 1
   MaxDistance: 20
-  Length: 9805
+  Length: 10600
 --- !u!114 &-2289981232095218789
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,10 +624,10 @@ MonoBehaviour:
   Path: FMOD/Last Shift Sounds/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639290677657273191
+  lastModified: 639291067569970718
   FileSizes:
   - Name: Desktop
-    Value: 2466
+    Value: 2750
   Exists: 1
 --- !u!114 &-1564198752015704097
 MonoBehaviour:
@@ -758,13 +840,17 @@ MonoBehaviour:
   - {fileID: -3384568103043237874}
   - {fileID: 7993670217899184126}
   - {fileID: -1314018804975719749}
+  - {fileID: 8301234209006856225}
+  - {fileID: -2451097032137819728}
+  - {fileID: 2998454447954585004}
+  - {fileID: -7783596585225564949}
   EditorParameters: []
   MasterBanks:
   - {fileID: 3508592065962559520}
   StringsBanks:
   - {fileID: -2289981232095218789}
   cacheVersion: 131861
-  cacheTime: 639290677657273191
+  cacheTime: 639291067569970718
   SerializableEventsDict:
   - key: event:/Sounds/P1/AMB/AMB_LOOP/Cam_1
     index: 0
@@ -836,6 +922,14 @@ MonoBehaviour:
     index: 33
   - key: event:/Sounds/P0/UI/Gate_Danger
     index: 34
+  - key: event:/Sounds/P1/SFX/Worker's_Knock
+    index: 35
+  - key: event:/Sounds/P1/SFX/Surfaces
+    index: 36
+  - key: event:/Sounds/P1/SFX/Enchancement_Complete
+    index: 37
+  - key: event:/Sounds/P1/SFX/Sortie_Return
+    index: 38
 --- !u!114 &495033452968047302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -863,6 +957,32 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 3250
+--- !u!114 &925499617439408033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Surfaces/Surface
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Surface
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 787822613
+    data2: 778757826
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Gravel
+  - Dirt
+  Exists: 1
 --- !u!114 &933247410155139728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1160,6 +1280,33 @@ MonoBehaviour:
   MinDistance: 0.90000004
   MaxDistance: 5.6
   Length: 69840
+--- !u!114 &2998454447954585004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Enchancement_Complete
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Enchancement_Complete
+  Guid:
+    Data1: -1822385434
+    Data2: 1101958775
+    Data3: -1402698308
+    Data4: 698065644
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4372
 --- !u!114 &3328025259767604413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,10 +1376,10 @@ MonoBehaviour:
   Path: FMOD/Last Shift Sounds/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639290677657253225
+  lastModified: 639291067569920663
   FileSizes:
   - Name: Desktop
-    Value: 7828064
+    Value: 7952512
   Exists: 1
 --- !u!114 &4122033455076490419
 MonoBehaviour:
@@ -1580,6 +1727,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &8301234209006856225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Worker's_Knock
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Worker's_Knock
+  Guid:
+    Data1: -1954324465
+    Data2: 1274422285
+    Data3: -1273124952
+    Data4: -689249451
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1050
 --- !u!114 &8357795434953425671
 MonoBehaviour:
   m_ObjectHideFlags: 0

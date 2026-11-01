@@ -6,6 +6,7 @@ using _Game.Code.Features.GateEncounter;
 using _Game.Code.Features.GateEncounter.View;
 using _Game.Code.Features.Gates.View;
 using _Game.Code.Features.Input.View;
+using _Game.Code.Features.Presentation.View;
 using _Game.Code.Features.Survivors.View;
 using _Game.Code.Features.Turret.View;
 using _Game.Code.Features.Zombies.View;
@@ -505,6 +506,7 @@ namespace _Game.Code.Editor
             GetOrAdd<SessionMenuView>(ui);
             GetOrAdd<NotificationView>(ui);
             GetOrAdd<InputSettingsView>(ui);
+            GetOrAdd<CctvOverlayView>(ui);
             GetOrAdd<PopulationHudView>(ui);
             GetOrAdd<GateControlsView>(ui);
         }
@@ -545,6 +547,7 @@ namespace _Game.Code.Editor
             events.order = Sound("event:/Sounds/P0/UI/Order_Receiving");
             events.waveWarning = Sound("event:/Sounds/P0/UI/Big_Wave_Oncoming");
             events.ambience = Sound("event:/Sounds/P1/AMB/AMB_LOOP/Cam_1");
+            events.personReturned = Sound("event:/Sounds/P1/SFX/Sortie_Return");
             EditorUtility.SetDirty(events);
 
             SetReference(GameObject.Find("Composition").GetComponent<GateEncounterScope>(), "audioEvents", events);
