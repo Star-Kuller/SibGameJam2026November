@@ -149,6 +149,13 @@ VContainer 1.19.0, UniTask 2.5.11, R3 1.3.1, FMOD Integration 2.03.15.
 
 ## Проверки
 
+Windows x64 Development-сборка: `Builds/GatePrototype/LastShift.exe`.
+Последняя сборка завершена без ошибок и предупреждений. Для передачи команде
+подготовлен локальный архив `Builds/LastShift-Windows-Playtest.zip`.
+Распакуйте его целиком перед запуском: exe требует соседние Data, DLL и банки.
+Диагностика переходов смены и ворот записывается с префиксом `[Last Shift]`
+в `%USERPROFILE%/AppData/LocalLow/DefaultCompany/SibGameJam2026November/Player.log`.
+
 Через Unity MCP выполнены проверки моделей и реальный запуск через Bootstrap.
 В Play Mode проверены кнопка запуска, ожидание беженца перед закрытыми
 воротами, приём после открытия, отправка/отзыв жителя без изменения общего
