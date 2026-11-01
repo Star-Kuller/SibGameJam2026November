@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{8f3e9b08-859c-4dde-9d4e-32e389fc718f}">
+		<property name="name">
+			<value>Zombies</value>
+		</property>
+		<relationship name="folder">
+			<destination>{e1476c80-3269-4325-933a-8bb264bc2cbe}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{d12bd555-2953-4a60-a500-7c5d92cc77bf}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{d12bd555-2953-4a60-a500-7c5d92cc77bf}">
+		<property name="parameterType">
+			<value>2</value>
+		</property>
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="enumerationLabels">
+			<value>Close</value>
+			<value>Far</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
