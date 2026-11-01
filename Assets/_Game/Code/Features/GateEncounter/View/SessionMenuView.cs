@@ -11,6 +11,7 @@ namespace _Game.Code.Features.GateEncounter.View
         private GateEncounterModel _session;
         private CombatStatisticsModel _statistics;
         private ColonyModel _colony;
+        private StockpileModel _stockpile;
         private IDisposable _binding;
 
         private VisualElement _overlay;
@@ -39,11 +40,13 @@ namespace _Game.Code.Features.GateEncounter.View
         public void Bind(
             GateEncounterModel session,
             CombatStatisticsModel statistics,
-            ColonyModel colony)
+            ColonyModel colony,
+            StockpileModel stockpile)
         {
             _session = session;
             _statistics = statistics;
             _colony = colony;
+            _stockpile = stockpile;
 
             if (Root != null)
             {
@@ -122,8 +125,6 @@ namespace _Game.Code.Features.GateEncounter.View
             var paused = state == SessionState.Paused;
             var running = state == SessionState.Running;
             _title.EnableInClassList("main-title", main);
-            Element<VisualElement>("menu-home").Q<VisualElement>(className: "briefing").style.display =
-                main ? DisplayStyle.Flex : DisplayStyle.None;
 
             _overlay.style.display = running ? DisplayStyle.None : DisplayStyle.Flex;
             Element<VisualElement>("hud").style.display = main ? DisplayStyle.None : DisplayStyle.Flex;
@@ -136,17 +137,17 @@ namespace _Game.Code.Features.GateEncounter.View
             switch (state)
             {
                 case SessionState.MainMenu:
-                    _title.text = "ПОСЛЕДНЯЯ\nСМЕНА";
-                    _subtitle.text = "Одни ворота. Три минуты до рассвета.\nСохраните людей и удержите периметр.";
+                    _title.text = "ПОСЛЕДНЯЯ СМЕНА";
+                    _subtitle.text = string.Empty;
                     break;
 
                 case SessionState.Paused:
-                    _title.text = "СМЕНА ПРИОСТАНОВЛЕНА";
-                    _subtitle.text = "Община ждёт вашего возвращения.";
+                    _title.text = "Пауза";
+                    _subtitle.text = string.Empty;
                     break;
 
                 case SessionState.Won:
-                    _title.text = "МЫ ДОЖИЛИ ДО УТРА";
+                    _title.text = "Смена завершена";
                     _subtitle.text = _session.ResultReason;
                     break;
 
@@ -156,12 +157,17 @@ namespace _Game.Code.Features.GateEncounter.View
                     break;
             }
 
+            _subtitle.style.display = string.IsNullOrEmpty(_subtitle.text)
+                ? DisplayStyle.None
+                : DisplayStyle.Flex;
+
             if (!main && !running)
             {
                 var time = TimeSpan.FromSeconds(_session.ElapsedTime);
                 _results.text = $"Время  {time:mm\\:ss}     Уничтожено  {_statistics.Kills}\n"
                     + $"Живы  {_colony.Total}     Спасено  {_colony.Rescued}     Погибло  {_colony.Lost}\n"
-                    + $"Дружественный огонь  {_colony.FriendlyFireDeaths}     Выстрелов  {_statistics.Shots}";
+                    + $"Дружественный огонь  {_colony.FriendlyFireDeaths}     Выстрелов  {_statistics.Shots}\n"
+                    + $"Доставлено: {_stockpile.DeliveredMetal} металла, {_stockpile.DeliveredRounds} патронов";
             }
 
             if (main)

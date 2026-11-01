@@ -38,6 +38,13 @@ namespace _Game.Code.Features.Survivors.View
 
         public void ShowPeople(IReadOnlyList<SurvivorView> people, float patience)
         {
+            if (Root != null)
+            {
+                Element<VisualElement>("people-panel").style.display = people.Count > 0
+                    ? DisplayStyle.Flex
+                    : DisplayStyle.None;
+            }
+
             var text = new StringBuilder();
 
             foreach (var view in people)
@@ -48,11 +55,11 @@ namespace _Game.Code.Features.Survivors.View
                 switch (person.State)
                 {
                     case SurvivorState.GoingOut:
-                        text.Append("Идёт к посту");
+                        text.Append("Идёт за ресурсами");
                         break;
 
                     case SurvivorState.Working:
-                        text.Append("На внешнем посту");
+                        text.Append("Собирает груз");
                         break;
 
                     case SurvivorState.Returning:
@@ -73,6 +80,12 @@ namespace _Game.Code.Features.Survivors.View
                     case SurvivorState.Entering:
                         text.Append("Входит в общину");
                         break;
+                }
+
+                if (person.IsResident && person.CargoMetal + person.CargoRounds > 0)
+                {
+                    text.Append(" · ").Append(person.CargoMetal).Append(" мет. / ")
+                        .Append(person.CargoRounds).Append(" патр.");
                 }
 
                 text.AppendLine();
@@ -135,7 +148,7 @@ namespace _Game.Code.Features.Survivors.View
 
         private void ShowPopulation(int revision)
         {
-            _population.text = $"ЖИТЕЛИ  {_colony.Total}    В БАЗЕ  {_colony.Inside}    СНАРУЖИ  {_colony.Outside}";
+            _population.text = $"ЛЮДИ  {_colony.Total} / СВОБОДНЫ  {_colony.Inside} / СНАРУЖИ  {_colony.Outside}";
             RefreshButtons();
         }
 
@@ -149,7 +162,7 @@ namespace _Game.Code.Features.Survivors.View
             _dispatch.SetEnabled(_colony.CanDispatch && _gate.CanPass);
             _dispatch.tooltip = !_gate.CanPass
                 ? "Для выхода нужны открытые ворота."
-                : "Один житель выходит к посту. Ресурсы в этом тесте не добываются.";
+                : "1 житель. Через 50 с начинает возвращение, 12 с пути к воротам. Груз: 12 металла и 30 патронов; зачисление внутри базы.";
             _recall.SetEnabled(_colony.Outside > 0);
         }
 

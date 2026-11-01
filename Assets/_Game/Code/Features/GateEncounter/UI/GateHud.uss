@@ -1,109 +1,88 @@
 #screen {
     flex-grow: 1;
-    color: rgb(235, 234, 217);
+    color: rgb(214, 210, 196);
     font-size: 18px;
+    -unity-font: url("../../../../../TextMesh Pro/Fonts/LiberationSans.ttf");
 }
-#hud {
+#hud, #cctv-overlay {
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
-}
-#cctv-overlay {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    bottom: 0;
-}
-#cctv-enabled {
-    height: 32px;
-    margin-top: 4px;
-    font-size: 19px;
 }
 .topbar {
     position: absolute;
-    left: 32px;
-    right: 32px;
-    top: 28px;
+    left: 24px;
+    right: 24px;
+    top: 18px;
+    height: 78px;
+    padding: 10px 22px;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    background-color: rgba(15, 17, 17, 0.92);
+    border-width: 1px;
+    border-color: rgb(83, 83, 75);
 }
-.camera-label, .clock-panel, .community-panel {
-    padding: 14px 20px;
-    background-color: rgba(15, 24, 22, 0.90);
-    border-top-width: 2px;
-    border-top-color: rgb(164, 139, 80);
+.camera-label {
+    padding-right: 26px;
+    border-right-width: 1px;
+    border-right-color: rgb(78, 78, 70);
 }
 .camera-title {
-    font-size: 23px;
+    font-size: 24px;
     -unity-font-style: bold;
-    margin-top: 3px;
+    color: rgb(226, 216, 191);
 }
 .eyebrow {
-    color: rgb(174, 184, 166);
-    font-size: 15px;
-    letter-spacing: 1px;
+    font-size: 18px;
+    color: rgb(176, 178, 170);
 }
 .micro {
-    font-size: 16px;
-    color: rgb(185, 195, 178);
-    margin-top: 7px;
+    font-size: 18px;
+    color: rgb(153, 158, 152);
 }
 .clock-panel {
-    min-width: 180px;
-    align-items: center;
-}
-.clock-value {
-    font-size: 43px;
-    color: rgb(224, 199, 140);
-    -unity-font-style: bold;
-}
-.community-panel {
     align-items: flex-end;
 }
-.population-value {
-    font-size: 19px;
+.clock-value {
+    font-size: 26px;
+    color: rgb(217, 210, 188);
     -unity-font-style: bold;
-}
-.friendly-text {
-    color: rgb(91, 215, 193);
 }
 .people-panel {
     position: absolute;
-    top: 157px;
-    left: 32px;
-    width: 315px;
-    padding: 17px 19px;
-    background-color: rgba(15, 24, 22, 0.83);
-    border-left-width: 2px;
-    border-left-color: rgb(68, 145, 132);
+    top: 114px;
+    left: 24px;
+    width: 330px;
+    padding: 15px 18px;
+    background-color: rgba(18, 21, 20, 0.85);
+    border-width: 1px;
+    border-color: rgb(73, 77, 71);
 }
 .people-list {
     font-size: 18px;
     white-space: normal;
-    margin-top: 12px;
-    color: rgb(207, 224, 211);
+    margin-top: 8px;
+    color: rgb(131, 191, 179);
 }
 #notification {
     position: absolute;
-    top: 175px;
-    left: 24%;
-    right: 18%;
-    padding: 12px 20px;
-    background-color: rgba(15, 28, 25, 0.92);
-    border-left-width: 3px;
-    border-left-color: rgb(91, 215, 193);
-    font-size: 21px;
+    top: 122px;
+    left: 31%;
+    right: 20%;
+    padding: 10px 16px;
+    background-color: rgba(16, 18, 17, 0.9);
+    border-left-width: 2px;
+    border-left-color: rgb(106, 168, 153);
+    font-size: 19px;
     white-space: normal;
-    -unity-text-align: middle-center;
     display: none;
 }
 #notification.danger {
-    border-left-color: rgb(218, 100, 74);
-    color: rgb(251, 195, 163);
+    border-left-color: rgb(171, 67, 46);
+    color: rgb(229, 170, 142);
 }
 #crosshair {
     position: absolute;
@@ -118,110 +97,112 @@
     top: 11px;
     left: 0;
     width: 24px;
-    height: 2px;
-    background-color: rgb(237, 236, 216);
+    height: 1px;
+    background-color: rgb(218, 216, 197);
 }
 .crosshair-vertical {
     position: absolute;
     top: 0;
     left: 11px;
-    width: 2px;
+    width: 1px;
     height: 24px;
-    background-color: rgb(237, 236, 216);
+    background-color: rgb(218, 216, 197);
 }
 #hit-marker {
     position: absolute;
     left: 50%;
     top: 50%;
     translate: -50% -50%;
-    font-size: 65px;
+    font-size: 55px;
     display: none;
 }
 #target-name {
     position: absolute;
-    left: 32%;
-    right: 32%;
+    left: 30%;
+    right: 30%;
     top: 55%;
     font-size: 20px;
-    -unity-font-style: bold;
     -unity-text-align: middle-center;
 }
 .bottombar {
     position: absolute;
-    left: 32px;
-    right: 32px;
-    bottom: 82px;
+    left: 24px;
+    right: 24px;
+    bottom: 52px;
+    height: 110px;
+    padding: 12px 22px;
+    background-color: rgba(13, 16, 15, 0.94);
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-end;
-}
-.health-panel, .kills-panel {
-    padding: 18px 22px;
-    background-color: rgba(15, 24, 22, 0.94);
+    align-items: center;
+    border-width: 1px;
+    border-color: rgb(83, 83, 75);
 }
 .health-panel {
     width: 290px;
+    margin-right: 24px;
 }
-.health-value {
-    font-size: 32px;
-    -unity-font-style: bold;
-    margin-top: 4px;
-    margin-bottom: 10px;
+.health-caption {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
 }
 .health-track {
-    height: 6px;
-    background-color: rgb(49, 64, 55);
+    height: 10px;
+    background-color: rgb(38, 44, 41);
+    border-width: 1px;
+    border-color: rgb(85, 94, 86);
 }
 #health-fill {
-    height: 6px;
+    flex-grow: 1;
     width: 100%;
-    background-color: rgb(193, 162, 91);
+    background-color: rgb(91, 145, 123);
 }
 #health-fill.critical {
-    background-color: rgb(220, 98, 69);
+    background-color: rgb(173, 65, 43);
 }
 .danger-text {
-    color: rgb(239, 145, 101);
+    color: rgb(223, 126, 87);
 }
 .commands {
-    margin-left: 18px;
-    margin-right: 18px;
     align-items: center;
-}
-.command-caption {
-    background-color: rgba(15, 24, 22, 0.88);
-    padding: 8px 14px;
-    margin-bottom: 8px;
-    font-size: 15px;
 }
 .command-buttons {
     flex-direction: row;
 }
 .command-buttons Button {
-    width: 195px;
-    margin-left: 4px;
-    margin-right: 4px;
-    font-size: 19px;
+    width: 188px;
+    margin-left: 5px;
+    margin-right: 5px;
+    height: 50px;
+    font-size: 20px;
 }
-.kills-panel {
-    min-width: 170px;
+#command-caption {
+    margin-top: 4px;
+    font-size: 18px;
+}
+.ammo-panel {
+    min-width: 130px;
+    margin-left: 24px;
     align-items: flex-end;
 }
-.kills-value {
-    font-size: 43px;
+.ammo-value {
+    font-size: 35px;
+    color: rgb(219, 189, 129);
     -unity-font-style: bold;
-    color: rgb(224, 199, 140);
+}
+.status-line {
+    position: absolute;
+    bottom: 16px;
+    left: 26px;
+    right: 26px;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 18px;
+    color: rgb(162, 166, 155);
 }
 #controls-hint {
-    position: absolute;
-    left: 32px;
-    right: 32px;
-    bottom: 24px;
-    padding: 10px 14px;
-    font-size: 17px;
-    white-space: normal;
-    background-color: rgba(15, 24, 22, 0.88);
-    -unity-text-align: middle-center;
+    font-size: 18px;
 }
 #menu-overlay {
     position: absolute;
@@ -229,179 +210,100 @@
     top: 0;
     right: 0;
     bottom: 0;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    padding: 48px 6%;
-    background-color: rgba(6, 14, 14, 0.82);
+    justify-content: center;
+    background-color: rgba(8, 10, 10, 0.76);
 }
 .menu-shell {
-    width: 700px;
-    padding: 30px 38px;
-    background-color: rgba(18, 30, 28, 0.98);
-    border-top-width: 3px;
-    border-top-color: rgb(193, 162, 91);
-}
-.menu-heading {
-    flex-direction: row;
-    align-items: center;
-    margin-bottom: 19px;
-}
-.station-badge {
-    color: rgb(23, 30, 24);
-    background-color: rgb(193, 162, 91);
-    -unity-font-style: bold;
-    padding: 6px 10px;
-    margin-right: 13px;
-    font-size: 16px;
+    width: 640px;
+    padding: 32px 42px;
+    background-color: rgba(21, 24, 23, 0.98);
+    border-width: 1px;
+    border-color: rgb(96, 95, 83);
 }
 #menu-title {
-    font-size: 39px;
+    font-size: 34px;
     -unity-font-style: bold;
-    letter-spacing: 1px;
     white-space: normal;
-    margin-bottom: 13px;
+    margin-bottom: 28px;
+    -unity-text-align: middle-center;
+    color: rgb(222, 216, 195);
 }
 #menu-title.main-title {
-    font-size: 68px;
-    letter-spacing: 3px;
+    font-size: 37px;
+    letter-spacing: 2px;
 }
-#menu-subtitle {
-    color: rgb(188, 204, 186);
-    font-size: 22px;
-    white-space: normal;
-    margin-bottom: 18px;
-}
-#run-results {
+#menu-subtitle, #run-results {
     font-size: 20px;
-    color: rgb(227, 207, 159);
     white-space: normal;
-    margin-bottom: 16px;
-}
-.briefing {
-    border-left-width: 2px;
-    border-left-color: rgb(72, 104, 91);
-    padding-left: 18px;
-    margin-bottom: 20px;
-}
-.briefing-title {
-    font-size: 17px;
-    color: rgb(222, 198, 140);
-    margin-top: 6px;
-    -unity-font-style: bold;
-}
-.briefing-body {
-    font-size: 18px;
-    white-space: normal;
-    color: rgb(174, 190, 173);
-    margin-bottom: 5px;
+    margin-bottom: 22px;
+    color: rgb(190, 185, 165);
 }
 Button {
-    height: 50px;
-    margin-top: 6px;
-    padding-left: 12px;
-    padding-right: 12px;
-    background-color: rgb(192, 160, 91);
-    color: rgb(18, 29, 24);
-    font-size: 21px;
+    height: 52px;
+    margin-top: 9px;
+    padding-left: 16px;
+    padding-right: 16px;
+    background-color: rgb(32, 36, 34);
+    color: rgb(217, 212, 193);
+    font-size: 23px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     border-width: 1px;
-    border-color: rgba(220, 201, 150, 0.20);
-    border-radius: 0;
+    border-left-color: rgb(103, 104, 92);
+    border-top-color: rgb(103, 104, 92);
+    border-right-color: rgb(51, 54, 48);
+    border-bottom-color: rgb(51, 54, 48);
+    border-radius: 2px;
 }
 Button:hover {
-    background-color: rgb(222, 192, 121);
+    background-color: rgb(55, 49, 35);
+    border-color: rgb(171, 130, 65);
+    color: rgb(236, 203, 133);
 }
 Button:focus {
-    border-width: 2px;
-    border-color: rgb(243, 226, 178);
+    border-color: rgb(181, 147, 88);
 }
 Button:active {
-    background-color: rgb(153, 126, 66);
+    background-color: rgb(37, 32, 23);
+    border-color: rgb(137, 104, 54);
 }
 Button:disabled {
-    background-color: rgb(34, 48, 41);
-    color: rgb(111, 127, 111);
-    border-color: rgb(49, 66, 54);
+    background-color: rgb(24, 27, 25);
+    color: rgb(99, 104, 97);
+    border-color: rgb(48, 52, 46);
 }
 .primary-action {
-    height: 57px;
-}
-.secondary {
-    background-color: rgb(47, 67, 56);
-    color: rgb(224, 229, 211);
-}
-.secondary:hover {
-    background-color: rgb(67, 91, 76);
-}
-.quiet {
-    background-color: rgba(27, 41, 35, 0.5);
-    color: rgb(170, 189, 171);
-}
-.menu-secondary {
-    flex-direction: row;
-}
-.menu-secondary Button {
-    flex-grow: 1;
-}
-#open-settings {
-    margin-right: 6px;
-}
-.menu-footer {
-    margin-top: 22px;
-    font-size: 13px;
-    letter-spacing: 1px;
-    color: rgb(111, 139, 120);
-}
-.menu-side {
-    align-items: flex-end;
-    margin-left: 40px;
-}
-.menu-motto {
-    font-size: 60px;
-    -unity-font-style: bold;
-    color: rgb(195, 189, 157);
-    -unity-text-align: middle-right;
-}
-.menu-motto-caption {
-    font-size: 21px;
-    color: rgb(164, 183, 162);
-    margin-top: 20px;
+    height: 58px;
 }
 #settings-panel {
     display: none;
 }
 .settings-title {
-    font-size: 35px;
+    font-size: 31px;
     -unity-font-style: bold;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
 }
 .settings-caption {
-    font-size: 18px;
-    color: rgb(174, 190, 173);
-    margin-top: 15px;
+    font-size: 19px;
+    color: rgb(190, 185, 165);
+    margin-top: 16px;
     margin-bottom: 9px;
 }
 Slider {
-    height: 39px;
-    margin-bottom: 8px;
+    height: 36px;
+    margin-bottom: 6px;
 }
 Slider Label {
-    width: 210px;
+    width: 200px;
     font-size: 19px;
 }
 Slider TextField {
     min-width: 65px;
 }
-#settings-panel .unity-base-text-field__input {
-    color: rgb(235, 234, 217);
-    background-color: rgb(35, 51, 44);
-    border-width: 1px;
-    border-color: rgb(78, 100, 80);
-}
-#settings-panel .unity-base-slider__dragger {
-    background-color: rgb(218, 188, 118);
+#cctv-enabled {
+    height: 32px;
+    font-size: 19px;
 }
 .binding-row {
     flex-direction: row;
@@ -413,24 +315,36 @@ Slider TextField {
     font-size: 20px;
 }
 .binding-row Button {
-    width: 260px;
-    height: 39px;
+    width: 245px;
+    height: 36px;
     margin-top: 0;
     font-size: 19px;
-    background-color: rgb(47, 67, 56);
-    color: rgb(222, 227, 206);
+}
+#settings-panel .unity-base-text-field__input {
+    color: rgb(221, 216, 196);
+    background-color: rgb(33, 38, 34);
+    border-width: 1px;
+    border-color: rgb(83, 91, 77);
+}
+#settings-panel .unity-base-slider__dragger {
+    background-color: rgb(179, 153, 105);
 }
 #rebind-message {
-    font-size: 17px;
+    font-size: 18px;
     white-space: normal;
-    color: rgb(222, 198, 140);
-    margin-top: 14px;
-    margin-bottom: 7px;
+    color: rgb(205, 180, 131);
+    margin-top: 12px;
+    margin-bottom: 4px;
 }
 #cancel-rebind {
     display: none;
 }
 #reset-controls, #settings-back, #cancel-rebind {
-    height: 43px;
+    height: 40px;
     font-size: 19px;
 }
+.hidden {
+    display: none;
+}
+
+

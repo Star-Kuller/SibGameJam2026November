@@ -44,6 +44,9 @@ namespace _Game.Code.Editor
 
             CheckSchedule();
             checks.Add("waves and spawn cutoff");
+
+            CheckStockpile();
+            checks.Add("finite ammo, cargo delivery and loss");
             return checks.ToArray();
         }
 
@@ -183,16 +186,72 @@ namespace _Game.Code.Editor
 
         private static void CheckSchedule()
         {
-            var schedule = new SpawnScheduleModel(4, 7, 180);
-            schedule.Advance(4, true);
-            Require(schedule.Pending == 1, "First regular zombie is scheduled.");
-
+            var schedule = new SpawnScheduleModel(25, 20, 720);
+            schedule.Advance(24.9, true);
+            Require(schedule.Pending == 0, "There are no enemies before the tutorial group.");
+            schedule.Advance(25, true);
+            Require(schedule.Pending == 2, "The first group has two walkers at 0:25.");
             schedule.ConsumeSpawn();
-            Require(schedule.Advance(60, true) && schedule.Pending == 4 && schedule.WaveNumber == 1,
-                "First wave replaces the regular spawn.");
+            schedule.ConsumeSpawn();
+            schedule.Advance(59.9, true);
+            Require(schedule.Pending == 0, "The tutorial has a pause after the first group.");
+            schedule.Advance(60, true);
+            Require(schedule.Pending == 3, "Regular groups start at 1:00.");
+            Require(schedule.Advance(180, true) && schedule.Pending == 12 && schedule.WaveNumber == 1,
+                "The first large wave replaces pending regular spawns at 3:00.");
 
-            schedule.Advance(180, true);
+            for (var index = 0; index < 12; index++)
+            {
+                schedule.ConsumeSpawn();
+            }
+
+            schedule.Advance(250, true, 1);
+            Require(schedule.WaveActive && schedule.Pending == 0,
+                "Regular spawns stay disabled while a wave enemy is alive.");
+            schedule.Advance(251, true, 0);
+            schedule.Advance(270.9, true);
+            Require(schedule.Pending == 0, "There is a full pause after the wave is cleared.");
+            schedule.Advance(271, true);
+            Require(schedule.Pending == 4, "Normal groups resume after the pause.");
+
+            Require(schedule.Advance(390, true) && schedule.Pending == 16, "Second wave: 6:30, 16 walkers.");
+            for (var index = 0; index < 16; index++)
+            {
+                schedule.ConsumeSpawn();
+            }
+
+            Require(schedule.Advance(630, true) && schedule.Pending == 20, "Final wave: 10:30, 20 walkers.");
+            schedule.Advance(720, true);
             Require(schedule.Pending == 0, "No new enemies after the end of the shift.");
+        }
+
+        private static void CheckStockpile()
+        {
+            using var stockpile = new StockpileModel(24, 1);
+            Require(stockpile.TryUseRound() && !stockpile.TryUseRound(), "Ammo cannot become negative.");
+
+            var person = new SurvivorModel(10, "Анна", true, new[] { Vector3.zero, Vector3.forward });
+            person.Move(1);
+            person.GatherCargo(0.5f, 12, 30);
+            Require(person.CargoMetal == 6 && person.CargoRounds == 15, "Partial cargo is carried by the worker.");
+            Require(!person.UnloadCargo(out _, out _) && stockpile.Metal == 24,
+                "Cargo cannot reach the stockpile outside the base.");
+            person.GatherCargo(1, 12, 30);
+            person.Recall(new[] { person.Position, Vector3.zero });
+            person.Move(1);
+            person.Enter(new[] { person.Position, Vector3.back });
+            person.Move(1);
+            Require(person.UnloadCargo(out var metal, out var rounds), "Cargo unloads only after entry.");
+            stockpile.Deliver(metal, rounds);
+            Require(stockpile.Metal == 36 && stockpile.Rounds == 30 && stockpile.Deliveries == 1,
+                "A full expedition delivers exactly 12 metal and 30 rounds.");
+            Require(!person.UnloadCargo(out _, out _), "The same cargo cannot be unloaded twice.");
+
+            var victim = new SurvivorModel(11, "Вера", true, new[] { Vector3.zero, Vector3.forward });
+            victim.Move(1);
+            victim.GatherCargo(1, 12, 30);
+            victim.Die();
+            Require(victim.CargoMetal == 0 && victim.CargoRounds == 0, "Death destroys the carried cargo.");
         }
 
         private static void Require(bool condition, string message)

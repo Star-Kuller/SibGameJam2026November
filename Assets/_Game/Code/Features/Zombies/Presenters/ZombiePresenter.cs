@@ -19,6 +19,7 @@ namespace _Game.Code.Features.Zombies.Presenters
             public ZombieModel Model;
             public ZombieView View;
             public float DeathAge;
+            public bool FromWave;
         }
 
         private readonly GatePrototypeSettings _settings;
@@ -275,17 +276,32 @@ namespace _Game.Code.Features.Zombies.Presenters
         {
             var time = _session.ElapsedTime;
 
-            if (_schedule.NextWaveTime - time <= 8 && _warnedWave == _schedule.WaveNumber)
+            if (_schedule.NextWaveTime - time <= 20 && _warnedWave == _schedule.WaveNumber)
             {
                 _warnedWave++;
                 _notifications.Show("Волна приближается. Отзовите людей и закройте ворота.", true);
                 _audio.Play(_sounds.waveWarning, Vector3.zero, true);
             }
 
-            if (_schedule.Advance(time, LivingCount < _settings.maxLivingZombies))
+            var livingWaveZombies = 0;
+
+            foreach (var zombie in _zombies)
+            {
+                if (zombie.FromWave && zombie.Model.State != ZombieState.Dead)
+                {
+                    livingWaveZombies++;
+                }
+            }
+
+            if (_schedule.Advance(time, LivingCount < _settings.maxLivingZombies, livingWaveZombies))
             {
                 var label = _schedule.WaveNumber == 3 ? "Финальная волна" : "Волна " + _schedule.WaveNumber;
                 _notifications.Show(label + ". Удерживайте периметр!", true);
+
+                if (_schedule.WaveNumber == 3)
+                {
+                    _survivors.RecallAll();
+                }
             }
 
             if (_schedule.Pending == 0 || LivingCount >= _settings.maxLivingZombies)
@@ -309,7 +325,12 @@ namespace _Game.Code.Features.Zombies.Presenters
                 view.name = "Zombie " + model.EntityId;
                 view.Bind(model, _settings.zombieSpeed / 1.5f);
 
-                _zombies.Add(new Zombie { Model = model, View = view });
+                _zombies.Add(new Zombie
+                {
+                    Model = model,
+                    View = view,
+                    FromWave = _schedule.PendingIsWave
+                });
                 _schedule.ConsumeSpawn();
                 break;
             }

@@ -18,6 +18,8 @@ namespace _Game.Code.Features.Survivors.Presenters
         {
             public SurvivorView View;
             public float DeathAge;
+            public float ReturnSpeed;
+            public float GatheringDuration;
         }
 
         private static readonly string[] Names =
@@ -29,6 +31,7 @@ namespace _Game.Code.Features.Survivors.Presenters
         private readonly GatePrototypeSettings _settings;
         private readonly GateEncounterModel _session;
         private readonly ColonyModel _colony;
+        private readonly StockpileModel _stockpile;
         private readonly GateModel _gate;
         private readonly SurvivorSceneView _scene;
         private readonly PopulationHudView _hud;
@@ -49,6 +52,7 @@ namespace _Game.Code.Features.Survivors.Presenters
             GatePrototypeSettings settings,
             GateEncounterModel session,
             ColonyModel colony,
+            StockpileModel stockpile,
             GateModel gate,
             SurvivorSceneView scene,
             PopulationHudView hud,
@@ -60,6 +64,7 @@ namespace _Game.Code.Features.Survivors.Presenters
             _settings = settings;
             _session = session;
             _colony = colony;
+            _stockpile = stockpile;
             _gate = gate;
             _scene = scene;
             _hud = hud;
@@ -129,15 +134,25 @@ namespace _Game.Code.Features.Survivors.Presenters
                     continue;
                 }
 
-                UpdatePerson(model, seconds);
+                UpdatePerson(person, seconds);
                 person.View.Render(false, _settings.survivorSpeed / 1.5f);
 
                 if (model.State == SurvivorState.Safe)
                 {
                     _colony.Admit(model.IsResident);
-                    _notifications.Show(model.Name + (model.IsResident
-                        ? " снова в общине."
-                        : " теперь в безопасности. В общине новый житель."));
+
+                    if (model.UnloadCargo(out var metal, out var rounds))
+                    {
+                        _stockpile.Deliver(metal, rounds);
+                        _notifications.Show($"{model.Name}: доставлено {metal} металла и {rounds} патронов.");
+                    }
+                    else
+                    {
+                        _notifications.Show(model.Name + (model.IsResident
+                            ? " вернулся без груза."
+                            : " вошёл в общину."));
+                    }
+
                     _audio.Play(model.IsResident ? _sounds.personReturned : _sounds.personSaved, model.Position);
                     RemoveAt(index);
                 }
@@ -170,7 +185,7 @@ namespace _Game.Code.Features.Survivors.Presenters
             }
 
             Create(true, _scene.OutboundRoute());
-            _notifications.Show("Житель вышел к посту. Прикройте путь или отзовите его.");
+            _notifications.Show("Вылазка началась. Прикройте жителя до возвращения с грузом.");
             _audio.Play(_sounds.order, Vector3.zero, true);
             RefreshHud();
         }
@@ -273,17 +288,35 @@ namespace _Game.Code.Features.Survivors.Presenters
                 return true;
             }
 
-            return view.Model.Recall(_scene.ReturnRoute(view.Model.Position));
+            var route = _scene.ReturnRoute(view.Model.Position);
+            var recalled = view.Model.Recall(route);
+
+            if (recalled)
+            {
+                var person = _people.Find(item => item.View == view);
+                person.ReturnSpeed = Mathf.Max(_settings.survivorSpeed,
+                    RouteLength(route) / _settings.expeditionReturnDuration);
+            }
+
+            return recalled;
         }
 
-        private void UpdatePerson(SurvivorModel model, float seconds)
+        private void UpdatePerson(Person person, float seconds)
         {
+            var model = person.View.Model;
             model.AdvanceWaiting(seconds);
 
-            if (model.State == SurvivorState.Working
-                && model.WorkingTime >= _settings.survivorWorkDuration)
+            if (model.State == SurvivorState.Working)
             {
-                model.Recall(_scene.ReturnRoute(model.Position));
+                var completion = model.ExpeditionTime >= _settings.survivorWorkDuration
+                    ? 1
+                    : model.WorkingTime / person.GatheringDuration;
+                model.GatherCargo(completion, _settings.expeditionMetal, _settings.expeditionRounds);
+
+                if (model.ExpeditionTime >= _settings.survivorWorkDuration)
+                {
+                    Recall(person.View);
+                }
             }
 
             // A closing door returns a person to the nearest side; it never kills them.
@@ -311,7 +344,10 @@ namespace _Game.Code.Features.Survivors.Presenters
                 }
             }
 
-            model.Move(_settings.survivorSpeed * seconds);
+            var speed = model.IsResident && model.State == SurvivorState.Returning
+                ? person.ReturnSpeed
+                : _settings.survivorSpeed;
+            model.Move(speed * seconds);
         }
 
         private void SpawnRefugeeIfDue(double time)
@@ -344,7 +380,25 @@ namespace _Game.Code.Features.Survivors.Presenters
 
             view.name = "Survivor " + model.Name;
             view.Bind(model);
-            _people.Add(new Person { View = view });
+            var outwardSeconds = RouteLength(route) / _settings.survivorSpeed;
+            _people.Add(new Person
+            {
+                View = view,
+                ReturnSpeed = _settings.survivorSpeed,
+                GatheringDuration = Mathf.Max(1, _settings.survivorWorkDuration - outwardSeconds)
+            });
+        }
+
+        private static float RouteLength(Vector3[] route)
+        {
+            var length = 0f;
+
+            for (var index = 1; index < route.Length; index++)
+            {
+                length += Vector3.Distance(route[index - 1], route[index]);
+            }
+
+            return length;
         }
 
         private void RemoveAt(int index)

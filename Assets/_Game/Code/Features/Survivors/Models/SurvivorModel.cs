@@ -28,6 +28,9 @@ namespace _Game.Code.Features.Survivors.Models
         public SurvivorState State { get; private set; }
         public float WaitingTime { get; private set; }
         public float WorkingTime { get; private set; }
+        public float ExpeditionTime { get; private set; }
+        public int CargoMetal { get; private set; }
+        public int CargoRounds { get; private set; }
         public bool IsAlive => State != SurvivorState.Dead && State != SurvivorState.Left;
         public bool IsVisible => IsAlive && State != SurvivorState.Safe;
         public bool IsWalking => State == SurvivorState.GoingOut
@@ -117,6 +120,13 @@ namespace _Game.Code.Features.Survivors.Models
 
         public void AdvanceWaiting(float seconds)
         {
+            seconds = Mathf.Max(0, seconds);
+
+            if (IsResident && (State == SurvivorState.GoingOut || State == SurvivorState.Working))
+            {
+                ExpeditionTime += seconds;
+            }
+
             if (State == SurvivorState.Waiting)
             {
                 WaitingTime += Mathf.Max(0, seconds);
@@ -125,6 +135,35 @@ namespace _Game.Code.Features.Survivors.Models
             {
                 WorkingTime += Mathf.Max(0, seconds);
             }
+        }
+
+        public void GatherCargo(float completed, int metal, int rounds)
+        {
+            if (!IsResident || State != SurvivorState.Working)
+            {
+                return;
+            }
+
+            completed = Mathf.Clamp01(completed);
+            CargoMetal = Mathf.Max(CargoMetal, Mathf.FloorToInt(Mathf.Max(0, metal) * completed));
+            CargoRounds = Mathf.Max(CargoRounds, Mathf.FloorToInt(Mathf.Max(0, rounds) * completed));
+        }
+
+        public bool UnloadCargo(out int metal, out int rounds)
+        {
+            metal = 0;
+            rounds = 0;
+
+            if (State != SurvivorState.Safe || CargoMetal + CargoRounds == 0)
+            {
+                return false;
+            }
+
+            metal = CargoMetal;
+            rounds = CargoRounds;
+            CargoMetal = 0;
+            CargoRounds = 0;
+            return true;
         }
 
         public void MoveOutsideGate(Vector3 waitingPosition)
@@ -155,6 +194,8 @@ namespace _Game.Code.Features.Survivors.Models
             }
 
             State = SurvivorState.Dead;
+            CargoMetal = 0;
+            CargoRounds = 0;
             return true;
         }
 

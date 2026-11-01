@@ -37,6 +37,7 @@ namespace _Game.Code.Features.GateEncounter
             builder.RegisterInstance(new GateModel(settings.positionHealth));
             builder.RegisterInstance(new ColonyModel(settings.startingResidents, settings.populationCapacity));
             builder.RegisterInstance(new CombatStatisticsModel());
+            builder.RegisterInstance(new StockpileModel(settings.startingMetal, settings.startingRounds));
             builder.RegisterInstance(new PlayerSettingsModel(settings.mouseSensitivity));
             builder.RegisterInstance(new SpawnScheduleModel(
                 settings.firstSpawnDelay,
@@ -51,6 +52,7 @@ namespace _Game.Code.Features.GateEncounter
             builder.RegisterComponentInHierarchy<TurretView>();
             builder.RegisterComponentInHierarchy<GateEncounterView>();
             builder.RegisterComponentInHierarchy<GateHudView>();
+            builder.RegisterComponentInHierarchy<StockpileHudView>();
             builder.RegisterComponentInHierarchy<SessionMenuView>();
             builder.RegisterComponentInHierarchy<NotificationView>();
             builder.RegisterComponentInHierarchy<InputSettingsView>();

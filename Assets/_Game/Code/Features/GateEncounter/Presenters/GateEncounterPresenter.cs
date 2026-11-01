@@ -23,6 +23,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
         private readonly GateModel _gate;
         private readonly ColonyModel _colony;
         private readonly CombatStatisticsModel _statistics;
+        private readonly StockpileModel _stockpile;
         private readonly PlayerInputView _input;
         private readonly SessionMenuView _menu;
         private readonly GateHudView _hud;
@@ -50,6 +51,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             GateModel gate,
             ColonyModel colony,
             CombatStatisticsModel statistics,
+            StockpileModel stockpile,
             PlayerInputView input,
             SessionMenuView menu,
             GateHudView hud,
@@ -67,6 +69,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             _gate = gate;
             _colony = colony;
             _statistics = statistics;
+            _stockpile = stockpile;
             _input = input;
             _menu = menu;
             _hud = hud;
@@ -82,7 +85,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
 
         public void Initialize()
         {
-            _menu.Bind(_session, _statistics, _colony);
+            _menu.Bind(_session, _statistics, _colony, _stockpile);
             _hud.Bind(_gate, _statistics);
 
             _menu.StartRequested += RequestStart;
@@ -173,6 +176,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             _gate.Dispose();
             _colony.Dispose();
             _statistics.Dispose();
+            _stockpile.Dispose();
         }
 
         private void HandleMenuRequests()
@@ -202,6 +206,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             _commandMode = false;
 
             _statistics.Reset();
+            _stockpile.Reset();
             _gates.Reset();
             _survivors.Reset();
             _zombies.Reset();
@@ -217,7 +222,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
                 _session.Pause();
             }
 
-            _notifications.Show("Прикройте беженцев. Открывайте ворота только когда путь свободен.");
+            _notifications.Show("Вылазка: отправьте жителя за металлом и патронами. Груз нужно вернуть за ворота.");
         }
 
         private void HandleFocus()

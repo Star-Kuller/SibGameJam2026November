@@ -59,7 +59,7 @@ namespace _Game.Code.Editor
             var peakEnemies = 0;
             var dispatched = false;
 
-            while (game.Session.State == SessionState.Running && game.Session.ElapsedTime < 250)
+            while (game.Session.State == SessionState.Running && game.Session.ElapsedTime < 800)
             {
                 var people = game.VisiblePeople();
                 var waiting = people.Any(person => person.Model.State == SurvivorState.Waiting);
@@ -92,6 +92,10 @@ namespace _Game.Code.Editor
                 + $"health={game.Gate.Health}, kills={game.Statistics.Kills}, shots={game.Statistics.Shots}.");
             Require(game.Colony.Rescued > 0, "The full shift must include a successful rescue.");
             Require(game.Colony.FriendlyFireDeaths == 0, "The test gunner must not shoot through a friendly.");
+            Require(game.Stockpile.Deliveries > 0, "A real expedition must deliver cargo inside the gate.");
+            Require(game.Stockpile.Rounds == game.Settings.startingRounds
+                + game.Stockpile.DeliveredRounds - game.Statistics.Shots,
+                "The ammo balance must include every shot and delivered round.");
 
             return new
             {
@@ -102,6 +106,9 @@ namespace _Game.Code.Editor
                 shots = game.Statistics.Shots,
                 rescued = game.Colony.Rescued,
                 alive = game.Colony.Total,
+                deliveries = game.Stockpile.Deliveries,
+                deliveredMetal = game.Stockpile.DeliveredMetal,
+                deliveredRounds = game.Stockpile.DeliveredRounds,
                 peakEnemies,
                 dispatched
             };
@@ -247,6 +254,7 @@ namespace _Game.Code.Editor
             public ZombiePresenter Zombies { get; }
             public TurretPresenter Turret { get; }
             public CombatStatisticsModel Statistics { get; }
+            public StockpileModel Stockpile { get; }
             public OutcomePresenter Outcome { get; }
 
             public Harness()
@@ -264,6 +272,7 @@ namespace _Game.Code.Editor
                 Zombies = container.Resolve<ZombiePresenter>();
                 Turret = container.Resolve<TurretPresenter>();
                 Statistics = container.Resolve<CombatStatisticsModel>();
+                Stockpile = container.Resolve<StockpileModel>();
                 Outcome = container.Resolve<OutcomePresenter>();
                 _audio = container.Resolve<GateAudio>();
                 _sounds = container.Resolve<GateAudioEvents>();
@@ -346,6 +355,7 @@ namespace _Game.Code.Editor
                 Gates.Reset();
                 Colony.Reset();
                 Statistics.Reset();
+                Stockpile.Reset();
                 Turret.Reset();
                 Session.ReturnToMenu();
 

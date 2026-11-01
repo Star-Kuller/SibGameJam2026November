@@ -19,7 +19,7 @@ namespace _Game.Code.Features.GateEncounter
         public float lookSpeed = 90;
 
         [Tooltip("Starting downward angle of the turret camera.")]
-        public float initialPitch = 12;
+        public float initialPitch = 7;
 
         [Range(1, 85)]
         public float yawLimit = 60;
@@ -29,7 +29,7 @@ namespace _Game.Code.Features.GateEncounter
 
         [Header("Weapon")]
         [Min(0.01f)]
-        public float shotsPerSecond = 5;
+        public float shotsPerSecond = 3;
 
         [Min(1)]
         public int shotDamage = 1;
@@ -45,7 +45,7 @@ namespace _Game.Code.Features.GateEncounter
         public float zombieSpeed = 1.5f;
 
         [Min(1)]
-        public int attackDamage = 5;
+        public int attackDamage = 3;
 
         [Min(0.1f)]
         public float attackInterval = 1;
@@ -55,10 +55,10 @@ namespace _Game.Code.Features.GateEncounter
 
         [Header("Spawning")]
         [Min(0)]
-        public float firstSpawnDelay = 2;
+        public float firstSpawnDelay = 25;
 
         [Min(0.1f)]
-        public float spawnInterval = 2.5f;
+        public float spawnInterval = 20;
 
         [Min(1)]
         public int maxLivingZombies = 20;
@@ -68,7 +68,14 @@ namespace _Game.Code.Features.GateEncounter
 
         [Header("Shift")]
         [Min(30)]
-        public float shiftDuration = 180;
+        public float shiftDuration = 720;
+
+        [Header("Stockpile and gate expeditions")]
+        [Min(0)] public int startingMetal = 24;
+        [Min(0)] public int startingRounds = 180;
+        [Min(0)] public int expeditionMetal = 12;
+        [Min(0)] public int expeditionRounds = 30;
+        [Min(1)] public float expeditionReturnDuration = 12;
 
         [Header("Gate movement")]
         [Min(0.1f)]
@@ -88,13 +95,14 @@ namespace _Game.Code.Features.GateEncounter
         public float survivorSpeed = 2.2f;
 
         [Min(1)]
-        public float survivorWorkDuration = 20;
+        [Tooltip("Total time from dispatch until the return starts, including outward travel.")]
+        public float survivorWorkDuration = 50;
 
         [Min(0)]
-        public float firstRefugeeDelay = 20;
+        public float firstRefugeeDelay = 80;
 
         [Min(1)]
-        public float refugeeInterval = 55;
+        public float refugeeInterval = 180;
 
         [Min(0)]
         public int refugeeCount = 3;

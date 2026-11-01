@@ -22,6 +22,7 @@ namespace _Game.Code.Features.Turret.Presenters
         private readonly PlayerSettingsModel _preferences;
         private readonly GateEncounterModel _session;
         private readonly CombatStatisticsModel _statistics;
+        private readonly StockpileModel _stockpile;
         private readonly PlayerInputView _input;
         private readonly TurretView _view;
         private readonly GateHudView _hud;
@@ -45,6 +46,7 @@ namespace _Game.Code.Features.Turret.Presenters
             PlayerSettingsModel preferences,
             GateEncounterModel session,
             CombatStatisticsModel statistics,
+            StockpileModel stockpile,
             PlayerInputView input,
             TurretView view,
             GateHudView hud,
@@ -58,6 +60,7 @@ namespace _Game.Code.Features.Turret.Presenters
             _preferences = preferences;
             _session = session;
             _statistics = statistics;
+            _stockpile = stockpile;
             _input = input;
             _view = view;
             _hud = hud;
@@ -121,7 +124,8 @@ namespace _Game.Code.Features.Turret.Presenters
             var target = _queries.QueryShot(_settings.range);
             ShowTarget(target);
 
-            if (_waitForRelease || !input.FireHeld || !_model.TryFire(_session.ElapsedTime))
+            if (_waitForRelease || !input.FireHeld || !_stockpile.HasRounds
+                || !_model.TryFire(_session.ElapsedTime))
             {
                 return;
             }
@@ -154,6 +158,11 @@ namespace _Game.Code.Features.Turret.Presenters
 
         private void Fire(ShotTarget target)
         {
+            if (!_stockpile.TryUseRound())
+            {
+                return;
+            }
+
             _statistics.RecordShot();
             _view.ShowShot(target.Point);
             _audio.Play(_sounds.shot, CameraPosition);
@@ -181,7 +190,8 @@ namespace _Game.Code.Features.Turret.Presenters
         {
             if (target.Survivor != null)
             {
-                _hud.ShowTarget("СВОЙ · " + target.Survivor.Model.Name, true);
+                var person = target.Survivor.Model;
+                _hud.ShowTarget($"{person.Name} · {person.CargoMetal} металла / {person.CargoRounds} патронов", true);
             }
             else if (target.Zombie != null)
             {

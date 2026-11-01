@@ -55,6 +55,7 @@ namespace _Game.Code.Editor
             ConfigureUi();
             ConfigureSettings();
             ConfigureAudio();
+            GateSliceRepair.Apply();
 
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());

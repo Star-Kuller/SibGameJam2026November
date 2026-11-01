@@ -15,32 +15,37 @@ MonoBehaviour:
   positionHealth: 300
   mouseSensitivity: 0.12
   lookSpeed: 90
-  initialPitch: 12
+  initialPitch: 10
   yawLimit: 60
-  minPitch: -12
-  maxPitch: 45
-  shotsPerSecond: 5
+  minPitch: -7
+  maxPitch: 40
+  shotsPerSecond: 3
   shotDamage: 1
   range: 150
   zombieHealth: 1
   zombieSpeed: 1.5
-  attackDamage: 5
+  attackDamage: 3
   attackInterval: 1
   deathDuration: 0.5
-  firstSpawnDelay: 4
-  spawnInterval: 7
-  maxLivingZombies: 16
+  firstSpawnDelay: 25
+  spawnInterval: 20
+  maxLivingZombies: 24
   spawnClearance: 0.8
-  shiftDuration: 180
+  shiftDuration: 720
+  startingMetal: 24
+  startingRounds: 180
+  expeditionMetal: 12
+  expeditionRounds: 30
+  expeditionReturnDuration: 12
   gateTransitionDuration: 1
   gatePlane: -15.4
   breachPlane: -16.8
   startingResidents: 8
   populationCapacity: 12
   survivorSpeed: 2.2
-  survivorWorkDuration: 20
-  firstRefugeeDelay: 20
-  refugeeInterval: 55
+  survivorWorkDuration: 50
+  firstRefugeeDelay: 80
+  refugeeInterval: 180
   refugeeCount: 3
   refugeePatience: 30
   personAttackWindup: 1.5
