@@ -210,7 +210,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             _hud.ShowTime(_settings.shiftDuration, 0);
 
             _session.Start();
-            _audio.Play(_sounds.ambience, Vector3.zero);
+            _audio.Play(_sounds.ambience, _turret.CameraPosition);
 
             if (!_input.HasFocus)
             {

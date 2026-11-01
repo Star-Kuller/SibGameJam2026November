@@ -38,6 +38,7 @@ namespace _Game.Code.Features.Turret.Presenters
         private bool _friendlyHit;
 
         public TurretModel Model => _model;
+        public Vector3 CameraPosition => _view.Camera.transform.position;
 
         public TurretPresenter(
             GatePrototypeSettings settings,
@@ -155,7 +156,7 @@ namespace _Game.Code.Features.Turret.Presenters
         {
             _statistics.RecordShot();
             _view.ShowShot(target.Point);
-            _audio.Play(_sounds.shot, _view.Camera.transform.position);
+            _audio.Play(_sounds.shot, CameraPosition);
 
             var hit = false;
             _friendlyHit = target.Survivor != null;
