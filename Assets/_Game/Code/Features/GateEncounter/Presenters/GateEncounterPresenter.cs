@@ -10,6 +10,9 @@ using _Game.Code.Features.Survivors.Presenters;
 using _Game.Code.Features.Turret.Presenters;
 using _Game.Code.Features.Zombies.Presenters;
 using R3;
+using _Game.Code.Core.Scenes;
+using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using VContainer.Unity;
 
@@ -42,6 +45,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
         private bool _commandMode;
         private bool _hadFocus;
         private bool _disposed;
+        private bool _changingScene;
 
         public GateEncounterModel Session => _session;
 
@@ -97,6 +101,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
 
             _hadFocus = _input.HasFocus;
             _stateBinding = _session.StateChanged.Subscribe(OnStateChanged);
+            _startRequested = true;
         }
 
         public void Tick()
@@ -185,17 +190,37 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             {
                 _mainMenuRequested = false;
                 _startRequested = false;
-                _session.ReturnToMenu();
-                _survivors.Clear();
-                _zombies.Clear();
-                _audio.Dispose();
-                _notifications.Clear();
+                ReturnToMenuAsync().Forget();
             }
 
             if (_startRequested)
             {
                 _startRequested = false;
                 StartSession();
+            }
+        }
+
+        private async UniTaskVoid ReturnToMenuAsync()
+        {
+            if (_changingScene)
+            {
+                return;
+            }
+
+            _changingScene = true;
+            _session.Pause();
+            _input.enabled = false;
+
+            try
+            {
+                await SceneNavigation.ChangeTo(SceneNavigation.MainMenuPath, _menu.gameObject.scene);
+            }
+            catch (Exception exception)
+            {
+                Debug.LogException(exception);
+                _changingScene = false;
+                _input.enabled = true;
+                _session.Resume();
             }
         }
 
@@ -293,6 +318,7 @@ namespace _Game.Code.Features.GateEncounter.Presenters
             _survivors.SetPaused(!running);
             _zombies.SetPaused(!running);
             _audio.SetPaused(!running);
+            _hud.ShowSessionState(state);
             _hud.SetAimMode(running && !_commandMode);
             UpdateCursor();
 

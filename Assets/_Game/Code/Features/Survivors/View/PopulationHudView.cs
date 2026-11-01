@@ -54,6 +54,9 @@ namespace _Game.Code.Features.Survivors.View
 
                 switch (person.State)
                 {
+                    case SurvivorState.WaitingToLeave:
+                        text.Append("Ждёт открытия ворот внутри");
+                        break;
                     case SurvivorState.GoingOut:
                         text.Append("Идёт за ресурсами");
                         break;
@@ -159,11 +162,9 @@ namespace _Game.Code.Features.Survivors.View
 
         private void RefreshButtons()
         {
-            _dispatch.SetEnabled(_colony.CanDispatch && _gate.CanPass);
-            _dispatch.tooltip = !_gate.CanPass
-                ? "Для выхода нужны открытые ворота."
-                : "1 житель. Через 50 с начинает возвращение, 12 с пути к воротам. Груз: 12 металла и 30 патронов; зачисление внутри базы.";
-            _recall.SetEnabled(_colony.Outside > 0);
+            _dispatch.SetEnabled(_colony.CanDispatch);
+            _dispatch.tooltip = "1 житель, груз 12 металла и 30 патронов. При закрытых воротах ждёт выхода внутри.";
+            _recall.SetEnabled(_colony.Outside + _colony.WaitingForExit > 0);
         }
 
         private void OnDispatch()

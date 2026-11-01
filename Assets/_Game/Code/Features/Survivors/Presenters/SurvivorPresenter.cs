@@ -173,19 +173,15 @@ namespace _Game.Code.Features.Survivors.Presenters
                 return;
             }
 
-            if (!_gate.CanPass)
-            {
-                _notifications.Show("Сначала откройте ворота для выхода жителя.");
-                return;
-            }
-
-            if (!_colony.Dispatch())
+            if (!_colony.Dispatch(!_gate.CanPass))
             {
                 return;
             }
 
             Create(true, _scene.OutboundRoute());
-            _notifications.Show("Вылазка началась. Прикройте жителя до возвращения с грузом.");
+            _notifications.Show(_gate.CanPass
+                ? "Вылазка началась. Прикройте возвращение с грузом."
+                : "Житель готов к вылазке и ждёт внутри. Откройте ворота для выхода.");
             _audio.Play(_sounds.order, Vector3.zero, true);
             RefreshHud();
         }
@@ -281,7 +277,7 @@ namespace _Game.Code.Features.Survivors.Presenters
 
         private bool Recall(SurvivorView view)
         {
-            if (view.Model.State == SurvivorState.GoingOut
+            if ((view.Model.State == SurvivorState.GoingOut || view.Model.State == SurvivorState.WaitingToLeave)
                 && view.Model.Position.z < _settings.gatePlane)
             {
                 view.Model.RetreatInside(_scene.InsidePosition);
@@ -304,6 +300,13 @@ namespace _Game.Code.Features.Survivors.Presenters
         private void UpdatePerson(Person person, float seconds)
         {
             var model = person.View.Model;
+
+            if (model.State == SurvivorState.WaitingToLeave && _gate.CanPass && model.BeginExit())
+            {
+                _colony.BeginExit();
+                _notifications.Show(model.Name + " вышел за ресурсами.");
+            }
+
             model.AdvanceWaiting(seconds);
 
             if (model.State == SurvivorState.Working)
@@ -376,6 +379,12 @@ namespace _Game.Code.Features.Survivors.Presenters
             _nextId++;
             var name = Names[(_nextId - 1) % Names.Length];
             var model = new SurvivorModel(_nextId, name, resident, route);
+
+            if (resident && !_gate.CanPass)
+            {
+                model.WaitForExit();
+            }
+
             var view = _scene.Create();
 
             view.name = "Survivor " + model.Name;

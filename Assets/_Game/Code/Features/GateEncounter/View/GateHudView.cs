@@ -25,6 +25,12 @@ namespace _Game.Code.Features.GateEncounter.View
         private VisualElement _hitMarker;
         private string _controlsText = string.Empty;
         private string _commandHintText = string.Empty;
+        private SessionState _sessionState;
+
+        public void ShowSessionState(SessionState state)
+        {
+            _sessionState = state;
+        }
 
         public void Bind(GateModel gate, CombatStatisticsModel statistics)
         {
@@ -70,7 +76,9 @@ namespace _Game.Code.Features.GateEncounter.View
         {
             if (Root != null)
             {
-                Element<Label>("control-mode").text = aiming ? "ТУРЕЛЬ" : "КОМАНДЫ · МИР НЕ НА ПАУЗЕ";
+                Element<Label>("control-mode").text = _sessionState == SessionState.Paused
+                    ? "ПАУЗА"
+                    : aiming ? "ТУРЕЛЬ" : "КУРСОР";
             }
 
             if (_crosshair != null)

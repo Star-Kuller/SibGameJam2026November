@@ -113,7 +113,7 @@ namespace _Game.Code.Features.Turret.Presenters
                 return;
             }
 
-            if (!input.FireHeld)
+            if (_warmupFrames == 0 && !input.FireHeld)
             {
                 _waitForRelease = false;
             }

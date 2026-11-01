@@ -4,23 +4,37 @@
         <ui:VisualElement name="hud" picking-mode="Ignore">
             <ui:VisualElement name="cctv-overlay" picking-mode="Ignore" />
             <ui:VisualElement class="topbar metal-plate" picking-mode="Ignore">
-                <ui:VisualElement class="camera-label"><ui:Label text="CAM 01" class="camera-title" /><ui:Label text="ГЛАВНЫЕ ВОРОТА" class="micro" /></ui:VisualElement>
+                <ui:VisualElement class="camera-label">
+                    <ui:Label text="CAM 01" class="camera-title" />
+                    <ui:Label text="ГЛАВНЫЕ ВОРОТА" class="micro" />
+                </ui:VisualElement>
                 <ui:Label name="population" text="ЛЮДИ  8 / СВОБОДНЫ  8 / СНАРУЖИ  0" />
                 <ui:Label name="metal" text="МЕТАЛЛ  24" />
-                <ui:VisualElement class="clock-panel"><ui:Label text="ДО РАССВЕТА" class="micro" /><ui:Label name="clock" text="12:00" class="clock-value" /></ui:VisualElement>
+                <ui:VisualElement class="clock-panel">
+                    <ui:Label text="ДО РАССВЕТА" class="micro" />
+                    <ui:Label name="clock" text="12:00" class="clock-value" />
+                </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="people-panel" class="people-panel metal-plate" picking-mode="Ignore">
                 <ui:Label text="ЛЮДИ СНАРУЖИ" class="eyebrow" />
                 <ui:Label name="people-list" text="За воротами никого нет." class="people-list" />
             </ui:VisualElement>
             <ui:Label name="notification" text="" picking-mode="Ignore" />
-            <ui:VisualElement name="crosshair" picking-mode="Ignore"><ui:VisualElement class="crosshair-horizontal" /><ui:VisualElement class="crosshair-vertical" /></ui:VisualElement>
+            <ui:VisualElement name="crosshair" picking-mode="Ignore">
+                <ui:VisualElement class="crosshair-horizontal" />
+                <ui:VisualElement class="crosshair-vertical" />
+            </ui:VisualElement>
             <ui:Label name="hit-marker" text="×" picking-mode="Ignore" />
             <ui:Label name="target-name" text="" picking-mode="Ignore" />
             <ui:VisualElement class="bottombar metal-plate" picking-mode="Ignore">
                 <ui:VisualElement class="health-panel">
-                    <ui:VisualElement class="health-caption"><ui:Label text="ВОРОТА" class="eyebrow" /><ui:Label name="health" text="300 / 300" /></ui:VisualElement>
-                    <ui:VisualElement class="health-track"><ui:VisualElement name="health-fill" /></ui:VisualElement>
+                    <ui:VisualElement class="health-caption">
+                        <ui:Label text="ВОРОТА" class="eyebrow" />
+                        <ui:Label name="health" text="300 / 300" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="health-track">
+                        <ui:VisualElement name="health-fill" />
+                    </ui:VisualElement>
                     <ui:Label name="gate-state" text="ЗАКРЫТЫ" class="micro" />
                 </ui:VisualElement>
                 <ui:VisualElement class="commands">
@@ -31,9 +45,17 @@
                     </ui:VisualElement>
                     <ui:Label name="command-caption" text="" class="micro" />
                 </ui:VisualElement>
-                <ui:VisualElement class="ammo-panel"><ui:Label text="ПАТРОНЫ" class="eyebrow" /><ui:Label name="rounds" text="180" class="ammo-value" /><ui:Label name="kills" text="000" class="hidden" /></ui:VisualElement>
+                <ui:VisualElement class="ammo-panel">
+                    <ui:Label text="ПАТРОНЫ" class="eyebrow" />
+                    <ui:Label name="rounds" text="180" class="ammo-value" />
+                    <ui:Label name="kills" text="000" class="hidden" />
+                </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement class="status-line" picking-mode="Ignore"><ui:Label name="control-mode" text="ТУРЕЛЬ" /><ui:Label name="controls-hint" text="" /><ui:Label name="enemies" text="УГРОЗЫ 00" /></ui:VisualElement>
+            <ui:VisualElement class="status-line" picking-mode="Ignore">
+                <ui:Label name="control-mode" text="ТУРЕЛЬ" />
+                <ui:Label name="controls-hint" text="" />
+                <ui:Label name="enemies" text="УГРОЗЫ 00" />
+            </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="menu-overlay">
             <ui:VisualElement class="menu-shell metal-plate">
@@ -54,11 +76,26 @@
                     <ui:Slider name="master-volume" label="Громкость" low-value="0" high-value="1" show-input-field="true" />
                     <ui:Toggle name="cctv-enabled" label="Эффект CCTV" value="true" />
                     <ui:Label text="Управление" class="settings-caption" />
-                    <ui:VisualElement class="binding-row"><ui:Label text="Огонь" /><ui:Button name="bind-Attack" /></ui:VisualElement>
-                    <ui:VisualElement class="binding-row"><ui:Label text="Пауза" /><ui:Button name="bind-Pause" /></ui:VisualElement>
-                    <ui:VisualElement class="binding-row"><ui:Label text="Ворота" /><ui:Button name="bind-Gate" /></ui:VisualElement>
-                    <ui:VisualElement class="binding-row"><ui:Label text="Отозвать" /><ui:Button name="bind-Recall" /></ui:VisualElement>
-                    <ui:VisualElement class="binding-row"><ui:Label text="Курсор / турель" /><ui:Button name="bind-CommandCursor" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row">
+                        <ui:Label text="Огонь" />
+                        <ui:Button name="bind-Attack" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="binding-row">
+                        <ui:Label text="Пауза" />
+                        <ui:Button name="bind-Pause" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="binding-row">
+                        <ui:Label text="Ворота" />
+                        <ui:Button name="bind-Gate" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="binding-row">
+                        <ui:Label text="Отозвать" />
+                        <ui:Button name="bind-Recall" />
+                    </ui:VisualElement>
+                    <ui:VisualElement class="binding-row">
+                        <ui:Label text="Курсор / турель" />
+                        <ui:Button name="bind-CommandCursor" />
+                    </ui:VisualElement>
                     <ui:Label name="rebind-message" text="" />
                     <ui:Button name="cancel-rebind" text="Отмена переназначения" />
                     <ui:Button name="reset-controls" text="По умолчанию" />

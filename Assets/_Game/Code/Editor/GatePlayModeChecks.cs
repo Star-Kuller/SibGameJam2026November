@@ -43,7 +43,9 @@ namespace _Game.Code.Editor
             using var game = new Harness();
             var results = new List<object>
             {
+                CheckGateVisuals(game),
                 CheckFullShift(game),
+                CheckQueuedExpedition(game),
                 CheckDestroyedGate(game),
                 CheckBreach(game),
                 CheckLastResident(game),
@@ -114,6 +116,30 @@ namespace _Game.Code.Editor
             };
         }
 
+        private static object CheckGateVisuals(Harness game)
+        {
+            game.StartNewRun();
+            var structure = GameObject.Find("Environment/GateStructure");
+            var walls = structure.GetComponentsInChildren<Transform>();
+            var matrices = walls.Select(wall => wall.localToWorldMatrix).ToArray();
+            var view = Object.FindFirstObjectByType<_Game.Code.Features.Gates.View.GateWorldView>();
+
+            try
+            {
+                view.Render(1, true);
+                Require(walls.Select((wall, index) => wall.localToWorldMatrix == matrices[index]).All(same => same),
+                    "Opening gate leaves must not move any wall or its collider.");
+                Require(structure.GetComponentsInChildren<Collider>().All(collider => collider.enabled),
+                    "Opening gates must not disable stationary wall colliders.");
+            }
+            finally
+            {
+                view.Render(0, false);
+            }
+
+            return new { scenario = "gate leaves move independently of walls and wall colliders" };
+        }
+
         private static object CheckDestroyedGate(Harness game)
         {
             game.StartNewRun();
@@ -129,6 +155,33 @@ namespace _Game.Code.Editor
             Require(game.Session.ResultReason.Contains("Ворота"), "Gate defeat needs a clear reason.");
 
             return new { scenario = "gate destruction", seconds = Math.Round(game.Session.ElapsedTime, 2) };
+        }
+
+        private static object CheckQueuedExpedition(Harness game)
+        {
+            game.StartNewRun();
+            game.People.Dispatch();
+            var queued = game.VisiblePeople().Single();
+            var position = queued.Model.Position;
+            game.People.Tick(10, 10);
+            Require(queued.Model.State == SurvivorState.WaitingToLeave
+                && queued.Model.Position == position && queued.Model.ExpeditionTime == 0,
+                "A queued worker must wait inside without starting the expedition timer.");
+            Require(game.Colony.Total == 8 && game.Colony.WaitingForExit == 1 && game.Colony.Outside == 0,
+                "Assigning a closed-gate expedition must preserve population accounting.");
+            game.People.RecallAll();
+            game.People.Tick(0.1f, 10.1);
+            Require(game.Colony.Inside == 8 && game.Colony.WaitingForExit == 0,
+                "A queued expedition can be cancelled without a loss.");
+
+            game.People.Dispatch();
+            game.Gates.Tick(1, true);
+            game.People.Tick(0, 10.1);
+            Require(game.VisiblePeople().Single().Model.State == SurvivorState.GoingOut
+                && game.Colony.WaitingForExit == 0 && game.Colony.Outside == 1,
+                "Opening the gate starts the already assigned expedition.");
+
+            return new { scenario = "dispatch at start, closed-gate waiting, cancellation and departure" };
         }
 
         private static object CheckBreach(Harness game)
@@ -193,7 +246,10 @@ namespace _Game.Code.Editor
             game.Turret.Tick(0.1f, InputFrame(true), true);
             Require(game.Statistics.Shots == 0, "Held fire must not resume automatically.");
 
-            game.Turret.Tick(0.1f, InputFrame(false), true);
+            for (var frame = 0; frame < 3; frame++)
+            {
+                game.Turret.Tick(0.1f, InputFrame(false), true);
+            }
             game.Session.AdvanceTime(0.21f);
             game.Turret.Tick(0.1f, InputFrame(true), true);
             Require(game.Statistics.Shots == 1, "A released and pressed fire action must fire again.");
@@ -296,12 +352,17 @@ namespace _Game.Code.Editor
 
             public void StartNewRun()
             {
+                if (Session.State == SessionState.MainMenu)
+                {
+                    Session.Start();
+                }
+
                 if (Session.State == SessionState.Running)
                 {
                     Session.Pause();
                 }
 
-                var buttonName = Session.State == SessionState.MainMenu ? "start" : "restart";
+                var buttonName = "restart";
                 var root = Object.FindFirstObjectByType<UnityEngine.UIElements.UIDocument>().rootVisualElement;
                 var button = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Button>(root, buttonName);
 
@@ -313,7 +374,10 @@ namespace _Game.Code.Editor
 
                 Loop.Tick();
                 Session.Resume();
-                Turret.Tick(0, InputFrame(false), true);
+                for (var frame = 0; frame < 3; frame++)
+                {
+                    Turret.Tick(0, InputFrame(false), true);
+                }
             }
 
             public SurvivorView[] VisiblePeople()

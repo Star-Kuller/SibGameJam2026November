@@ -2,11 +2,12 @@ using System;
 using _Game.Code.Features.GateEncounter.Models;
 using _Game.Code.Features.Survivors.Models;
 using R3;
+using _Game.Code.Features.Input.View;
 using UnityEngine.UIElements;
 
 namespace _Game.Code.Features.GateEncounter.View
 {
-    public sealed class SessionMenuView : DocumentSectionView
+    public sealed class SessionMenuView : DocumentSectionView, ISettingsPanel
     {
         private GateEncounterModel _session;
         private CombatStatisticsModel _statistics;
@@ -126,13 +127,14 @@ namespace _Game.Code.Features.GateEncounter.View
             var running = state == SessionState.Running;
             _title.EnableInClassList("main-title", main);
 
-            _overlay.style.display = running ? DisplayStyle.None : DisplayStyle.Flex;
+            _overlay.style.display = main || running ? DisplayStyle.None : DisplayStyle.Flex;
             Element<VisualElement>("hud").style.display = main ? DisplayStyle.None : DisplayStyle.Flex;
             _start.style.display = main ? DisplayStyle.Flex : DisplayStyle.None;
             _resume.style.display = paused ? DisplayStyle.Flex : DisplayStyle.None;
             _restart.style.display = main || running ? DisplayStyle.None : DisplayStyle.Flex;
             _main.style.display = main || running ? DisplayStyle.None : DisplayStyle.Flex;
-            _results.style.display = main || running ? DisplayStyle.None : DisplayStyle.Flex;
+            _quit.style.display = paused ? DisplayStyle.None : DisplayStyle.Flex;
+            _results.style.display = main || running || paused ? DisplayStyle.None : DisplayStyle.Flex;
 
             switch (state)
             {

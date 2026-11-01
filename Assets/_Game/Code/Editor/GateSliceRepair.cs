@@ -4,6 +4,7 @@ using _Game.Code.Features.GateEncounter;
 using _Game.Code.Features.GateEncounter.View;
 using _Game.Code.Features.Turret.View;
 using _Game.Code.Features.Presentation.View;
+using _Game.Code.Features.Gates.View;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -23,10 +24,16 @@ namespace _Game.Code.Editor
                 throw new InvalidOperationException("Stop Play Mode before repairing the scene.");
             }
 
+            if (EditorSceneManager.GetActiveScene().path != "Assets/_Game/Scenes/GatePrototype.unity")
+            {
+                EditorSceneManager.OpenScene("Assets/_Game/Scenes/GatePrototype.unity");
+            }
+
             ReplaceDesignerTrees();
             PlaceTurret();
             ConfigureLighting();
             RepairGateHierarchy();
+            ScatterRocks();
             ConfigureBalance();
 
             var ui = GameObject.Find("UI");
@@ -89,7 +96,7 @@ namespace _Game.Code.Editor
         private static void PlaceTurret()
         {
             var rig = GameObject.Find("TurretRig").transform;
-            rig.position = new Vector3(0, 4.8f, -20.5f);
+            rig.position = new Vector3(0, 4.2f, -18.4f);
             var parts = rig.GetComponentsInChildren<Transform>();
             var pitch = parts.First(item => item.name == "PitchPivot");
             pitch.localPosition = new Vector3(0, -0.55f, 0.7f);
@@ -127,17 +134,17 @@ namespace _Game.Code.Editor
             receiver.localPosition = new Vector3(0, -0.05f, -0.32f);
             receiver.localScale = new Vector3(0.34f, 0.22f, 0.65f);
             receiver.GetComponent<Renderer>().sharedMaterial = metal;
-            SupportPart(support.transform, "Footing", new Vector3(0, 2.9f, -20.4f),
+            SupportPart(support.transform, "Footing", new Vector3(0, 2.3f, -18.3f),
                 new Vector3(3.6f, 0.2f, 3.3f), metal);
-            SupportPart(support.transform, "Pedestal", new Vector3(0, 3.4f, -20.25f),
+            SupportPart(support.transform, "Pedestal", new Vector3(0, 2.8f, -18.15f),
                 new Vector3(0.35f, 0.8f, 0.35f), metal);
 
             for (var index = 0; index < 4; index++)
             {
                 var x = index % 2 == 0 ? -1.4f : 1.4f;
-                var z = index < 2 ? -21.6f : -19.2f;
-                SupportPart(support.transform, "TowerLeg" + index, new Vector3(x, 1.4f, z),
-                    new Vector3(0.22f, 2.8f, 0.22f), metal);
+                var z = index < 2 ? -19.5f : -18.2f;
+                SupportPart(support.transform, "TowerLeg" + index, new Vector3(x, 1.1f, z),
+                    new Vector3(0.22f, 2.2f, 0.22f), metal);
             }
         }
 
@@ -162,17 +169,37 @@ namespace _Game.Code.Editor
             var gate = GameObject.Find("Environment/GateMechanism").transform;
             var left = gate.Find("LeftHinge");
             var right = gate.Find("RightHinge");
-            var parts = gate.GetComponentsInChildren<Transform>(true);
+            var structure = GameObject.Find("Environment/GateStructure").transform;
+            var parts = GameObject.Find("Environment").GetComponentsInChildren<Transform>(true);
 
-            foreach (var name in new[] { "part_0", "part_12" })
+            for (var index = 0; index < 14; index++)
             {
-                parts.First(part => part.name == name).SetParent(left, true);
+                var name = "part_" + index;
+                var parent = index == 0 || index == 12 ? left
+                    : index == 9 || index == 13 ? right
+                    : structure;
+                var mesh = parts.First(part => part.name == name);
+                mesh.SetParent(parent, true);
+
+                var collider = parts.FirstOrDefault(part => part.name == "Obstacle_" + name);
+
+                if (collider != null)
+                {
+                    collider.SetParent(parent, true);
+                }
             }
 
-            foreach (var name in new[] { "part_9", "part_13" })
+            var serialized = new SerializedObject(gate.GetComponent<GateWorldView>());
+            var colliders = gate.GetComponentsInChildren<Collider>(true);
+            var property = serialized.FindProperty("doorColliders");
+            property.arraySize = colliders.Length;
+
+            for (var index = 0; index < colliders.Length; index++)
             {
-                parts.First(part => part.name == name).SetParent(right, true);
+                property.GetArrayElementAtIndex(index).objectReferenceValue = colliders[index];
             }
+
+            serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
         private static void ConfigureBalance()
@@ -186,13 +213,38 @@ namespace _Game.Code.Editor
             settings.attackDamage = 3;
             settings.initialPitch = 10;
             settings.minPitch = -7;
-            settings.maxPitch = 40;
+            settings.maxPitch = 55;
             settings.survivorWorkDuration = 50;
             settings.expeditionReturnDuration = 12;
             settings.firstRefugeeDelay = 80;
             settings.refugeeInterval = 180;
             settings.zombieSpeed = 1.5f;
+            GameObject.Find("GameplayMarkers/People/Inside").transform.position = new Vector3(1.5f, 0, -17.0f);
             EditorUtility.SetDirty(settings);
+        }
+
+        private static void ScatterRocks()
+        {
+            var positions = new[]
+            {
+                new Vector3(-8, 0, -3), new Vector3(9, 0, 3),
+                new Vector3(-12, 0, 14), new Vector3(12, 0, 19),
+                new Vector3(-7, 0, 22), new Vector3(8, 0, -8)
+            };
+
+            for (var index = 0; index < positions.Length; index++)
+            {
+                var name = "rock_moss_set_01_rock0" + (index + 1);
+                var rock = GameObject.Find(name).transform;
+                var offset = positions[index] - rock.position;
+                rock.position = positions[index];
+                var collider = GameObject.Find("Obstacle_" + name);
+
+                if (collider != null && !collider.transform.IsChildOf(rock))
+                {
+                    collider.transform.position += offset;
+                }
+            }
         }
 
         private static Mesh BarrelMesh()

@@ -18,7 +18,7 @@ MonoBehaviour:
   initialPitch: 10
   yawLimit: 60
   minPitch: -7
-  maxPitch: 40
+  maxPitch: 55
   shotsPerSecond: 3
   shotDamage: 1
   range: 150

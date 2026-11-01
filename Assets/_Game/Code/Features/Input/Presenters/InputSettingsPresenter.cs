@@ -24,7 +24,7 @@ namespace _Game.Code.Features.Input.Presenters
         private readonly PlayerSettingsModel _model;
         private readonly PlayerInputView _input;
         private readonly InputSettingsView _view;
-        private readonly SessionMenuView _menu;
+        private readonly ISettingsPanel _menu;
         private readonly GateAudio _audio;
 
         private InputActionRebindingExtensions.RebindingOperation _operation;
@@ -38,7 +38,7 @@ namespace _Game.Code.Features.Input.Presenters
             PlayerSettingsModel model,
             PlayerInputView input,
             InputSettingsView view,
-            SessionMenuView menu,
+            ISettingsPanel menu,
             GateAudio audio)
         {
             _defaults = defaults;

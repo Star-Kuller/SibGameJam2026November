@@ -11,11 +11,12 @@ namespace _Game.Code.Features.Survivors.Models
 
         public int Inside { get; private set; }
         public int Outside { get; private set; }
-        public int Total => Inside + Outside;
+        public int WaitingForExit { get; private set; }
+        public int Total => Inside + Outside + WaitingForExit;
         public int Rescued { get; private set; }
         public int Lost { get; private set; }
         public int FriendlyFireDeaths { get; private set; }
-        public bool CanDispatch => Inside > 0 && Outside == 0;
+        public bool CanDispatch => Inside > 0 && Outside == 0 && WaitingForExit == 0;
         public bool HasCapacity => Total < _capacity;
         public Observable<int> Changed => _revision;
 
@@ -35,13 +36,14 @@ namespace _Game.Code.Features.Survivors.Models
         {
             Inside = _startingResidents;
             Outside = 0;
+            WaitingForExit = 0;
             Rescued = 0;
             Lost = 0;
             FriendlyFireDeaths = 0;
             Notify();
         }
 
-        public bool Dispatch()
+        public bool Dispatch(bool waitForExit = false)
         {
             if (!CanDispatch)
             {
@@ -49,21 +51,47 @@ namespace _Game.Code.Features.Survivors.Models
             }
 
             Inside--;
-            Outside++;
+            if (waitForExit)
+            {
+                WaitingForExit++;
+            }
+            else
+            {
+                Outside++;
+            }
             Notify();
             return true;
+        }
+
+        public void BeginExit()
+        {
+            if (WaitingForExit == 0)
+            {
+                return;
+            }
+
+            WaitingForExit--;
+            Outside++;
+            Notify();
         }
 
         public bool Admit(bool alreadyResident)
         {
             if (alreadyResident)
             {
-                if (Outside == 0)
+                if (Outside == 0 && WaitingForExit == 0)
                 {
                     return false;
                 }
 
-                Outside--;
+                if (WaitingForExit > 0)
+                {
+                    WaitingForExit--;
+                }
+                else
+                {
+                    Outside--;
+                }
             }
             else
             {
@@ -84,12 +112,19 @@ namespace _Game.Code.Features.Survivors.Models
         {
             if (resident)
             {
-                if (Outside == 0)
+                if (Outside == 0 && WaitingForExit == 0)
                 {
                     return;
                 }
 
-                Outside--;
+                if (WaitingForExit > 0)
+                {
+                    WaitingForExit--;
+                }
+                else
+                {
+                    Outside--;
+                }
             }
 
             Lost++;

@@ -5,6 +5,7 @@ namespace _Game.Code.Features.Survivors.Models
 {
     public enum SurvivorState
     {
+        WaitingToLeave,
         GoingOut,
         Working,
         Returning,
@@ -106,6 +107,25 @@ namespace _Game.Code.Features.Survivors.Models
             return true;
         }
 
+        public void WaitForExit()
+        {
+            if (State == SurvivorState.GoingOut)
+            {
+                State = SurvivorState.WaitingToLeave;
+            }
+        }
+
+        public bool BeginExit()
+        {
+            if (State != SurvivorState.WaitingToLeave)
+            {
+                return false;
+            }
+
+            State = SurvivorState.GoingOut;
+            return true;
+        }
+
         public bool Enter(Vector3[] route)
         {
             if (State != SurvivorState.Waiting)
@@ -177,7 +197,7 @@ namespace _Game.Code.Features.Survivors.Models
 
         public void RetreatInside(Vector3 inside)
         {
-            if (State != SurvivorState.GoingOut)
+            if (State != SurvivorState.GoingOut && State != SurvivorState.WaitingToLeave)
             {
                 return;
             }

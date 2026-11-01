@@ -53,7 +53,7 @@ namespace _Game.Code.Features.GateEncounter
             builder.RegisterComponentInHierarchy<GateEncounterView>();
             builder.RegisterComponentInHierarchy<GateHudView>();
             builder.RegisterComponentInHierarchy<StockpileHudView>();
-            builder.RegisterComponentInHierarchy<SessionMenuView>();
+            builder.RegisterComponentInHierarchy<SessionMenuView>().AsSelf().As<ISettingsPanel>();
             builder.RegisterComponentInHierarchy<NotificationView>();
             builder.RegisterComponentInHierarchy<InputSettingsView>();
             builder.RegisterComponentInHierarchy<CctvOverlayView>();

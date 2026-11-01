@@ -346,5 +346,3 @@ Slider TextField {
 .hidden {
     display: none;
 }
-
-
