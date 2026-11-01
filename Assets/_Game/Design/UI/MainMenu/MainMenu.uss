@@ -1,0 +1,6 @@
+.main-menu-screen #menu-overlay {
+    background-color: rgba(5, 8, 9, 0.20);
+}
+.main-menu-screen .menu-shell {
+    background-color: rgba(13, 17, 17, 0.84);
+}

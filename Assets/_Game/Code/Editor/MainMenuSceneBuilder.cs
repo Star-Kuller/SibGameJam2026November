@@ -10,6 +10,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+using UnityEngine.Video;
 
 namespace _Game.Code.Editor
 {
@@ -24,6 +25,7 @@ namespace _Game.Code.Editor
 
             if (AssetDatabase.LoadAssetAtPath<SceneAsset>(SceneNavigation.MainMenuPath) != null)
             {
+                ConfigureExistingScene();
                 return;
             }
 
@@ -38,6 +40,7 @@ namespace _Game.Code.Editor
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.055f, 0.065f, 0.065f);
             cameraObject.AddComponent<FMODUnity.StudioListener>();
+            ConfigureVideo(camera);
             new GameObject("MenuLight").AddComponent<Light>().type = LightType.Directional;
 
             var ui = new GameObject("MainMenuUI");
@@ -70,6 +73,73 @@ namespace _Game.Code.Editor
                 new EditorBuildSettingsScene(SceneNavigation.GatePath, true)
             };
             AssetDatabase.SaveAssets();
+        }
+
+        public static void ConfigureExistingScene()
+        {
+            if (EditorApplication.isPlaying)
+            {
+                throw new System.InvalidOperationException("Stop Play Mode before updating the main menu scene.");
+            }
+
+            var original = SceneManager.GetActiveScene();
+            var scene = SceneManager.GetSceneByPath(SceneNavigation.MainMenuPath);
+            var opened = !scene.isLoaded;
+
+            if (opened)
+            {
+                scene = EditorSceneManager.OpenScene(SceneNavigation.MainMenuPath, OpenSceneMode.Additive);
+            }
+
+            foreach (var root in scene.GetRootGameObjects())
+            {
+                var camera = root.GetComponentInChildren<Camera>();
+
+                if (camera != null)
+                {
+                    ConfigureVideo(camera);
+                    break;
+                }
+            }
+
+            EditorSceneManager.SaveScene(scene);
+
+            if (opened)
+            {
+                EditorSceneManager.CloseScene(scene, true);
+                SceneManager.SetActiveScene(original);
+            }
+        }
+
+        private static void ConfigureVideo(Camera camera)
+        {
+            var clip = AssetDatabase.LoadAssetAtPath<VideoClip>(
+                "Assets/_Game/Art/Videos/MainMenuBackground.mp4");
+
+            if (clip == null)
+            {
+                throw new System.InvalidOperationException("Main-menu background video has not been imported.");
+            }
+
+            var player = camera.GetComponent<VideoPlayer>();
+
+            if (player == null)
+            {
+                player = camera.gameObject.AddComponent<VideoPlayer>();
+            }
+
+            player.source = VideoSource.VideoClip;
+            player.clip = clip;
+            player.renderMode = VideoRenderMode.CameraFarPlane;
+            player.targetCamera = camera;
+            player.targetCameraAlpha = 1;
+            player.aspectRatio = VideoAspectRatio.FitOutside;
+            player.audioOutputMode = VideoAudioOutputMode.None;
+            player.playOnAwake = true;
+            player.waitForFirstFrame = true;
+            player.isLooping = true;
+            player.skipOnDrop = true;
+            EditorUtility.SetDirty(player);
         }
     }
 }

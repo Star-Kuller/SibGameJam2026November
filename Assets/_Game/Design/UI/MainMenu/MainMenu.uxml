@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements">
     <ui:Style src="../GateEncounter/GateHud.uss" />
-    <ui:VisualElement name="screen">
+    <ui:Style src="MainMenu.uss" />
+    <ui:VisualElement name="screen" class="main-menu-screen">
         <ui:VisualElement name="menu-overlay">
             <ui:VisualElement class="menu-shell metal-plate">
                 <ui:VisualElement name="menu-home">
