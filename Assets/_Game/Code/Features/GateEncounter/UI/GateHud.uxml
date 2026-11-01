@@ -1,0 +1,108 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="GateHud.uss" />
+    <ui:VisualElement name="screen" picking-mode="Ignore">
+        <ui:VisualElement name="hud" picking-mode="Ignore">
+            <ui:VisualElement class="topbar" picking-mode="Ignore">
+                <ui:VisualElement class="camera-label" picking-mode="Ignore">
+                    <ui:Label text="CAM 01" class="eyebrow" />
+                    <ui:Label text="ГЛАВНЫЕ ВОРОТА" class="camera-title" />
+                    <ui:Label name="control-mode" text="ТУРЕЛЬ" class="micro" />
+                </ui:VisualElement>
+                <ui:VisualElement class="clock-panel" picking-mode="Ignore">
+                    <ui:Label text="ДО РАССВЕТА" class="eyebrow" />
+                    <ui:Label name="clock" text="03:00" class="clock-value" />
+                </ui:VisualElement>
+                <ui:VisualElement class="community-panel" picking-mode="Ignore">
+                    <ui:Label name="population" text="ЖИТЕЛИ  8    В БАЗЕ  8    СНАРУЖИ  0" class="population-value" />
+                    <ui:Label text="БИРЮЗОВАЯ ПОВЯЗКА — СВОЙ" class="friendly-text micro" />
+                    <ui:Label name="enemies" text="УГРОЗЫ  00" class="micro" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="people-panel" picking-mode="Ignore">
+                <ui:Label text="ЛЮДИ ЗА ПЕРИМЕТРОМ" class="eyebrow" />
+                <ui:Label name="people-list" text="За воротами никого нет." class="people-list" />
+            </ui:VisualElement>
+            <ui:Label name="notification" text="" picking-mode="Ignore" />
+            <ui:VisualElement name="crosshair" picking-mode="Ignore">
+                <ui:VisualElement class="crosshair-horizontal" />
+                <ui:VisualElement class="crosshair-vertical" />
+            </ui:VisualElement>
+            <ui:Label name="hit-marker" text="×" picking-mode="Ignore" />
+            <ui:Label name="target-name" text="" picking-mode="Ignore" />
+            <ui:VisualElement class="bottombar" picking-mode="Ignore">
+                <ui:VisualElement class="health-panel" picking-mode="Ignore">
+                    <ui:Label text="ВОРОТА / ПРОЧНОСТЬ" class="eyebrow" />
+                    <ui:Label name="health" text="300 / 300" class="health-value" />
+                    <ui:VisualElement class="health-track">
+                        <ui:VisualElement name="health-fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="gate-state" text="ЗАКРЫТЫ" class="micro" />
+                </ui:VisualElement>
+                <ui:VisualElement class="commands">
+                    <ui:Label name="command-caption" text="" class="micro command-caption" picking-mode="Ignore" />
+                    <ui:VisualElement class="command-buttons">
+                        <ui:Button name="toggle-gate" text="Открыть ворота" />
+                        <ui:Button name="recall-people" text="Отозвать своих" class="secondary" />
+                        <ui:Button name="dispatch-person" text="Выход к посту" class="secondary" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="kills-panel" picking-mode="Ignore">
+                    <ui:Label text="УНИЧТОЖЕНО" class="eyebrow" />
+                    <ui:Label name="kills" text="000" class="kills-value" />
+                    <ui:Label text="ПАТРОНЫ  ∞" class="micro" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label name="controls-hint" text="" picking-mode="Ignore" />
+        </ui:VisualElement>
+        <ui:VisualElement name="menu-overlay">
+            <ui:VisualElement class="menu-shell">
+                <ui:VisualElement class="menu-heading">
+                    <ui:Label text="КПП 01" class="station-badge" />
+                    <ui:Label text="ПЕРИМЕТР ОБЩИНЫ / СВЯЗЬ УСТАНОВЛЕНА" class="eyebrow" />
+                </ui:VisualElement>
+                <ui:VisualElement name="menu-home">
+                    <ui:Label name="menu-title" text="ПОСЛЕДНЯЯ&#10;СМЕНА" />
+                    <ui:Label name="menu-subtitle" text="" />
+                    <ui:Label name="run-results" text="" />
+                    <ui:VisualElement class="briefing">
+                        <ui:Label text="01   СТРЕЛЯЙТЕ В ЗОМБИ" class="briefing-title" />
+                        <ui:Label text="Удерживайте огонь. Люди не защищены от ваших пуль." class="briefing-body" />
+                        <ui:Label text="02   БЕРЕГИТЕ ЛЮДЕЙ" class="briefing-title" />
+                        <ui:Label text="Впускайте беженцев. Прикрывайте и отзывайте своих." class="briefing-body" />
+                        <ui:Label text="03   УДЕРЖИТЕ ВОРОТА" class="briefing-title" />
+                        <ui:Label text="Открытый проход пропускает и людей, и зомби." class="briefing-body" />
+                    </ui:VisualElement>
+                    <ui:Button name="start" text="Начать смену" class="primary-action" />
+                    <ui:Button name="resume" text="Продолжить" class="primary-action" />
+                    <ui:Button name="restart" text="Новая смена" class="primary-action" />
+                    <ui:Button name="back-main" text="Главное меню" class="secondary" />
+                    <ui:VisualElement class="menu-secondary">
+                        <ui:Button name="open-settings" text="Настройки" class="secondary" />
+                        <ui:Button name="quit" text="Выход" class="quiet" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement name="settings-panel">
+                    <ui:Label text="НАСТРОЙКИ" class="settings-title" />
+                    <ui:Label text="Мышь и звук" class="eyebrow settings-caption" />
+                    <ui:Slider name="mouse-sensitivity" label="Чувствительность" low-value="0.02" high-value="0.5" show-input-field="true" />
+                    <ui:Slider name="master-volume" label="Громкость" low-value="0" high-value="1" show-input-field="true" />
+                    <ui:Label text="Нажмите на назначение, чтобы изменить его" class="settings-caption" />
+                    <ui:VisualElement class="binding-row"><ui:Label text="Огонь" /><ui:Button name="bind-Attack" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Пауза" /><ui:Button name="bind-Pause" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Ворота" /><ui:Button name="bind-Gate" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Отозвать" /><ui:Button name="bind-Recall" /></ui:VisualElement>
+                    <ui:VisualElement class="binding-row"><ui:Label text="Курсор / турель" /><ui:Button name="bind-CommandCursor" /></ui:VisualElement>
+                    <ui:Label name="rebind-message" text="Назначения сохраняются между запусками." />
+                    <ui:Button name="cancel-rebind" text="Отмена переназначения" class="secondary" />
+                    <ui:Button name="reset-controls" text="Восстановить настройки" class="secondary" />
+                    <ui:Button name="settings-back" text="Назад" />
+                </ui:VisualElement>
+                <ui:Label text="ПРОТОТИП ДЛЯ КОМАНДНОГО ТЕСТА  /  LAST SHIFT" class="menu-footer" />
+            </ui:VisualElement>
+            <ui:VisualElement class="menu-side" picking-mode="Ignore">
+                <ui:Label text="СВЕТ&#10;ЕЩЁ ГОРИТ." class="menu-motto" />
+                <ui:Label text="Значит, есть кого защищать." class="menu-motto-caption" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

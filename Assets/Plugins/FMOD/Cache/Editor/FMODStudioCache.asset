@@ -1,5 +1,221 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8256826460897096423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Lose
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Lose
+  Guid:
+    Data1: 1300272192
+    Data2: 1194549479
+    Data3: -1848712026
+    Data4: -1272260798
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4200
+--- !u!114 &-8124415884849461837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Camera_Switching
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Camera_Switching
+  Guid:
+    Data1: -1502233112
+    Data2: 1106902882
+    Data3: -2129008196
+    Data4: 181024301
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1300
+--- !u!114 &-6554464749389251235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Zombies_Close
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Zombies_Close
+  Guid:
+    Data1: 1426503567
+    Data2: 1301898726
+    Data3: -2000279168
+    Data4: 1975538925
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3600
+--- !u!114 &-6152199490099495303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Sniper_Rifle
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Sniper_Rifle
+  Guid:
+    Data1: 2101291814
+    Data2: 1280599092
+    Data3: -817969731
+    Data4: -848176690
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 550
+--- !u!114 &-5981971435711179518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/AMB/AMB_LOOP/Cam_2
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/AMB/AMB_LOOP/Cam_2
+  Guid:
+    Data1: -1942302564
+    Data2: 1314477496
+    Data3: -943086410
+    Data4: 995558964
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 60000
+--- !u!114 &-5917062981976222790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/AMB/AMB_LOOP/Dispatch_Office
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/AMB/AMB_LOOP/Dispatch_Office
+  Guid:
+    Data1: 1145958065
+    Data2: 1096683363
+    Data3: 1295796671
+    Data4: 1753956354
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 60375
+--- !u!114 &-5633296275419492202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Gate_Destruction
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Gate_Destruction
+  Guid:
+    Data1: 1968096985
+    Data2: 1309260843
+    Data3: 755795077
+    Data4: 435935547
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 4400
+--- !u!114 &-4994409596697057899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Command_Denied
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Command_Denied
+  Guid:
+    Data1: -937882284
+    Data2: 1170271628
+    Data3: -499459173
+    Data4: 1485804471
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 211
 --- !u!114 &-4957094560660500429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20,6 +236,33 @@ MonoBehaviour:
   - Name: Desktop
     Value: 12314112
   Exists: 1
+--- !u!114 &-4850626006016932718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Zombie_Death
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Zombie_Death
+  Guid:
+    Data1: -2131654524
+    Data2: 1290615209
+    Data3: 1301824405
+    Data4: 1678681746
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &-4556624604655248221
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,6 +337,216 @@ MonoBehaviour:
   - Name: Desktop
     Value: 1478
   Exists: 1
+--- !u!114 &-3921191444588963441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Win
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Win
+  Guid:
+    Data1: -398461662
+    Data2: 1333991624
+    Data3: -1314315643
+    Data4: 1616690076
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5000
+--- !u!114 &-3899881410634464362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Order_Receiving
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Order_Receiving
+  Guid:
+    Data1: -372262470
+    Data2: 1169296682
+    Data3: 524419486
+    Data4: 1926717264
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 700
+--- !u!114 &-3703391738577643036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Zombie_Gate_Hit
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Zombie_Gate_Hit
+  Guid:
+    Data1: 189539287
+    Data2: 1293474848
+    Data3: 1592718513
+    Data4: 198229370
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
+--- !u!114 &-3578640098986697988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Critical
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Critical
+  Guid:
+    Data1: -2050475505
+    Data2: 1148525382
+    Data3: -193216361
+    Data4: -2047888234
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1900
+--- !u!114 &-3384568103043237874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Worker_In_Danger
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Worker_In_Danger
+  Guid:
+    Data1: -143175959
+    Data2: 1141841496
+    Data3: 140325819
+    Data4: -1592785263
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
+--- !u!114 &-3377862569749063175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Turret_Shots
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Turret_Shots
+  Guid:
+    Data1: -1829525276
+    Data2: 1116860146
+    Data3: -892270162
+    Data4: 1209744899
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1200
+--- !u!114 &-2343139844968169342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/SFX_LOOP/Machine
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/SFX_LOOP/Machine
+  Guid:
+    Data1: -743435967
+    Data2: 1144487681
+    Data3: 1950083771
+    Data4: -1827838290
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -505632551823238865}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 9805
+--- !u!114 &-2289981232095218789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: FMOD/Last Shift Sounds/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 639290677657273191
+  FileSizes:
+  - Name: Desktop
+    Value: 2466
+  Exists: 1
 --- !u!114 &-1564198752015704097
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +573,140 @@ MonoBehaviour:
   - Normal
   - Evil
   Exists: 1
+--- !u!114 &-1314018804975719749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Gate_Danger
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Gate_Danger
+  Guid:
+    Data1: -1174703880
+    Data2: 1243052084
+    Data3: -1382360435
+    Data4: -1560949100
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 926
+--- !u!114 &-669894773161805974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Zombies_Far
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Zombies_Far
+  Guid:
+    Data1: 1632808495
+    Data2: 1179881122
+    Data3: -380387157
+    Data4: 1415693158
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 5000
+--- !u!114 &-505632551823238865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Machine/Parameter 1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorParamRef
+  Name: Parameter 1
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1681685717
+    data2: 1199156887
+  Type: 2
+  IsGlobal: 0
+  Labels:
+  - Work
+  - Not Work
+  Exists: 1
+--- !u!114 &-429185145819462759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Crafting_Complete
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Crafting_Complete
+  Guid:
+    Data1: 688278856
+    Data2: 1170524981
+    Data3: 624151978
+    Data4: 2037151249
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 650
+--- !u!114 &-19159152384688554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Friendly_Fire
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Friendly_Fire
+  Guid:
+    Data1: 1550192037
+    Data2: 1142291365
+    Data3: -1995820627
+    Data4: 2117335239
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1380
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,46 +720,176 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EventCache
   EditorBanks:
-  - {fileID: -4013365544026250821}
-  - {fileID: -4957094560660500429}
+  - {fileID: -2289981232095218789}
+  - {fileID: 3508592065962559520}
   EditorEvents:
-  - {fileID: 2774968771080696118}
-  - {fileID: 3471870811162269203}
-  - {fileID: 1386191871913422271}
-  - {fileID: 1663442691705555541}
-  - {fileID: 6913242492095228064}
-  - {fileID: 6866996282942287753}
-  - {fileID: 6570638293818184893}
-  - {fileID: 1117764349595093866}
-  - {fileID: 8357795434953425671}
-  EditorParameters:
-  - {fileID: 5211306727186538278}
-  - {fileID: 1572425229463792394}
+  - {fileID: 4122033455076490419}
+  - {fileID: 3328025259767604413}
+  - {fileID: -3578640098986697988}
+  - {fileID: 6072548055505719691}
+  - {fileID: -3921191444588963441}
+  - {fileID: -6152199490099495303}
+  - {fileID: 1742088648360986004}
+  - {fileID: -669894773161805974}
+  - {fileID: 5286396354332582777}
+  - {fileID: 495033452968047302}
+  - {fileID: -8256826460897096423}
+  - {fileID: -2343139844968169342}
+  - {fileID: -429185145819462759}
+  - {fileID: 933247410155139728}
+  - {fileID: 6923842892227079893}
+  - {fileID: -4994409596697057899}
+  - {fileID: 8263815393224305161}
+  - {fileID: 6880650028187927435}
+  - {fileID: 2542300328909062996}
+  - {fileID: 2303382601128567548}
+  - {fileID: -4850626006016932718}
+  - {fileID: -6554464749389251235}
+  - {fileID: -5981971435711179518}
+  - {fileID: 7762916190627344257}
+  - {fileID: -19159152384688554}
+  - {fileID: -5917062981976222790}
+  - {fileID: -3899881410634464362}
+  - {fileID: 1217068663836287366}
+  - {fileID: -3703391738577643036}
+  - {fileID: -5633296275419492202}
+  - {fileID: -3377862569749063175}
+  - {fileID: -8124415884849461837}
+  - {fileID: -3384568103043237874}
+  - {fileID: 7993670217899184126}
+  - {fileID: -1314018804975719749}
+  EditorParameters: []
   MasterBanks:
-  - {fileID: -4957094560660500429}
+  - {fileID: 3508592065962559520}
   StringsBanks:
-  - {fileID: -4013365544026250821}
+  - {fileID: -2289981232095218789}
   cacheVersion: 131861
-  cacheTime: 639289635862574897
+  cacheTime: 639290677657273191
   SerializableEventsDict:
-  - key: event:/Sounds/Room Tone
+  - key: event:/Sounds/P1/AMB/AMB_LOOP/Cam_1
     index: 0
-  - key: event:/Sounds/Music/Celeste
+  - key: event:/Sounds/P0/UI/Repair
     index: 1
-  - key: event:/Sounds/Ambient
+  - key: event:/Sounds/P0/UI/Critical
     index: 2
-  - key: event:/Sounds/Surfaces
+  - key: event:/Sounds/P0/SFX/Turret_Dry_Fire
     index: 3
-  - key: event:/Sounds/Blast
+  - key: event:/Sounds/P0/SFX/Win
     index: 4
-  - key: event:/Sounds/Door
+  - key: event:/Sounds/P0/SFX/Sniper_Rifle
     index: 5
-  - key: event:/Sounds/Wind
+  - key: event:/Sounds/P0/SFX/Gate_Open
     index: 6
-  - key: event:/Sounds/Door Mechanism
+  - key: event:/Sounds/P1/SFX/Zombies_Far
     index: 7
-  - key: event:/Sounds/Robot
+  - key: event:/Sounds/P0/UI/Resourses_Loading_Wood
     index: 8
+  - key: event:/Sounds/P0/UI/Big_Wave_Oncoming
+    index: 9
+  - key: event:/Sounds/P0/SFX/Lose
+    index: 10
+  - key: event:/Sounds/P1/SFX/SFX_LOOP/Machine
+    index: 11
+  - key: event:/Sounds/P0/UI/Crafting_Complete
+    index: 12
+  - key: event:/Sounds/P0/SFX/Sniper_Shots
+    index: 13
+  - key: event:/Sounds/P0/UI/Button_Press
+    index: 14
+  - key: event:/Sounds/P0/UI/Command_Denied
+    index: 15
+  - key: event:/Sounds/P0/SFX/Sniper_Dry_Fire
+    index: 16
+  - key: event:/Sounds/P0/SFX/Person_Death
+    index: 17
+  - key: event:/Sounds/P0/SFX/Zombie_Hit
+    index: 18
+  - key: event:/Sounds/P0/SFX/Gate_Close
+    index: 19
+  - key: event:/Sounds/P0/SFX/Zombie_Death
+    index: 20
+  - key: event:/Sounds/P1/SFX/Zombies_Close
+    index: 21
+  - key: event:/Sounds/P1/AMB/AMB_LOOP/Cam_2
+    index: 22
+  - key: event:/Sounds/P1/SFX/Axe
+    index: 23
+  - key: event:/Sounds/P0/SFX/Friendly_Fire
+    index: 24
+  - key: event:/Sounds/P1/AMB/AMB_LOOP/Dispatch_Office
+    index: 25
+  - key: event:/Sounds/P0/UI/Order_Receiving
+    index: 26
+  - key: event:/Sounds/P0/UI/Resources_Loading_Metal
+    index: 27
+  - key: event:/Sounds/P0/SFX/Zombie_Gate_Hit
+    index: 28
+  - key: event:/Sounds/P0/SFX/Gate_Destruction
+    index: 29
+  - key: event:/Sounds/P0/SFX/Turret_Shots
+    index: 30
+  - key: event:/Sounds/P0/UI/Camera_Switching
+    index: 31
+  - key: event:/Sounds/P0/UI/Worker_In_Danger
+    index: 32
+  - key: event:/Sounds/P1/AMB/AMB_LOOP/Cam_3
+    index: 33
+  - key: event:/Sounds/P0/UI/Gate_Danger
+    index: 34
+--- !u!114 &495033452968047302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Big_Wave_Oncoming
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Big_Wave_Oncoming
+  Guid:
+    Data1: 729616957
+    Data2: 1157718144
+    Data3: 1440033169
+    Data4: 1976298737
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 3250
+--- !u!114 &933247410155139728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Sniper_Shots
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Sniper_Shots
+  Guid:
+    Data1: -1646418100
+    Data2: 1323624650
+    Data3: -2111052398
+    Data4: 374227994
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
 --- !u!114 &1117764349595093866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -201,6 +918,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 19000
+--- !u!114 &1217068663836287366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Resources_Loading_Metal
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Resources_Loading_Metal
+  Guid:
+    Data1: -1635582788
+    Data2: 1109835005
+    Data3: -535305569
+    Data4: 1884405503
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 950
 --- !u!114 &1386191871913422271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,6 +1026,87 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 4900
+--- !u!114 &1742088648360986004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Gate_Open
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Gate_Open
+  Guid:
+    Data1: 1959045678
+    Data2: 1319389273
+    Data3: 1378154391
+    Data4: 1608153534
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1900
+--- !u!114 &2303382601128567548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Gate_Close
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Gate_Close
+  Guid:
+    Data1: -1854275196
+    Data2: 1091092344
+    Data3: 1589843598
+    Data4: 674730731
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1700
+--- !u!114 &2542300328909062996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Zombie_Hit
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Zombie_Hit
+  Guid:
+    Data1: 933605249
+    Data2: 1187220299
+    Data3: 743336615
+    Data4: -1516076
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 850
 --- !u!114 &2751607240248475067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -335,6 +1160,33 @@ MonoBehaviour:
   MinDistance: 0.90000004
   MaxDistance: 5.6
   Length: 69840
+--- !u!114 &3328025259767604413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Repair
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Repair
+  Guid:
+    Data1: -1568065271
+    Data2: 1125981067
+    Data3: 1914942092
+    Data4: 667920806
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1300
 --- !u!114 &3471870811162269203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,6 +1214,53 @@ MonoBehaviour:
   MinDistance: 2
   MaxDistance: 10
   Length: 102856
+--- !u!114 &3508592065962559520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorBankRef
+  Path: FMOD/Last Shift Sounds/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639290677657253225
+  FileSizes:
+  - Name: Desktop
+    Value: 7828064
+  Exists: 1
+--- !u!114 &4122033455076490419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/AMB/AMB_LOOP/Cam_1
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/AMB/AMB_LOOP/Cam_1
+  Guid:
+    Data1: 513893379
+    Data2: 1312739489
+    Data3: -1546271080
+    Data4: -340999497
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 60000
 --- !u!114 &4845393999157936274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,6 +1309,60 @@ MonoBehaviour:
   IsGlobal: 1
   Labels: []
   Exists: 1
+--- !u!114 &5286396354332582777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Resourses_Loading_Wood
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Resourses_Loading_Wood
+  Guid:
+    Data1: -662954695
+    Data2: 1252321088
+    Data3: -472186982
+    Data4: -738020687
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 950
+--- !u!114 &6072548055505719691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Turret_Dry_Fire
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Turret_Dry_Fire
+  Guid:
+    Data1: 1733430546
+    Data2: 1311866531
+    Data3: -404556884
+    Data4: -1751260442
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 524
 --- !u!114 &6570638293818184893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -465,6 +1418,33 @@ MonoBehaviour:
   MinDistance: 0.7
   MaxDistance: 7.4
   Length: 0
+--- !u!114 &6880650028187927435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Person_Death
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Person_Death
+  Guid:
+    Data1: 1155613805
+    Data2: 1312761090
+    Data3: 677704889
+    Data4: -216994016
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1500
 --- !u!114 &6913242492095228064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +1472,114 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
+--- !u!114 &6923842892227079893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/UI/Button_Press
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/UI/Button_Press
+  Guid:
+    Data1: -963597748
+    Data2: 1263455292
+    Data3: 1030078601
+    Data4: 106922624
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 200
+--- !u!114 &7762916190627344257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/SFX/Axe
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/SFX/Axe
+  Guid:
+    Data1: -1164563039
+    Data2: 1328700053
+    Data3: 566698913
+    Data4: -861611155
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2000
+--- !u!114 &7993670217899184126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P1/AMB/AMB_LOOP/Cam_3
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P1/AMB/AMB_LOOP/Cam_3
+  Guid:
+    Data1: -349889803
+    Data2: 1083443624
+    Data3: -1857247062
+    Data4: 1002100569
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 60000
+--- !u!114 &8263815393224305161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Sounds/P0/SFX/Sniper_Dry_Fire
+  m_EditorClassIdentifier: FMODUnityEditor::FMODUnity.EditorEventRef
+  Path: event:/Sounds/P0/SFX/Sniper_Dry_Fire
+  Guid:
+    Data1: 351706199
+    Data2: 1189177439
+    Data3: 1383534011
+    Data4: 1212316979
+  Banks:
+  - {fileID: 3508592065962559520}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 800
 --- !u!114 &8357795434953425671
 MonoBehaviour:
   m_ObjectHideFlags: 0

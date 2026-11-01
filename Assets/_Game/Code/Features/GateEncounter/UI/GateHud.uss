@@ -1,0 +1,415 @@
+#screen {
+    flex-grow: 1;
+    color: rgb(235, 234, 217);
+    font-size: 18px;
+}
+#hud {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+.topbar {
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    top: 28px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+.camera-label, .clock-panel, .community-panel {
+    padding: 14px 20px;
+    background-color: rgba(15, 24, 22, 0.90);
+    border-top-width: 2px;
+    border-top-color: rgb(164, 139, 80);
+}
+.camera-title {
+    font-size: 23px;
+    -unity-font-style: bold;
+    margin-top: 3px;
+}
+.eyebrow {
+    color: rgb(174, 184, 166);
+    font-size: 15px;
+    letter-spacing: 1px;
+}
+.micro {
+    font-size: 16px;
+    color: rgb(185, 195, 178);
+    margin-top: 7px;
+}
+.clock-panel {
+    min-width: 180px;
+    align-items: center;
+}
+.clock-value {
+    font-size: 43px;
+    color: rgb(224, 199, 140);
+    -unity-font-style: bold;
+}
+.community-panel {
+    align-items: flex-end;
+}
+.population-value {
+    font-size: 19px;
+    -unity-font-style: bold;
+}
+.friendly-text {
+    color: rgb(91, 215, 193);
+}
+.people-panel {
+    position: absolute;
+    top: 157px;
+    left: 32px;
+    width: 315px;
+    padding: 17px 19px;
+    background-color: rgba(15, 24, 22, 0.83);
+    border-left-width: 2px;
+    border-left-color: rgb(68, 145, 132);
+}
+.people-list {
+    font-size: 18px;
+    white-space: normal;
+    margin-top: 12px;
+    color: rgb(207, 224, 211);
+}
+#notification {
+    position: absolute;
+    top: 175px;
+    left: 24%;
+    right: 18%;
+    padding: 12px 20px;
+    background-color: rgba(15, 28, 25, 0.92);
+    border-left-width: 3px;
+    border-left-color: rgb(91, 215, 193);
+    font-size: 21px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+    display: none;
+}
+#notification.danger {
+    border-left-color: rgb(218, 100, 74);
+    color: rgb(251, 195, 163);
+}
+#crosshair {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    translate: -50% -50%;
+}
+.crosshair-horizontal {
+    position: absolute;
+    top: 11px;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    background-color: rgb(237, 236, 216);
+}
+.crosshair-vertical {
+    position: absolute;
+    top: 0;
+    left: 11px;
+    width: 2px;
+    height: 24px;
+    background-color: rgb(237, 236, 216);
+}
+#hit-marker {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    font-size: 65px;
+    display: none;
+}
+#target-name {
+    position: absolute;
+    left: 32%;
+    right: 32%;
+    top: 55%;
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+.bottombar {
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    bottom: 82px;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.health-panel, .kills-panel {
+    padding: 18px 22px;
+    background-color: rgba(15, 24, 22, 0.94);
+}
+.health-panel {
+    width: 290px;
+}
+.health-value {
+    font-size: 32px;
+    -unity-font-style: bold;
+    margin-top: 4px;
+    margin-bottom: 10px;
+}
+.health-track {
+    height: 6px;
+    background-color: rgb(49, 64, 55);
+}
+#health-fill {
+    height: 6px;
+    width: 100%;
+    background-color: rgb(193, 162, 91);
+}
+#health-fill.critical {
+    background-color: rgb(220, 98, 69);
+}
+.danger-text {
+    color: rgb(239, 145, 101);
+}
+.commands {
+    margin-left: 18px;
+    margin-right: 18px;
+    align-items: center;
+}
+.command-caption {
+    background-color: rgba(15, 24, 22, 0.88);
+    padding: 8px 14px;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+.command-buttons {
+    flex-direction: row;
+}
+.command-buttons Button {
+    width: 195px;
+    margin-left: 4px;
+    margin-right: 4px;
+    font-size: 19px;
+}
+.kills-panel {
+    min-width: 170px;
+    align-items: flex-end;
+}
+.kills-value {
+    font-size: 43px;
+    -unity-font-style: bold;
+    color: rgb(224, 199, 140);
+}
+#controls-hint {
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    bottom: 24px;
+    padding: 10px 14px;
+    font-size: 17px;
+    white-space: normal;
+    background-color: rgba(15, 24, 22, 0.88);
+    -unity-text-align: middle-center;
+}
+#menu-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 48px 6%;
+    background-color: rgba(6, 14, 14, 0.82);
+}
+.menu-shell {
+    width: 700px;
+    padding: 30px 38px;
+    background-color: rgba(18, 30, 28, 0.98);
+    border-top-width: 3px;
+    border-top-color: rgb(193, 162, 91);
+}
+.menu-heading {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 19px;
+}
+.station-badge {
+    color: rgb(23, 30, 24);
+    background-color: rgb(193, 162, 91);
+    -unity-font-style: bold;
+    padding: 6px 10px;
+    margin-right: 13px;
+    font-size: 16px;
+}
+#menu-title {
+    font-size: 39px;
+    -unity-font-style: bold;
+    letter-spacing: 1px;
+    white-space: normal;
+    margin-bottom: 13px;
+}
+#menu-title.main-title {
+    font-size: 68px;
+    letter-spacing: 3px;
+}
+#menu-subtitle {
+    color: rgb(188, 204, 186);
+    font-size: 22px;
+    white-space: normal;
+    margin-bottom: 18px;
+}
+#run-results {
+    font-size: 20px;
+    color: rgb(227, 207, 159);
+    white-space: normal;
+    margin-bottom: 16px;
+}
+.briefing {
+    border-left-width: 2px;
+    border-left-color: rgb(72, 104, 91);
+    padding-left: 18px;
+    margin-bottom: 20px;
+}
+.briefing-title {
+    font-size: 17px;
+    color: rgb(222, 198, 140);
+    margin-top: 6px;
+    -unity-font-style: bold;
+}
+.briefing-body {
+    font-size: 18px;
+    white-space: normal;
+    color: rgb(174, 190, 173);
+    margin-bottom: 5px;
+}
+Button {
+    height: 50px;
+    margin-top: 6px;
+    padding-left: 12px;
+    padding-right: 12px;
+    background-color: rgb(192, 160, 91);
+    color: rgb(18, 29, 24);
+    font-size: 21px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+    border-width: 1px;
+    border-color: rgba(220, 201, 150, 0.20);
+    border-radius: 0;
+}
+Button:hover {
+    background-color: rgb(222, 192, 121);
+}
+Button:focus {
+    border-width: 2px;
+    border-color: rgb(243, 226, 178);
+}
+Button:active {
+    background-color: rgb(153, 126, 66);
+}
+Button:disabled {
+    background-color: rgb(34, 48, 41);
+    color: rgb(111, 127, 111);
+    border-color: rgb(49, 66, 54);
+}
+.primary-action {
+    height: 57px;
+}
+.secondary {
+    background-color: rgb(47, 67, 56);
+    color: rgb(224, 229, 211);
+}
+.secondary:hover {
+    background-color: rgb(67, 91, 76);
+}
+.quiet {
+    background-color: rgba(27, 41, 35, 0.5);
+    color: rgb(170, 189, 171);
+}
+.menu-secondary {
+    flex-direction: row;
+}
+.menu-secondary Button {
+    flex-grow: 1;
+}
+#open-settings {
+    margin-right: 6px;
+}
+.menu-footer {
+    margin-top: 22px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    color: rgb(111, 139, 120);
+}
+.menu-side {
+    align-items: flex-end;
+    margin-left: 40px;
+}
+.menu-motto {
+    font-size: 60px;
+    -unity-font-style: bold;
+    color: rgb(195, 189, 157);
+    -unity-text-align: middle-right;
+}
+.menu-motto-caption {
+    font-size: 21px;
+    color: rgb(164, 183, 162);
+    margin-top: 20px;
+}
+#settings-panel {
+    display: none;
+}
+.settings-title {
+    font-size: 35px;
+    -unity-font-style: bold;
+    margin-bottom: 12px;
+}
+.settings-caption {
+    font-size: 18px;
+    color: rgb(174, 190, 173);
+    margin-top: 15px;
+    margin-bottom: 9px;
+}
+Slider {
+    height: 39px;
+    margin-bottom: 8px;
+}
+Slider Label {
+    width: 210px;
+    font-size: 19px;
+}
+Slider TextField {
+    min-width: 65px;
+}
+.binding-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+}
+.binding-row Label {
+    font-size: 20px;
+}
+.binding-row Button {
+    width: 260px;
+    height: 39px;
+    margin-top: 0;
+    font-size: 19px;
+    background-color: rgb(47, 67, 56);
+    color: rgb(222, 227, 206);
+}
+#rebind-message {
+    font-size: 17px;
+    white-space: normal;
+    color: rgb(222, 198, 140);
+    margin-top: 14px;
+    margin-bottom: 7px;
+}
+#cancel-rebind {
+    display: none;
+}
+#reset-controls, #settings-back, #cancel-rebind {
+    height: 43px;
+    font-size: 19px;
+}

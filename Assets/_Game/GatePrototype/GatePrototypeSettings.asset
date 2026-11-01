@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63cb19acea0e2c044bcd55af72839781, type: 3}
+  m_Name: GatePrototypeSettings
+  m_EditorClassIdentifier: Assembly-CSharp::_Game.Code.Features.GateEncounter.GatePrototypeSettings
+  positionHealth: 300
+  mouseSensitivity: 0.12
+  lookSpeed: 90
+  initialPitch: 12
+  yawLimit: 60
+  minPitch: -12
+  maxPitch: 45
+  shotsPerSecond: 5
+  shotDamage: 1
+  range: 150
+  zombieHealth: 1
+  zombieSpeed: 1.5
+  attackDamage: 5
+  attackInterval: 1
+  deathDuration: 0.5
+  firstSpawnDelay: 4
+  spawnInterval: 7
+  maxLivingZombies: 16
+  spawnClearance: 0.8
+  shiftDuration: 180
+  gateTransitionDuration: 1
+  gatePlane: -15.4
+  breachPlane: -16.8
+  startingResidents: 8
+  populationCapacity: 12
+  survivorSpeed: 2.2
+  survivorWorkDuration: 20
+  firstRefugeeDelay: 20
+  refugeeInterval: 55
+  refugeeCount: 3
+  refugeePatience: 30
+  personAttackWindup: 1.5
+  personAttackRange: 1.3
+  personDangerRange: 5
