@@ -25,6 +25,7 @@ namespace _Game.Code.Features.Zombies.Models
         public Vector3 Forward { get; private set; } = Vector3.back;
         public ZombieState State { get; private set; }
         public Vector3 GatePosition => _route[_route.Length - 1];
+        public float RouteLength { get; }
 
         public ZombieModel(int entityId, int health, Vector3[] route)
         {
@@ -38,6 +39,11 @@ namespace _Game.Code.Features.Zombies.Models
 
             _route = (Vector3[])route.Clone();
             Position = _route[0];
+
+            for (var index = 1; index < _route.Length; index++)
+            {
+                RouteLength += Vector3.Distance(_route[index - 1], _route[index]);
+            }
         }
 
         // Movement is a calculation over model data. The presenter decides when to request it.

@@ -48,6 +48,9 @@ namespace _Game.Code.Editor
                 CheckFullShift(game),
                 CheckQueuedExpedition(game),
                 CheckPersistentResidents(game),
+                CheckRefugeeTimes(game),
+                CheckFinalWaveQueue(game),
+                CheckGateWarning(game),
                 CheckDestroyedGate(game),
                 CheckBreach(game),
                 CheckLastResident(game),
@@ -244,6 +247,81 @@ namespace _Game.Code.Editor
                 "A persistent loss record must keep the friendly-fire cause.");
 
             return new { scenario = "resident picker, persistent identity, 62-second expedition and loss history" };
+        }
+
+        private static object CheckRefugeeTimes(Harness game)
+        {
+            game.StartNewRun();
+            var expectedTimes = new[] { 80, 260, 440 };
+            var arrivals = new List<double>();
+
+            foreach (var expected in expectedTimes)
+            {
+                SurvivorView refugee = null;
+
+                while (game.Session.ElapsedTime < expected + 1)
+                {
+                    game.Session.AdvanceTime(StepSeconds);
+                    game.People.Tick(StepSeconds, game.Session.ElapsedTime);
+                    refugee = game.VisiblePeople().FirstOrDefault(person => !person.Model.IsResident
+                        && person.Model.State == SurvivorState.Waiting);
+
+                    if (refugee != null)
+                    {
+                        break;
+                    }
+                }
+
+                Require(refugee != null && Math.Abs(game.Session.ElapsedTime - expected) < 0.1,
+                    "A refugee must reach the gate at the scheduled time, not merely spawn far away.");
+                arrivals.Add(Math.Round(game.Session.ElapsedTime, 2));
+                game.People.Tick(31, game.Session.ElapsedTime);
+            }
+
+            return new { scenario = "refugees arrive at the gate on schedule", arrivals };
+        }
+
+        private static object CheckFinalWaveQueue(Harness game)
+        {
+            game.StartNewRun();
+            var capacity = game.Settings.maxLivingZombies;
+
+            try
+            {
+                game.Settings.maxLivingZombies = 0;
+                game.Session.AdvanceTime(720);
+
+                for (var index = 0; index < 3; index++)
+                {
+                    game.Zombies.Move(0);
+                    game.Outcome.Evaluate();
+                    Require(game.Session.State == SessionState.Running,
+                        "No victory is allowed while a scheduled wave remains unspawned.");
+                }
+
+                return new { scenario = "blocked wave queue survives the deadline and prevents false victory" };
+            }
+            finally
+            {
+                game.Settings.maxLivingZombies = capacity;
+            }
+        }
+
+        private static object CheckGateWarning(Harness game)
+        {
+            game.StartNewRun();
+            game.Gate.ApplyDamage(211);
+            game.Gates.Tick(0, false);
+            var root = Object.FindFirstObjectByType<UnityEngine.UIElements.UIDocument>().rootVisualElement;
+            var icon = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.VisualElement>(root, "gate-damage-icon");
+            Require(icon.style.display == UnityEngine.UIElements.DisplayStyle.Flex,
+                "Critical gate damage has a visible crack icon.");
+            var notifications = Object.FindFirstObjectByType<NotificationView>();
+            notifications.Show("Marker");
+            game.Gates.Tick(0, false);
+            var label = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Label>(root, "notification");
+            Require(label.text == "Marker", "The critical gate warning must not repeat every frame.");
+            return new { scenario = "critical gate icon and non-repeating warning" };
         }
 
         private static void Submit(UnityEngine.UIElements.Button button)

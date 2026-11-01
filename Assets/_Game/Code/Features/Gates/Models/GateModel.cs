@@ -18,6 +18,7 @@ namespace _Game.Code.Features.Gates.Models
 
         public int MaximumHealth { get; }
         public int Health => _health.Value;
+        public bool IsCritical => Health > 0 && Health < MaximumHealth * 0.3f;
         public GateState State => _state.Value;
         public float Openness { get; private set; }
         public bool CanPass => State == GateState.Open;

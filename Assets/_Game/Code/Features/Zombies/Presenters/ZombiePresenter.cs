@@ -118,7 +118,6 @@ namespace _Game.Code.Features.Zombies.Presenters
         public void Move(float seconds)
         {
             UpdateSpawning();
-            var distance = _settings.zombieSpeed * seconds;
 
             foreach (var zombie in _zombies)
             {
@@ -127,8 +126,9 @@ namespace _Game.Code.Features.Zombies.Presenters
                     continue;
                 }
 
-                MoveZombie(zombie.Model, distance);
-                zombie.View.RenderPose(_settings.zombieSpeed / 1.5f);
+                var routeSpeed = zombie.Model.RouteLength / _settings.zombieApproachDuration;
+                MoveZombie(zombie.Model, seconds, routeSpeed);
+                zombie.View.RenderPose(routeSpeed / 1.5f);
 
                 if (_session.State != SessionState.Running)
                 {
@@ -234,7 +234,7 @@ namespace _Game.Code.Features.Zombies.Presenters
             }
         }
 
-        private void MoveZombie(ZombieModel model, float distance)
+        private void MoveZombie(ZombieModel model, float seconds, float routeSpeed)
         {
             var person = _survivors.FindNearest(model.Position, _settings.personDangerRange);
 
@@ -245,11 +245,13 @@ namespace _Game.Code.Features.Zombies.Presenters
                 if ((person.Model.Position - model.Position).sqrMagnitude
                     > _settings.personAttackRange * _settings.personAttackRange)
                 {
-                    model.MoveToward(person.Model.Position, distance);
+                    model.MoveToward(person.Model.Position, _settings.zombieSpeed * seconds);
                 }
 
                 return;
             }
+
+            var distance = routeSpeed * seconds;
 
             if (model.Move(distance))
             {

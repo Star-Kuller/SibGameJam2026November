@@ -60,7 +60,7 @@ namespace _Game.Code.Features.Survivors.Models
 
         public bool StartExpedition(Vector3[] route, bool waitForExit)
         {
-            if (!IsResident || State != SurvivorState.Safe)
+            if (!IsResident || State != SurvivorState.Safe || _arrivalPending || CargoMetal + CargoRounds > 0)
             {
                 return false;
             }

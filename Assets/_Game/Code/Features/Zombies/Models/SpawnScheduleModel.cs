@@ -18,6 +18,7 @@ namespace _Game.Code.Features.Zombies.Models
         public int WaveNumber { get; private set; }
         public bool WaveActive { get; private set; }
         public bool PendingIsWave { get; private set; }
+        public bool AllWavesSpawned => _nextWave == _waveTimes.Length && Pending == 0;
         public double NextWaveTime => _nextWave < _waveTimes.Length
             ? _waveTimes[_nextWave]
             : double.PositiveInfinity;
@@ -50,21 +51,26 @@ namespace _Game.Code.Features.Zombies.Models
                 _nextRegularSpawn = time + _interval;
             }
 
-            if (time >= _duration)
+            if (_nextWave < _waveTimes.Length && time >= _waveTimes[_nextWave])
             {
-                Pending = 0;
-                return false;
-            }
-
-            if (!WaveActive && _nextWave < _waveTimes.Length && time >= _waveTimes[_nextWave])
-            {
-                // A large wave replaces regular enemies still waiting to spawn.
-                Pending = _waveSizes[_nextWave];
+                // Scheduled waves keep their start time even if an earlier wave is still alive.
+                // Unspawned wave enemies stay committed; only pending regular groups are replaced.
+                Pending = (PendingIsWave ? Pending : 0) + _waveSizes[_nextWave];
                 _nextWave++;
                 WaveNumber = _nextWave;
                 WaveActive = true;
                 PendingIsWave = true;
                 return true;
+            }
+
+            if (time >= _duration)
+            {
+                if (!PendingIsWave)
+                {
+                    Pending = 0;
+                }
+
+                return false;
             }
 
             if (WaveActive || Pending > 0 || time < _nextRegularSpawn || !hasCapacity)

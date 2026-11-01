@@ -11,7 +11,6 @@ namespace _Game.Code.Editor
 {
     public static class CameraPresentationSetup
     {
-        private const string Root = "Assets/_Game/GatePrototype";
         private const float HorizontalFieldOfView = 65.81f;
 
         [MenuItem("Last Shift/Update Camera Presentation")]
@@ -39,7 +38,7 @@ namespace _Game.Code.Editor
             serialized.ApplyModifiedPropertiesWithoutUndo();
             view.Camera.fieldOfView = Camera.HorizontalToVerticalFieldOfView(HorizontalFieldOfView, view.Camera.aspect);
 
-            var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>(Root + "/GatePrototypeSettings.asset");
+            var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>("Assets/_Game/Design/Configs/GatePrototypeSettings.asset");
             settings.yawLimit = 31;
             settings.minPitch = -3;
             settings.maxPitch = 34;
@@ -67,7 +66,7 @@ namespace _Game.Code.Editor
         {
             var fallback = CreateFont("CameraCyrillic", "Assets/TextMesh Pro/Fonts/LiberationSans.ttf",
                 "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя№—…·");
-            var cameraFont = CreateFont("CameraOsd", Root + "/Fonts/VCR_OSD_MONO.ttf",
+            var cameraFont = CreateFont("CameraOsd", "Assets/_Game/Art/Fonts/VCR_OSD_MONO.ttf",
                 new string(Enumerable.Range(32, 95).Select(value => (char)value).ToArray()));
             cameraFont.fallbackFontAssetTable = new System.Collections.Generic.List<FontAsset> { fallback };
             EditorUtility.SetDirty(cameraFont);
@@ -75,7 +74,7 @@ namespace _Game.Code.Editor
 
         private static FontAsset CreateFont(string name, string sourcePath, string characters)
         {
-            var path = Root + "/Fonts/" + name + ".asset";
+            var path = "Assets/_Game/Art/Fonts/" + name + ".asset";
             var asset = AssetDatabase.LoadAssetAtPath<FontAsset>(path);
 
             if (asset != null)

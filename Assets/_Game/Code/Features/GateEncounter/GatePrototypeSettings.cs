@@ -44,6 +44,10 @@ namespace _Game.Code.Features.GateEncounter
         [Min(0.1f)]
         public float zombieSpeed = 1.5f;
 
+        [Tooltip("Seconds from spawning to the gate along an uninterrupted route.")]
+        [Min(1)]
+        public float zombieApproachDuration = 24;
+
         [Min(1)]
         public int attackDamage = 3;
 

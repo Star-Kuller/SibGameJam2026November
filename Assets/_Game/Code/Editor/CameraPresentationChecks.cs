@@ -20,7 +20,7 @@ namespace _Game.Code.Editor
             var oldAspect = camera.aspect;
             var oldFieldOfView = camera.fieldOfView;
             var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>(
-                "Assets/_Game/GatePrototype/GatePrototypeSettings.asset");
+                "Assets/_Game/Design/Configs/GatePrototypeSettings.asset");
             var ground = UnityEngine.Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None)
                 .First(renderer => renderer.sharedMaterial != null && renderer.sharedMaterial.name == "Soil").bounds;
             var ends = GameObject.Find("Environment/GateStructure").GetComponentsInChildren<MeshRenderer>()

@@ -2,6 +2,7 @@ using System;
 using _Game.Code.Features.Audio;
 using _Game.Code.Features.GateEncounter;
 using _Game.Code.Features.GateEncounter.Models;
+using _Game.Code.Features.GateEncounter.View;
 using _Game.Code.Features.Gates.Models;
 using _Game.Code.Features.Gates.View;
 using UnityEngine;
@@ -18,8 +19,10 @@ namespace _Game.Code.Features.Gates.Presenters
         private readonly GateControlsView _controls;
         private readonly GateAudio _audio;
         private readonly GateAudioEvents _sounds;
+        private readonly NotificationView _notifications;
 
         private bool _toggleRequested;
+        private bool _criticalNotified;
 
         public GatePresenter(
             GatePrototypeSettings settings,
@@ -28,7 +31,8 @@ namespace _Game.Code.Features.Gates.Presenters
             GateWorldView world,
             GateControlsView controls,
             GateAudio audio,
-            GateAudioEvents sounds)
+            GateAudioEvents sounds,
+            NotificationView notifications)
         {
             _settings = settings;
             _session = session;
@@ -37,6 +41,7 @@ namespace _Game.Code.Features.Gates.Presenters
             _controls = controls;
             _audio = audio;
             _sounds = sounds;
+            _notifications = notifications;
         }
 
         public void Initialize()
@@ -49,6 +54,7 @@ namespace _Game.Code.Features.Gates.Presenters
         public void Reset()
         {
             _toggleRequested = false;
+            _criticalNotified = false;
             _model.Reset();
             _world.Render(0, false);
         }
@@ -73,6 +79,13 @@ namespace _Game.Code.Features.Gates.Presenters
 
             _model.AdvanceTransition(seconds / Mathf.Max(0.01f, _settings.gateTransitionDuration));
             _world.Render(_model.Openness, _model.CanPass);
+
+            if (_model.IsCritical && !_criticalNotified)
+            {
+                _criticalNotified = true;
+                _notifications.Show("Ворота повреждены! Прочность ниже 30%.", true);
+                _audio.Play(_sounds.gateCritical, Vector3.zero, true);
+            }
         }
 
         public void Dispose()

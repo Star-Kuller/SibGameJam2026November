@@ -14,7 +14,6 @@ namespace _Game.Code.Editor
 {
     public static class GateSliceRepair
     {
-        private const string Root = "Assets/_Game/GatePrototype";
 
         [MenuItem("Last Shift/Repair Approved Gate Slice")]
         public static void Apply()
@@ -64,9 +63,9 @@ namespace _Game.Code.Editor
                 root = new GameObject("DesignerTrees").transform;
                 root.SetParent(environment, false);
 
-                var source = AssetDatabase.LoadAssetAtPath<GameObject>(Root + "/Art/CorrectedLocation.fbx");
-                var foliage = AssetDatabase.LoadAssetAtPath<Material>(Root + "/Rendering/TreeFoliage.mat");
-                var bark = AssetDatabase.LoadAssetAtPath<Material>(Root + "/Rendering/TreeBark.mat");
+                var source = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/_Game/Art/Models/Environment/CorrectedLocation.fbx");
+                var foliage = AssetDatabase.LoadAssetAtPath<Material>("Assets/_Game/Art/Materials/TreeFoliage.mat");
+                var bark = AssetDatabase.LoadAssetAtPath<Material>("Assets/_Game/Art/Materials/TreeBark.mat");
                 var trees = source.GetComponentsInChildren<MeshRenderer>(true)
                     .Where(renderer => renderer.name.StartsWith("Leaf Oak2.")).ToArray();
 
@@ -205,7 +204,7 @@ namespace _Game.Code.Editor
 
         private static void ConfigureBalance()
         {
-            var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>(Root + "/GatePrototypeSettings.asset");
+            var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>("Assets/_Game/Design/Configs/GatePrototypeSettings.asset");
             settings.shiftDuration = 720;
             settings.firstSpawnDelay = 25;
             settings.spawnInterval = 20;
@@ -251,7 +250,7 @@ namespace _Game.Code.Editor
 
         private static Mesh BarrelMesh()
         {
-            var path = Root + "/Rendering/GunBarrel.asset";
+            var path = "Assets/_Game/Art/Meshes/GunBarrel.asset";
             var mesh = AssetDatabase.LoadAssetAtPath<Mesh>(path);
 
             if (mesh != null)

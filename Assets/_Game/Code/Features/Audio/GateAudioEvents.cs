@@ -10,6 +10,7 @@ namespace _Game.Code.Features.Audio
         public EventReference zombieHit;
         public EventReference zombieDeath;
         public EventReference gateHit;
+        public EventReference gateCritical;
         public EventReference destruction;
         public EventReference lose;
         public EventReference button;

@@ -241,7 +241,23 @@ namespace _Game.Code.Editor
 
             Require(schedule.Advance(630, true) && schedule.Pending == 20, "Final wave: 10:30, 20 walkers.");
             schedule.Advance(720, true);
-            Require(schedule.Pending == 0, "No new enemies after the end of the shift.");
+            Require(schedule.Pending == 20 && !schedule.AllWavesSpawned,
+                "The deadline must not discard the final wave or allow an early victory.");
+
+            for (var index = 0; index < 20; index++)
+            {
+                schedule.ConsumeSpawn();
+            }
+
+            schedule.Advance(750, true, 0);
+            Require(schedule.Pending == 0 && schedule.AllWavesSpawned,
+                "Finishing the committed final wave allows the shift to end.");
+
+            var overlapping = new SpawnScheduleModel(25, 20, 720);
+            overlapping.Advance(180, true);
+            Require(overlapping.Advance(390, true, 1) && overlapping.WaveNumber == 2,
+                "The second wave starts at 6:30 even with a first-wave survivor.");
+            Require(overlapping.Pending == 28, "Unspawned enemies from both scheduled waves must be preserved.");
         }
 
         private static void CheckStockpile()

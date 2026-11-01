@@ -43,9 +43,9 @@ namespace _Game.Code.Editor
             var ui = new GameObject("MainMenuUI");
             var document = ui.AddComponent<UIDocument>();
             document.panelSettings = AssetDatabase.LoadAssetAtPath<PanelSettings>(
-                "Assets/_Game/Code/Features/GateEncounter/UI/GatePanel.asset");
+                "Assets/_Game/Design/UI/GateEncounter/GatePanel.asset");
             document.visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(
-                "Assets/_Game/Code/Features/MainMenu/UI/MainMenu.uxml");
+                "Assets/_Game/Design/UI/MainMenu/MainMenu.uxml");
             ui.AddComponent<MainMenuView>();
             ui.AddComponent<InputSettingsView>();
             ui.AddComponent<MetalPanelView>();
@@ -55,9 +55,9 @@ namespace _Game.Code.Editor
             var scope = new GameObject("MainMenuScope").AddComponent<MainMenuScope>();
             var serialized = new SerializedObject(scope);
             serialized.FindProperty("settings").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>(
-                "Assets/_Game/GatePrototype/GatePrototypeSettings.asset");
+                "Assets/_Game/Design/Configs/GatePrototypeSettings.asset");
             serialized.FindProperty("audioEvents").objectReferenceValue = AssetDatabase.LoadAssetAtPath<GateAudioEvents>(
-                "Assets/_Game/GatePrototype/GateAudioEvents.asset");
+                "Assets/_Game/Audio/GateAudioEvents.asset");
             serialized.ApplyModifiedPropertiesWithoutUndo();
             EditorSceneManager.SaveScene(scene, SceneNavigation.MainMenuPath);
             EditorSceneManager.CloseScene(scene, true);

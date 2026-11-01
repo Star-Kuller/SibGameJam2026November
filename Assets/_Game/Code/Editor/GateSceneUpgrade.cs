@@ -23,7 +23,6 @@ namespace _Game.Code.Editor
     // Repeatable scene migration through supported Editor APIs. Original source FBX files stay intact.
     public static class GateSceneUpgrade
     {
-        private const string Root = "Assets/_Game/GatePrototype";
         private const string ScenePath = "Assets/_Game/Scenes/GatePrototype.unity";
         private const string InputPath = "Assets/InputSystem_Actions.inputactions";
 
@@ -40,7 +39,7 @@ namespace _Game.Code.Editor
                 EditorSceneManager.OpenScene(ScenePath);
             }
 
-            Directory.CreateDirectory(Root + "/Rendering");
+            Directory.CreateDirectory("Assets/_Game/Art/Materials");
             AssetDatabase.Refresh();
 
             EnsureLayer("Survivor");
@@ -60,6 +59,8 @@ namespace _Game.Code.Editor
             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
             EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             AssetDatabase.SaveAssets();
+            DesignerAssetSetup.Apply();
+            GatePresentationPolish.Apply();
             Debug.Log("[Last Shift] Gate scene upgrade saved.");
         }
 
@@ -129,7 +130,7 @@ namespace _Game.Code.Editor
 
         private static SurvivorView CreateSurvivorPrefab()
         {
-            var path = Root + "/Art/Survivor.fbx";
+            var path = "Assets/_Game/Art/Models/Characters/Survivor.fbx";
             var importer = (ModelImporter)AssetImporter.GetAtPath(path);
             importer.animationType = ModelImporterAnimationType.Generic;
             importer.importCameras = false;
@@ -170,7 +171,7 @@ namespace _Game.Code.Editor
 
             animator.applyRootMotion = false;
             animator.runtimeAnimatorController = Controller(
-                Root + "/Art/SurvivorWalk.controller",
+                "Assets/_Game/Art/Animations/SurvivorWalk.controller",
                 AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>()
                     .First(clip => !clip.name.StartsWith("__preview__")));
 
@@ -214,7 +215,7 @@ namespace _Game.Code.Editor
                 transform.gameObject.layer = LayerMask.NameToLayer("Survivor");
             }
 
-            var prefab = PrefabUtility.SaveAsPrefabAsset(root, Root + "/Prefabs/Survivor.prefab");
+            var prefab = PrefabUtility.SaveAsPrefabAsset(root, "Assets/_Game/Design/Prefabs/Characters/Survivor.prefab");
             UnityEngine.Object.DestroyImmediate(root);
             return prefab.GetComponent<SurvivorView>();
         }
@@ -239,7 +240,7 @@ namespace _Game.Code.Editor
 
         private static void ConfigureZombieMaterial()
         {
-            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>(Root + "/Art/ZombieBaseColor.png");
+            var texture = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/_Game/Art/Textures/ZombieBaseColor.png");
 
             if (texture == null)
             {
@@ -248,7 +249,7 @@ namespace _Game.Code.Editor
 
             var material = Material("ZombieTextured", Color.white);
             material.SetTexture("_BaseMap", texture);
-            var path = Root + "/Prefabs/Zombie.prefab";
+            var path = "Assets/_Game/Design/Prefabs/Characters/Zombie.prefab";
             var root = PrefabUtility.LoadPrefabContents(path);
 
             try
@@ -327,7 +328,7 @@ namespace _Game.Code.Editor
 
         private static Mesh CrownMesh()
         {
-            var path = Root + "/Rendering/TreeCrown.asset";
+            var path = "Assets/_Game/Art/Meshes/TreeCrown.asset";
             var mesh = AssetDatabase.LoadAssetAtPath<Mesh>(path);
 
             if (mesh != null)
@@ -453,7 +454,7 @@ namespace _Game.Code.Editor
             var runtime = GameObject.Find("Runtime").transform;
             var zombieScene = GetOrAdd<ZombieSceneView>(composition);
             SetReference(zombieScene, "prefab", AssetDatabase.LoadAssetAtPath<GameObject>(
-                Root + "/Prefabs/Zombie.prefab").GetComponent<ZombieView>());
+                "Assets/_Game/Design/Prefabs/Characters/Zombie.prefab").GetComponent<ZombieView>());
             SetReference(zombieScene, "runtime", runtime);
             SetArray(zombieScene, "routes", UnityEngine.Object.FindObjectsByType<ZombieRoute>(
                 FindObjectsSortMode.None).OrderBy(route => route.name).ToArray());
@@ -515,7 +516,7 @@ namespace _Game.Code.Editor
 
         private static void ConfigureSettings()
         {
-            var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>(Root + "/GatePrototypeSettings.asset");
+            var settings = AssetDatabase.LoadAssetAtPath<GatePrototypeSettings>("Assets/_Game/Design/Configs/GatePrototypeSettings.asset");
             settings.positionHealth = 300;
             settings.shiftDuration = 180;
             settings.firstSpawnDelay = 4;
@@ -532,7 +533,7 @@ namespace _Game.Code.Editor
 
         private static void ConfigureAudio()
         {
-            var events = AssetDatabase.LoadAssetAtPath<GateAudioEvents>(Root + "/GateAudioEvents.asset");
+            var events = AssetDatabase.LoadAssetAtPath<GateAudioEvents>("Assets/_Game/Audio/GateAudioEvents.asset");
             events.shot = Sound("event:/Sounds/P0/SFX/Turret_Shots");
             events.zombieHit = Sound("event:/Sounds/P0/SFX/Zombie_Hit");
             events.zombieDeath = Sound("event:/Sounds/P0/SFX/Zombie_Death");
@@ -569,7 +570,7 @@ namespace _Game.Code.Editor
 
         private static UnityEngine.Material Material(string name, Color color)
         {
-            var path = Root + "/Rendering/" + name + ".mat";
+            var path = "Assets/_Game/Art/Materials/" + name + ".mat";
             var material = AssetDatabase.LoadAssetAtPath<UnityEngine.Material>(path);
 
             if (material == null)

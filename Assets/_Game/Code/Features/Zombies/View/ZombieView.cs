@@ -1,4 +1,5 @@
 using _Game.Code.Features.Zombies.Models;
+using _Game.Code.Features.Presentation.View;
 using UnityEngine;
 
 namespace _Game.Code.Features.Zombies.View
@@ -13,6 +14,9 @@ namespace _Game.Code.Features.Zombies.View
         private ZombieModel _model;
         private Vector3 _visualScale;
         private Quaternion _visualRotation;
+        private string _animationState;
+        private Vector3 _visualPosition;
+        private SkinnedMeshRenderer _deathRenderer;
 
         public int EntityId => _model.EntityId;
         public ZombieModel Model => _model;
@@ -22,6 +26,9 @@ namespace _Game.Code.Features.Zombies.View
             _model = model;
             _visualScale = visual.localScale;
             _visualRotation = visual.localRotation;
+            _animationState = null;
+            _visualPosition = visual.localPosition;
+            _deathRenderer = visual.GetComponentInChildren<SkinnedMeshRenderer>();
 
             if (animator != null)
             {
@@ -50,6 +57,11 @@ namespace _Game.Code.Features.Zombies.View
         {
             hitbox.enabled = false;
 
+            if (CharacterDeathPose.Render(animator, visual, _deathRenderer, _visualPosition, progress, Model.Position.y))
+            {
+                return;
+            }
+
             var rotation = Quaternion.Euler(75 * progress, 0, 0);
             var scale = 1 - 0.8f * progress;
 
@@ -64,7 +76,15 @@ namespace _Game.Code.Features.Zombies.View
                 return;
             }
 
-            if (paused || _model.State != ZombieState.Moving)
+            var state = _model.State == ZombieState.Moving ? "Walk" : "Work";
+
+            if (_animationState != state && animator.HasState(0, Animator.StringToHash(state)))
+            {
+                animator.Play(state);
+                _animationState = state;
+            }
+
+            if (paused)
             {
                 animator.speed = 0;
                 return;

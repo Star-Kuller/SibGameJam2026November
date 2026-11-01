@@ -155,7 +155,10 @@ namespace _Game.Code.Features.GateEncounter.View
         {
             _health.text = $"{value} / {_gate.MaximumHealth}";
             _healthFill.style.width = Length.Percent(100f * value / _gate.MaximumHealth);
-            _healthFill.EnableInClassList("critical", value <= _gate.MaximumHealth * 0.3f);
+            _healthFill.EnableInClassList("critical", _gate.IsCritical);
+            Element<VisualElement>("gate-damage-icon").style.display = _gate.IsCritical
+                ? DisplayStyle.Flex
+                : DisplayStyle.None;
         }
 
         private void ShowKills(int value)

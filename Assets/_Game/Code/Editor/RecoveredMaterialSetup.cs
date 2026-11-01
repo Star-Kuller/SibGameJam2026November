@@ -6,8 +6,7 @@ namespace _Game.Code.Editor
 {
     public static class RecoveredMaterialSetup
     {
-        private const string Root = "Assets/_Game/GatePrototype";
-        private const string Textures = Root + "/Art/Textures/";
+        private const string Textures = "Assets/_Game/Art/Textures/";
 
         public static void Apply()
         {
@@ -41,7 +40,7 @@ namespace _Game.Code.Editor
             roughnessImporter.isReadable = false;
             roughnessImporter.SaveAndReimport();
 
-            var stone = AssetDatabase.LoadAssetAtPath<Material>(Root + "/Rendering/Stone.mat");
+            var stone = AssetDatabase.LoadAssetAtPath<Material>("Assets/_Game/Art/Materials/Stone.mat");
             stone.SetColor("_BaseColor", Color.white);
             stone.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture2D>(Textures + "RockBaseColor.jpg"));
             stone.SetTexture("_BumpMap", AssetDatabase.LoadAssetAtPath<Texture2D>(Textures + "RockNormal.exr"));
@@ -52,7 +51,7 @@ namespace _Game.Code.Editor
             stone.EnableKeyword("_METALLICSPECGLOSSMAP");
             EditorUtility.SetDirty(stone);
 
-            var bark = AssetDatabase.LoadAssetAtPath<Material>(Root + "/Rendering/TreeBark.mat");
+            var bark = AssetDatabase.LoadAssetAtPath<Material>("Assets/_Game/Art/Materials/TreeBark.mat");
             bark.SetColor("_BaseColor", Color.white);
             bark.SetTexture("_BaseMap", AssetDatabase.LoadAssetAtPath<Texture2D>(Textures + "BarkBaseColor.png"));
             EditorUtility.SetDirty(bark);
