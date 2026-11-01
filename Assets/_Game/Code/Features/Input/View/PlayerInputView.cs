@@ -170,8 +170,12 @@ namespace _Game.Code.Features.Input.View
                 return;
             }
 
-            if (source == Asset || source is InputAction action && action.actionMap?.asset == Asset
-                || source is InputActionMap map && map.asset == Asset)
+            var asset = Asset;
+            var matchesAsset = source is InputActionAsset changedAsset && changedAsset == asset;
+            var matchesAction = source is InputAction action && action.actionMap?.asset == asset;
+            var matchesMap = source is InputActionMap map && map.asset == asset;
+
+            if (matchesAsset || matchesAction || matchesMap)
             {
                 BindingsChanged?.Invoke();
             }

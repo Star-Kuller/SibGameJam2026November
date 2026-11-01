@@ -176,6 +176,7 @@ namespace _Game.Code.Editor
             var accent = Material("CommunityTurquoise", new Color(0.12f, 0.78f, 0.66f));
             accent.EnableKeyword("_EMISSION");
             accent.SetColor("_EmissionColor", new Color(0.03f, 0.22f, 0.18f));
+            accent.globalIlluminationFlags = MaterialGlobalIlluminationFlags.None;
 
             var arm = visual.GetComponentsInChildren<Transform>()
                 .First(transform => transform.name == "mixamorig:LeftArm");

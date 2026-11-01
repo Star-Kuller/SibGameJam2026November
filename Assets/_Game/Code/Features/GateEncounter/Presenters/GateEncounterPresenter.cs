@@ -278,6 +278,10 @@ namespace _Game.Code.Features.GateEncounter.Presenters
 
         private void OnStateChanged(SessionState state)
         {
+            Debug.Log($"[Last Shift] State={state}; Time={_session.ElapsedTime:F2}; "
+                + $"GateHP={_gate.Health}; Residents={_colony.Total}; "
+                + $"Kills={_statistics.Kills}; Shots={_statistics.Shots}; Reason={_session.ResultReason}");
+
             var running = state == SessionState.Running;
 
             _turret.ResetInputSafety();

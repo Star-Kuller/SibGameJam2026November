@@ -61,6 +61,8 @@ namespace _Game.Code.Features.Gates.Presenters
 
                 if (_model.Toggle())
                 {
+                    Debug.Log($"[Last Shift] GateState={_model.State}; Time={_session.ElapsedTime:F2}");
+
                     var sound = _model.State == GateState.Opening
                         ? _sounds.gateOpen
                         : _sounds.gateClose;
