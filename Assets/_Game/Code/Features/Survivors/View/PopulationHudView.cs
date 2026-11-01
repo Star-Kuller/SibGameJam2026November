@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using _Game.Code.Features.GateEncounter.View;
 using _Game.Code.Features.Gates.Models;
 using _Game.Code.Features.Survivors.Models;
@@ -11,19 +10,33 @@ namespace _Game.Code.Features.Survivors.View
 {
     public sealed class PopulationHudView : DocumentSectionView
     {
+        private sealed class PersonRow
+        {
+            public VisualElement Root;
+            public Label Status;
+            public Button Recall;
+        }
+
         private ColonyModel _colony;
         private GateModel _gate;
         private IDisposable _populationBinding;
         private IDisposable _gateBinding;
+        private readonly Dictionary<int, PersonRow> _rows = new();
 
         private Label _population;
-        private Label _people;
+        private VisualElement _people;
+        private VisualElement _picker;
+        private VisualElement _choices;
+        private Label _selection;
         private Button _dispatch;
         private Button _recall;
-        private string _peopleText = "За воротами никого нет.";
+        private Button _confirm;
+        private Button _cancel;
+        private int _selectedId;
 
-        public event Action DispatchRequested;
+        public event Action<int> DispatchRequested;
         public event Action RecallRequested;
+        public event Action<int> RecallPersonRequested;
 
         public void Bind(ColonyModel colony, GateModel gate)
         {
@@ -36,98 +49,83 @@ namespace _Game.Code.Features.Survivors.View
             }
         }
 
-        public void ShowPeople(IReadOnlyList<SurvivorView> people, float patience)
+        public void ShowPeople(float patience)
         {
-            if (Root != null)
-            {
-                Element<VisualElement>("people-panel").style.display = people.Count > 0
-                    ? DisplayStyle.Flex
-                    : DisplayStyle.None;
-            }
-
-            var text = new StringBuilder();
-
-            foreach (var view in people)
-            {
-                var person = view.Model;
-                text.Append(person.Name).Append("  ·  ");
-
-                switch (person.State)
-                {
-                    case SurvivorState.WaitingToLeave:
-                        text.Append("Ждёт открытия ворот внутри");
-                        break;
-                    case SurvivorState.GoingOut:
-                        text.Append("Идёт за ресурсами");
-                        break;
-
-                    case SurvivorState.Working:
-                        text.Append("Собирает груз");
-                        break;
-
-                    case SurvivorState.Returning:
-                        text.Append("Возвращается");
-                        break;
-
-                    case SurvivorState.Waiting:
-                        text.Append("Ждёт открытия ворот");
-
-                        if (!person.IsResident)
-                        {
-                            var remaining = Math.Max(0, (int)Math.Ceiling(patience - person.WaitingTime));
-                            text.Append(" · ").Append(remaining).Append(" с");
-                        }
-
-                        break;
-
-                    case SurvivorState.Entering:
-                        text.Append("Входит в общину");
-                        break;
-                }
-
-                if (person.IsResident && person.CargoMetal + person.CargoRounds > 0)
-                {
-                    text.Append(" · ").Append(person.CargoMetal).Append(" мет. / ")
-                        .Append(person.CargoRounds).Append(" патр.");
-                }
-
-                text.AppendLine();
-            }
-
-            var next = text.Length == 0 ? "За воротами никого нет." : text.ToString().TrimEnd();
-
-            if (_peopleText == next)
+            if (Root == null || _colony == null)
             {
                 return;
             }
 
-            _peopleText = next;
-
-            if (_people != null)
+            foreach (var row in _rows.Values)
             {
-                _people.text = next;
+                row.Root.style.display = DisplayStyle.None;
+            }
+
+            var visibleCount = 0;
+
+            foreach (var person in _colony.People)
+            {
+                if (!person.IsVisible)
+                {
+                    continue;
+                }
+
+                visibleCount++;
+                var row = GetRow(person.EntityId);
+                row.Root.style.display = DisplayStyle.Flex;
+                row.Status.text = Describe(person, patience);
+                row.Recall.SetEnabled(person.IsResident && CanRecall(person.State));
+                row.Recall.style.display = person.IsResident ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+
+            Element<VisualElement>("people-panel").style.display = visibleCount > 0
+                ? DisplayStyle.Flex
+                : DisplayStyle.None;
+        }
+
+        public void CancelSelection()
+        {
+            _selectedId = 0;
+
+            if (_picker != null)
+            {
+                _picker.style.display = DisplayStyle.None;
             }
         }
 
         protected override void BindElements()
         {
             _population = Element<Label>("population");
-            _people = Element<Label>("people-list");
+            _people = Element<VisualElement>("people-list");
             _dispatch = Element<Button>("dispatch-person");
             _recall = Element<Button>("recall-people");
-            _people.text = _peopleText;
+            _picker = Element<VisualElement>("resident-picker");
+            _choices = Element<VisualElement>("resident-choices");
+            _selection = Element<Label>("resident-selection");
+            _confirm = Element<Button>("confirm-expedition");
+            _cancel = Element<Button>("cancel-expedition");
 
-            _dispatch.clicked += OnDispatch;
+            _rows.Clear();
+            _dispatch.clicked += ShowPicker;
             _recall.clicked += OnRecall;
+            _confirm.clicked += ConfirmSelection;
+            _cancel.clicked += CancelSelection;
+            Root.RegisterCallback<PointerDownEvent>(OnPointerDown);
+            Root.RegisterCallback<KeyDownEvent>(OnKeyDown);
+            CancelSelection();
             Subscribe();
         }
 
         protected override void UnbindElements()
         {
             Unsubscribe();
-            _dispatch.clicked -= OnDispatch;
+            _dispatch.clicked -= ShowPicker;
             _recall.clicked -= OnRecall;
-            _people = null;
+            _confirm.clicked -= ConfirmSelection;
+            _cancel.clicked -= CancelSelection;
+            Root.UnregisterCallback<PointerDownEvent>(OnPointerDown);
+            Root.UnregisterCallback<KeyDownEvent>(OnKeyDown);
+            _rows.Clear();
         }
 
         private void Subscribe()
@@ -137,7 +135,7 @@ namespace _Game.Code.Features.Survivors.View
             if (_colony != null && _gate != null)
             {
                 _populationBinding = _colony.Changed.Subscribe(ShowPopulation);
-                _gateBinding = _gate.StateChanged.Subscribe(ShowGateState);
+                _gateBinding = _gate.StateChanged.Subscribe(_ => RefreshButtons());
             }
         }
 
@@ -155,21 +153,124 @@ namespace _Game.Code.Features.Survivors.View
             RefreshButtons();
         }
 
-        private void ShowGateState(GateState state)
-        {
-            RefreshButtons();
-        }
-
         private void RefreshButtons()
         {
             _dispatch.SetEnabled(_colony.CanDispatch);
-            _dispatch.tooltip = "1 житель, груз 12 металла и 30 патронов. При закрытых воротах ждёт выхода внутри.";
+            _dispatch.tooltip = _colony.CanDispatch
+                ? "1 житель · 62 с без ожидания ворот · 12 металла и 30 патронов после входа."
+                : "Нужен свободный житель. Одновременно доступна одна вылазка.";
             _recall.SetEnabled(_colony.Outside + _colony.WaitingForExit > 0);
+
+            var person = _colony.Find(_selectedId);
+            _confirm.SetEnabled(_colony.CanDispatch && person?.State == SurvivorState.Safe);
         }
 
-        private void OnDispatch()
+        private void ShowPicker()
         {
-            DispatchRequested?.Invoke();
+            _choices.Clear();
+            _selectedId = 0;
+            _selection.text = "Выберите свободного жителя";
+
+            foreach (var person in _colony.People)
+            {
+                if (!person.IsResident || person.State != SurvivorState.Safe)
+                {
+                    continue;
+                }
+
+                var id = person.EntityId;
+                var choice = new Button(() => SelectPerson(id)) { text = person.Name + " · свободен" };
+                choice.AddToClassList("resident-choice");
+                _choices.Add(choice);
+            }
+
+            _picker.style.display = DisplayStyle.Flex;
+            RefreshButtons();
+        }
+
+        private void SelectPerson(int id)
+        {
+            _selectedId = id;
+            _selection.text = _colony.Find(id).Name + " · вылазка к месту сбора";
+            RefreshButtons();
+        }
+
+        private void ConfirmSelection()
+        {
+            var id = _selectedId;
+            CancelSelection();
+            DispatchRequested?.Invoke(id);
+        }
+
+        private PersonRow GetRow(int id)
+        {
+            if (_rows.TryGetValue(id, out var row))
+            {
+                return row;
+            }
+
+            var root = new VisualElement();
+            root.AddToClassList("person-row");
+            var status = new Label();
+            status.AddToClassList("person-status");
+            var recall = new Button(() => RecallPersonRequested?.Invoke(id)) { text = "Отозвать" };
+            root.Add(status);
+            root.Add(recall);
+            _people.Add(root);
+            row = new PersonRow { Root = root, Status = status, Recall = recall };
+            _rows.Add(id, row);
+            return row;
+        }
+
+        private static bool CanRecall(SurvivorState state)
+        {
+            return state == SurvivorState.WaitingToLeave
+                || state == SurvivorState.GoingOut
+                || state == SurvivorState.Working;
+        }
+
+        private static string Describe(SurvivorModel person, float patience)
+        {
+            var state = person.State switch
+            {
+                SurvivorState.WaitingToLeave => "Ждёт выхода внутри",
+                SurvivorState.GoingOut => "Идёт за ресурсами",
+                SurvivorState.Working => "Собирает груз",
+                SurvivorState.Returning => person.IsResident ? "Возвращается" : "Идёт к воротам",
+                SurvivorState.Waiting => "Ждёт у ворот",
+                SurvivorState.Entering => "Входит в общину",
+                _ => string.Empty
+            };
+
+            var text = person.Name + " · " + state;
+
+            if (!person.IsResident && person.State == SurvivorState.Waiting)
+            {
+                text += $" · {Math.Max(0, (int)Math.Ceiling(patience - person.WaitingTime))} с";
+            }
+
+            if (person.CargoMetal + person.CargoRounds > 0)
+            {
+                text += $"\nГруз: {person.CargoMetal} металла / {person.CargoRounds} патронов";
+            }
+
+            return text;
+        }
+
+        private void OnPointerDown(PointerDownEvent evt)
+        {
+            if (evt.button == 1)
+            {
+                CancelSelection();
+            }
+        }
+
+        private void OnKeyDown(KeyDownEvent evt)
+        {
+            if (evt.keyCode == UnityEngine.KeyCode.Escape)
+            {
+                CancelSelection();
+            }
         }
 
         private void OnRecall()

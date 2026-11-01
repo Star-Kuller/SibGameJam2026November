@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using _Game.Code.Features.GateEncounter.Models;
 using _Game.Code.Features.Survivors.Models;
 using R3;
@@ -170,6 +171,26 @@ namespace _Game.Code.Features.GateEncounter.View
                     + $"Живы  {_colony.Total}     Спасено  {_colony.Rescued}     Погибло  {_colony.Lost}\n"
                     + $"Дружественный огонь  {_colony.FriendlyFireDeaths}     Выстрелов  {_statistics.Shots}\n"
                     + $"Доставлено: {_stockpile.DeliveredMetal} металла, {_stockpile.DeliveredRounds} патронов";
+
+                if (!paused)
+                {
+                    var losses = new StringBuilder();
+
+                    foreach (var person in _colony.People)
+                    {
+                        if (person.State != SurvivorState.Dead)
+                        {
+                            continue;
+                        }
+
+                        var cause = person.DeathCause == SurvivorDeathCause.FriendlyFire
+                            ? "ваш выстрел"
+                            : "атака зомби";
+                        losses.Append('\n').Append(person.Name).Append(" — ").Append(cause);
+                    }
+
+                    _results.text += losses.ToString();
+                }
             }
 
             if (main)

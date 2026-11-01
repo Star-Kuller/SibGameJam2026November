@@ -22,12 +22,6 @@ namespace _Game.Code.Features.Survivors.Presenters
             public float GatheringDuration;
         }
 
-        private static readonly string[] Names =
-        {
-            "Анна", "Михаил", "Вера", "Илья", "Нина", "Лев",
-            "Ольга", "Саша", "Марк", "Ирина", "Павел", "Соня"
-        };
-
         private readonly GatePrototypeSettings _settings;
         private readonly GateEncounterModel _session;
         private readonly ColonyModel _colony;
@@ -40,11 +34,9 @@ namespace _Game.Code.Features.Survivors.Presenters
         private readonly GateAudio _audio;
         private readonly GateAudioEvents _sounds;
         private readonly List<Person> _people = new();
-        private readonly List<SurvivorView> _visiblePeople = new();
 
         private double _nextArrival;
         private int _arrivals;
-        private int _nextId;
 
         public int WaitingCount { get; private set; }
 
@@ -79,20 +71,22 @@ namespace _Game.Code.Features.Survivors.Presenters
             _hud.Bind(_colony, _gate);
             _hud.DispatchRequested += Dispatch;
             _hud.RecallRequested += RecallAll;
+            _hud.RecallPersonRequested += RecallPerson;
         }
 
         public void Dispose()
         {
             _hud.DispatchRequested -= Dispatch;
             _hud.RecallRequested -= RecallAll;
+            _hud.RecallPersonRequested -= RecallPerson;
         }
 
         public void Reset()
         {
             Clear();
-            _nextArrival = _settings.firstRefugeeDelay;
+            var approachSeconds = RouteLength(_scene.ArrivalRoute()) / _settings.survivorSpeed;
+            _nextArrival = _settings.firstRefugeeDelay - approachSeconds;
             _arrivals = 0;
-            _nextId = 0;
             _colony.Reset();
             RefreshHud();
         }
@@ -108,7 +102,6 @@ namespace _Game.Code.Features.Survivors.Presenters
             }
 
             _people.Clear();
-            _visiblePeople.Clear();
             WaitingCount = 0;
         }
 
@@ -139,7 +132,8 @@ namespace _Game.Code.Features.Survivors.Presenters
 
                 if (model.State == SurvivorState.Safe)
                 {
-                    _colony.Admit(model.IsResident);
+                    var wasResident = model.IsResident;
+                    _colony.Admit(model);
 
                     if (model.UnloadCargo(out var metal, out var rounds))
                     {
@@ -148,12 +142,12 @@ namespace _Game.Code.Features.Survivors.Presenters
                     }
                     else
                     {
-                        _notifications.Show(model.Name + (model.IsResident
+                        _notifications.Show(model.Name + (wasResident
                             ? " вернулся без груза."
                             : " вошёл в общину."));
                     }
 
-                    _audio.Play(model.IsResident ? _sounds.personReturned : _sounds.personSaved, model.Position);
+                    _audio.Play(wasResident ? _sounds.personReturned : _sounds.personSaved, model.Position);
                     RemoveAt(index);
                 }
                 else if (model.State == SurvivorState.Left)
@@ -168,22 +162,58 @@ namespace _Game.Code.Features.Survivors.Presenters
 
         public void Dispatch()
         {
+            foreach (var person in _colony.People)
+            {
+                if (person.IsResident && person.State == SurvivorState.Safe)
+                {
+                    Dispatch(person.EntityId);
+                    return;
+                }
+            }
+        }
+
+        public void Dispatch(int personId)
+        {
             if (_session.State != SessionState.Running)
             {
                 return;
             }
 
-            if (!_colony.Dispatch(!_gate.CanPass))
+            var route = _scene.OutboundRoute();
+
+            if (!_colony.Dispatch(personId, route, !_gate.CanPass))
             {
                 return;
             }
 
-            Create(true, _scene.OutboundRoute());
+            Create(_colony.Find(personId), route);
             _notifications.Show(_gate.CanPass
                 ? "Вылазка началась. Прикройте возвращение с грузом."
                 : "Житель готов к вылазке и ждёт внутри. Откройте ворота для выхода.");
             _audio.Play(_sounds.order, Vector3.zero, true);
             RefreshHud();
+        }
+
+        public void CancelSelection()
+        {
+            _hud.CancelSelection();
+        }
+
+        private void RecallPerson(int personId)
+        {
+            if (_session.State != SessionState.Running)
+            {
+                return;
+            }
+
+            var person = _people.Find(item => item.View.Model.EntityId == personId);
+
+            if (person != null && Recall(person.View))
+            {
+                _notifications.Show(person.View.Model.Name + " возвращается к воротам.");
+                _audio.Play(_sounds.order, Vector3.zero, true);
+                RefreshHud();
+            }
         }
 
         public void RecallAll()
@@ -246,12 +276,11 @@ namespace _Game.Code.Features.Survivors.Presenters
 
         public bool Kill(SurvivorView view, bool friendlyFire)
         {
-            if (!view.Model.Die())
+            if (!view.Model.Die(friendlyFire))
             {
                 return false;
             }
 
-            _colony.RecordDeath(view.Model.IsResident, friendlyFire);
             view.Render(false, 0);
 
             var reason = friendlyFire ? " Причина — ваш выстрел." : " Причина — атака зомби.";
@@ -290,8 +319,9 @@ namespace _Game.Code.Features.Survivors.Presenters
             if (recalled)
             {
                 var person = _people.Find(item => item.View == view);
-                person.ReturnSpeed = Mathf.Max(_settings.survivorSpeed,
-                    RouteLength(route) / _settings.expeditionReturnDuration);
+                var entrance = _scene.EntranceRoute(_scene.WaitingPosition);
+                var distance = RouteLength(route) + RouteLength(entrance);
+                person.ReturnSpeed = distance / _settings.expeditionReturnDuration;
             }
 
             return recalled;
@@ -303,7 +333,6 @@ namespace _Game.Code.Features.Survivors.Presenters
 
             if (model.State == SurvivorState.WaitingToLeave && _gate.CanPass && model.BeginExit())
             {
-                _colony.BeginExit();
                 _notifications.Show(model.Name + " вышел за ресурсами.");
             }
 
@@ -347,7 +376,8 @@ namespace _Game.Code.Features.Survivors.Presenters
                 }
             }
 
-            var speed = model.IsResident && model.State == SurvivorState.Returning
+            var returning = model.State == SurvivorState.Returning || model.State == SurvivorState.Entering;
+            var speed = model.IsResident && returning
                 ? person.ReturnSpeed
                 : _settings.survivorSpeed;
             model.Move(speed * seconds);
@@ -368,23 +398,14 @@ namespace _Game.Code.Features.Survivors.Presenters
             }
 
             _arrivals++;
-            _nextArrival = time + _settings.refugeeInterval;
+            _nextArrival += _settings.refugeeInterval;
 
-            Create(false, route);
+            Create(_colony.CreateRefugee(route), route);
             _notifications.Show("К воротам идёт беженец. Бирюзовая повязка — свой.");
         }
 
-        private void Create(bool resident, Vector3[] route)
+        private void Create(SurvivorModel model, Vector3[] route)
         {
-            _nextId++;
-            var name = Names[(_nextId - 1) % Names.Length];
-            var model = new SurvivorModel(_nextId, name, resident, route);
-
-            if (resident && !_gate.CanPass)
-            {
-                model.WaitForExit();
-            }
-
             var view = _scene.Create();
 
             view.name = "Survivor " + model.Name;
@@ -419,7 +440,6 @@ namespace _Game.Code.Features.Survivors.Presenters
         private void RefreshHud()
         {
             WaitingCount = 0;
-            _visiblePeople.Clear();
 
             foreach (var person in _people)
             {
@@ -428,13 +448,9 @@ namespace _Game.Code.Features.Survivors.Presenters
                     WaitingCount++;
                 }
 
-                if (person.View.Model.IsVisible)
-                {
-                    _visiblePeople.Add(person.View);
-                }
             }
 
-            _hud.ShowPeople(_visiblePeople, _settings.refugeePatience);
+            _hud.ShowPeople(_settings.refugeePatience);
         }
     }
 }

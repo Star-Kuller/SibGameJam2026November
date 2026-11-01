@@ -87,6 +87,34 @@
     margin-top: 8px;
     color: rgb(131, 191, 179);
 }
+#resident-picker {
+    position: absolute;
+    left: 24px;
+    bottom: 184px;
+    width: 390px;
+    max-height: 540px;
+    padding: 16px;
+    background-color: rgba(18, 21, 20, 0.97);
+    display: none;
+}
+#resident-choices {
+    max-height: 300px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#resident-picker Button, .person-row Button {
+    font-size: 18px;
+    min-height: 34px;
+    margin-top: 4px;
+}
+.person-status {
+    font-size: 18px;
+    white-space: normal;
+    color: rgb(155, 199, 185);
+}
+.person-row {
+    margin-bottom: 10px;
+}
 #notification {
     position: absolute;
     top: 122px;

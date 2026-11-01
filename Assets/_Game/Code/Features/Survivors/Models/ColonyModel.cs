@@ -1,21 +1,34 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using R3;
+using UnityEngine;
 
 namespace _Game.Code.Features.Survivors.Models
 {
     public sealed class ColonyModel : IDisposable
     {
+        private static readonly string[] Names =
+        {
+            "Михаил", "Илья", "Лев", "Павел", "Иван", "Борис",
+            "Виктор", "Роман", "Марк", "Алексей", "Сергей", "Денис"
+        };
+
         private readonly int _startingResidents;
         private readonly int _capacity;
+        private readonly List<SurvivorModel> _people = new();
+        private readonly IReadOnlyList<SurvivorModel> _readOnlyPeople;
         private readonly ReactiveProperty<int> _revision = new(0);
+        private int _nextId;
 
-        public int Inside { get; private set; }
-        public int Outside { get; private set; }
-        public int WaitingForExit { get; private set; }
-        public int Total => Inside + Outside + WaitingForExit;
+        public IReadOnlyList<SurvivorModel> People => _readOnlyPeople;
+        public int Inside => _people.Count(person => person.IsResident && person.State == SurvivorState.Safe);
+        public int WaitingForExit => _people.Count(person => person.State == SurvivorState.WaitingToLeave);
+        public int Total => _people.Count(person => person.IsResident && person.IsAlive);
+        public int Outside => Total - Inside - WaitingForExit;
         public int Rescued { get; private set; }
-        public int Lost { get; private set; }
-        public int FriendlyFireDeaths { get; private set; }
+        public int Lost => _people.Count(person => person.State == SurvivorState.Dead);
+        public int FriendlyFireDeaths => _people.Count(person => person.DeathCause == SurvivorDeathCause.FriendlyFire);
         public bool CanDispatch => Inside > 0 && Outside == 0 && WaitingForExit == 0;
         public bool HasCapacity => Total < _capacity;
         public Observable<int> Changed => _revision;
@@ -29,117 +42,92 @@ namespace _Game.Code.Features.Survivors.Models
 
             _startingResidents = startingResidents;
             _capacity = capacity;
+            _readOnlyPeople = _people.AsReadOnly();
             Reset();
         }
 
         public void Reset()
         {
-            Inside = _startingResidents;
-            Outside = 0;
-            WaitingForExit = 0;
+            UnsubscribePeople();
+            _people.Clear();
+            _nextId = 0;
             Rescued = 0;
-            Lost = 0;
-            FriendlyFireDeaths = 0;
+
+            for (var index = 0; index < _startingResidents; index++)
+            {
+                var id = ++_nextId;
+                Add(new SurvivorModel(id, NameFor(id)));
+            }
+
             Notify();
         }
 
-        public bool Dispatch(bool waitForExit = false)
+        public SurvivorModel CreateRefugee(Vector3[] route)
         {
-            if (!CanDispatch)
+            var id = ++_nextId;
+            var person = new SurvivorModel(id, NameFor(id), false, route);
+            Add(person);
+            Notify();
+            return person;
+        }
+
+        public SurvivorModel Find(int id)
+        {
+            return _people.Find(person => person.EntityId == id);
+        }
+
+        public bool Dispatch(int id, Vector3[] route, bool waitForExit)
+        {
+            return CanDispatch && Find(id)?.StartExpedition(route, waitForExit) == true;
+        }
+
+        public bool Admit(SurvivorModel person)
+        {
+            if (!_people.Contains(person) || !person.IsResident && !HasCapacity)
             {
                 return false;
             }
 
-            Inside--;
-            if (waitForExit)
-            {
-                WaitingForExit++;
-            }
-            else
-            {
-                Outside++;
-            }
-            Notify();
-            return true;
-        }
+            var refugee = !person.IsResident;
 
-        public void BeginExit()
-        {
-            if (WaitingForExit == 0)
+            if (!person.ConfirmArrival())
             {
-                return;
+                return false;
             }
 
-            WaitingForExit--;
-            Outside++;
-            Notify();
-        }
-
-        public bool Admit(bool alreadyResident)
-        {
-            if (alreadyResident)
+            if (refugee)
             {
-                if (Outside == 0 && WaitingForExit == 0)
-                {
-                    return false;
-                }
-
-                if (WaitingForExit > 0)
-                {
-                    WaitingForExit--;
-                }
-                else
-                {
-                    Outside--;
-                }
-            }
-            else
-            {
-                if (Total >= _capacity)
-                {
-                    return false;
-                }
-
                 Rescued++;
             }
 
-            Inside++;
             Notify();
             return true;
-        }
-
-        public void RecordDeath(bool resident, bool friendlyFire)
-        {
-            if (resident)
-            {
-                if (Outside == 0 && WaitingForExit == 0)
-                {
-                    return;
-                }
-
-                if (WaitingForExit > 0)
-                {
-                    WaitingForExit--;
-                }
-                else
-                {
-                    Outside--;
-                }
-            }
-
-            Lost++;
-
-            if (friendlyFire)
-            {
-                FriendlyFireDeaths++;
-            }
-
-            Notify();
         }
 
         public void Dispose()
         {
+            UnsubscribePeople();
             _revision.Dispose();
+        }
+
+        private void Add(SurvivorModel person)
+        {
+            _people.Add(person);
+            person.StateChanged += Notify;
+        }
+
+        private void UnsubscribePeople()
+        {
+            foreach (var person in _people)
+            {
+                person.StateChanged -= Notify;
+            }
+        }
+
+        private static string NameFor(int id)
+        {
+            var name = Names[(id - 1) % Names.Length];
+            return id <= Names.Length ? name : name + " " + id;
         }
 
         private void Notify()

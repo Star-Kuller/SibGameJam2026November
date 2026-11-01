@@ -3,6 +3,13 @@ using UnityEngine;
 
 namespace _Game.Code.Features.Survivors.Models
 {
+    public enum SurvivorDeathCause
+    {
+        None,
+        Zombie,
+        FriendlyFire
+    }
+
     public enum SurvivorState
     {
         WaitingToLeave,
@@ -23,7 +30,7 @@ namespace _Game.Code.Features.Survivors.Models
 
         public int EntityId { get; }
         public string Name { get; }
-        public bool IsResident { get; }
+        public bool IsResident { get; private set; }
         public Vector3 Position { get; private set; }
         public Vector3 Forward { get; private set; } = Vector3.back;
         public SurvivorState State { get; private set; }
@@ -32,11 +39,54 @@ namespace _Game.Code.Features.Survivors.Models
         public float ExpeditionTime { get; private set; }
         public int CargoMetal { get; private set; }
         public int CargoRounds { get; private set; }
+        public SurvivorDeathCause DeathCause { get; private set; }
+        public int CompletedExpeditions { get; private set; }
+        public event Action StateChanged;
+
+        private bool _arrivalPending;
         public bool IsAlive => State != SurvivorState.Dead && State != SurvivorState.Left;
         public bool IsVisible => IsAlive && State != SurvivorState.Safe;
         public bool IsWalking => State == SurvivorState.GoingOut
             || State == SurvivorState.Returning
             || State == SurvivorState.Entering;
+
+        public SurvivorModel(int entityId, string name)
+        {
+            EntityId = entityId;
+            Name = name;
+            IsResident = true;
+            State = SurvivorState.Safe;
+        }
+
+        public bool StartExpedition(Vector3[] route, bool waitForExit)
+        {
+            if (!IsResident || State != SurvivorState.Safe)
+            {
+                return false;
+            }
+
+            SetRoute(route);
+            Position = _route[0];
+            WorkingTime = 0;
+            ExpeditionTime = 0;
+            WaitingTime = 0;
+            _arrivalPending = false;
+            ChangeState(waitForExit ? SurvivorState.WaitingToLeave : SurvivorState.GoingOut);
+            return true;
+        }
+
+        public bool ConfirmArrival()
+        {
+            if (State != SurvivorState.Safe || !_arrivalPending)
+            {
+                return false;
+            }
+
+            _arrivalPending = false;
+            IsResident = true;
+            StateChanged?.Invoke();
+            return true;
+        }
 
         public SurvivorModel(int entityId, string name, bool resident, Vector3[] route)
         {
@@ -81,16 +131,17 @@ namespace _Game.Code.Features.Survivors.Models
             switch (State)
             {
                 case SurvivorState.GoingOut:
-                    State = SurvivorState.Working;
+                    ChangeState(SurvivorState.Working);
                     break;
 
                 case SurvivorState.Returning:
-                    State = SurvivorState.Waiting;
                     WaitingTime = 0;
+                    ChangeState(SurvivorState.Waiting);
                     break;
 
                 case SurvivorState.Entering:
-                    State = SurvivorState.Safe;
+                    _arrivalPending = true;
+                    ChangeState(SurvivorState.Safe);
                     break;
             }
         }
@@ -103,7 +154,7 @@ namespace _Game.Code.Features.Survivors.Models
             }
 
             SetRoute(route);
-            State = SurvivorState.Returning;
+            ChangeState(SurvivorState.Returning);
             return true;
         }
 
@@ -111,7 +162,7 @@ namespace _Game.Code.Features.Survivors.Models
         {
             if (State == SurvivorState.GoingOut)
             {
-                State = SurvivorState.WaitingToLeave;
+                ChangeState(SurvivorState.WaitingToLeave);
             }
         }
 
@@ -122,7 +173,7 @@ namespace _Game.Code.Features.Survivors.Models
                 return false;
             }
 
-            State = SurvivorState.GoingOut;
+            ChangeState(SurvivorState.GoingOut);
             return true;
         }
 
@@ -134,7 +185,7 @@ namespace _Game.Code.Features.Survivors.Models
             }
 
             SetRoute(route);
-            State = SurvivorState.Entering;
+            ChangeState(SurvivorState.Entering);
             return true;
         }
 
@@ -183,6 +234,7 @@ namespace _Game.Code.Features.Survivors.Models
             rounds = CargoRounds;
             CargoMetal = 0;
             CargoRounds = 0;
+            CompletedExpeditions++;
             return true;
         }
 
@@ -191,7 +243,7 @@ namespace _Game.Code.Features.Survivors.Models
             if (State == SurvivorState.Entering)
             {
                 Position = waitingPosition;
-                State = SurvivorState.Waiting;
+                ChangeState(SurvivorState.Waiting);
             }
         }
 
@@ -203,19 +255,20 @@ namespace _Game.Code.Features.Survivors.Models
             }
 
             SetRoute(new[] { Position, inside });
-            State = SurvivorState.Entering;
+            ChangeState(SurvivorState.Entering);
         }
 
-        public bool Die()
+        public bool Die(bool friendlyFire = false)
         {
             if (!IsVisible)
             {
                 return false;
             }
 
-            State = SurvivorState.Dead;
+            DeathCause = friendlyFire ? SurvivorDeathCause.FriendlyFire : SurvivorDeathCause.Zombie;
             CargoMetal = 0;
             CargoRounds = 0;
+            ChangeState(SurvivorState.Dead);
             return true;
         }
 
@@ -226,8 +279,14 @@ namespace _Game.Code.Features.Survivors.Models
                 return false;
             }
 
-            State = SurvivorState.Left;
+            ChangeState(SurvivorState.Left);
             return true;
+        }
+
+        private void ChangeState(SurvivorState state)
+        {
+            State = state;
+            StateChanged?.Invoke();
         }
 
         private void SetRoute(Vector3[] route)

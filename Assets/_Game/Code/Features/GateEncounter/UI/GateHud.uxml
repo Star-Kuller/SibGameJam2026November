@@ -17,7 +17,15 @@
             </ui:VisualElement>
             <ui:VisualElement name="people-panel" class="people-panel metal-plate" picking-mode="Ignore">
                 <ui:Label text="ЛЮДИ СНАРУЖИ" class="eyebrow" />
-                <ui:Label name="people-list" text="За воротами никого нет." class="people-list" />
+                <ui:VisualElement name="people-list" class="people-list" />
+            </ui:VisualElement>
+            <ui:VisualElement name="resident-picker" class="metal-plate">
+                <ui:Label text="ВЫЛАЗКА" class="eyebrow" />
+                <ui:Label text="1 житель · 62 с · груз 12 металла и 30 патронов" class="person-status" />
+                <ui:ScrollView name="resident-choices" />
+                <ui:Label name="resident-selection" class="person-status" />
+                <ui:Button name="confirm-expedition" text="Отправить" />
+                <ui:Button name="cancel-expedition" text="Отмена" />
             </ui:VisualElement>
             <ui:Label name="notification" text="" picking-mode="Ignore" />
             <ui:Label name="wave-announcement" text="" picking-mode="Ignore" />

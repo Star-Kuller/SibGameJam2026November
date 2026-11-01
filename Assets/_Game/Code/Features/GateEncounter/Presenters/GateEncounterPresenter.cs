@@ -337,6 +337,11 @@ namespace _Game.Code.Features.GateEncounter.Presenters
         private void UpdateCursor()
         {
             var capture = _session.State == SessionState.Running && _input.HasFocus && !_commandMode;
+            if (capture || _session.State != SessionState.Running)
+            {
+                _survivors.CancelSelection();
+            }
+
             _input.CaptureCursor(capture);
         }
 

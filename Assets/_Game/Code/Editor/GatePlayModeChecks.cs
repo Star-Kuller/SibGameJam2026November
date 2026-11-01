@@ -47,6 +47,7 @@ namespace _Game.Code.Editor
                 CheckWaveAnnouncement(game),
                 CheckFullShift(game),
                 CheckQueuedExpedition(game),
+                CheckPersistentResidents(game),
                 CheckDestroyedGate(game),
                 CheckBreach(game),
                 CheckLastResident(game),
@@ -205,6 +206,51 @@ namespace _Game.Code.Editor
                 "Opening the gate starts the already assigned expedition.");
 
             return new { scenario = "dispatch at start, closed-gate waiting, cancellation and departure" };
+        }
+
+        private static object CheckPersistentResidents(Harness game)
+        {
+            game.StartNewRun();
+            game.Gates.Tick(1, true);
+            var resident = game.Colony.People[3];
+            var root = Object.FindFirstObjectByType<UnityEngine.UIElements.UIDocument>().rootVisualElement;
+            Submit(UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Button>(root, "dispatch-person"));
+            var choices = UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.VisualElement>(root, "resident-choices");
+            var choice = choices.Children().OfType<UnityEngine.UIElements.Button>()
+                .Single(button => button.text.StartsWith(resident.Name + " ·"));
+            Submit(choice);
+            Submit(UnityEngine.UIElements.UQueryExtensions.Q<UnityEngine.UIElements.Button>(root, "confirm-expedition"));
+
+            Require(game.VisiblePeople().Single().Model == resident,
+                "The picker must dispatch the selected persistent resident.");
+
+            while (resident.State != SurvivorState.Safe && game.Session.ElapsedTime < 65)
+            {
+                game.Session.AdvanceTime(StepSeconds);
+                game.People.Tick(StepSeconds, game.Session.ElapsedTime);
+            }
+
+            Require(resident.State == SurvivorState.Safe && resident.CompletedExpeditions == 1,
+                "The selected resident must return and unload.");
+            Require(Math.Abs(game.Session.ElapsedTime - 62) < 0.15,
+                "A complete expedition with open gates must take 62 seconds.");
+            Require(ReferenceEquals(game.Colony.Find(resident.EntityId), resident),
+                "Returning must not replace the resident's record.");
+            game.People.Dispatch(resident.EntityId);
+            Require(game.VisiblePeople().Single().Model == resident,
+                "The same resident can be selected for the next expedition.");
+            game.People.Kill(game.VisiblePeople().Single(), true);
+            Require(resident.DeathCause == SurvivorDeathCause.FriendlyFire && game.Colony.FriendlyFireDeaths == 1,
+                "A persistent loss record must keep the friendly-fire cause.");
+
+            return new { scenario = "resident picker, persistent identity, 62-second expedition and loss history" };
+        }
+
+        private static void Submit(UnityEngine.UIElements.Button button)
+        {
+            using var evt = UnityEngine.UIElements.NavigationSubmitEvent.GetPooled();
+            evt.target = button;
+            button.SendEvent(evt);
         }
 
         private static object CheckBreach(Harness game)

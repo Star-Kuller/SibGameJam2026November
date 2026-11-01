@@ -75,35 +75,54 @@ namespace _Game.Code.Editor
         private static void CheckPopulation()
         {
             using var colony = new ColonyModel(8, 12);
-            Require(colony.Dispatch() && !colony.Dispatch(), "Only one resident can be dispatched.");
-            Require(colony.Total == 8 && colony.Inside == 7 && colony.Outside == 1,
-                "Dispatch must preserve the total population.");
+            var resident = colony.People[0];
+            var id = resident.EntityId;
+            var name = resident.Name;
+            var route = new[] { Vector3.zero, Vector3.right };
 
-            Require(colony.Admit(true), "Returning resident must rejoin the colony.");
-            Require(!colony.Admit(true), "A resident cannot be admitted twice.");
+            Require(colony.People.Count == 8 && colony.Inside == 8, "Starting residents have persistent records.");
+            Require(colony.Dispatch(id, route, true), "A selected resident can wait inside for the gate.");
+            Require(!colony.Dispatch(id, route, true), "A second expedition cannot be assigned.");
+            Require(colony.WaitingForExit == 1 && colony.Outside == 0 && colony.Total == 8,
+                "Waiting for exit does not change the living population.");
 
-            for (var index = 0; index < 4; index++)
+            resident.BeginExit();
+            resident.Move(1);
+            resident.GatherCargo(1, 12, 30);
+            resident.Recall(new[] { resident.Position, Vector3.zero });
+            resident.Move(1);
+            resident.Enter(new[] { resident.Position, Vector3.back });
+            resident.Move(1);
+            Require(colony.Admit(resident) && !colony.Admit(resident), "Arrival is registered exactly once.");
+            Require(resident.UnloadCargo(out _, out _) && !resident.UnloadCargo(out _, out _),
+                "Cargo is unloaded once.");
+            Require(ReferenceEquals(colony.Find(id), resident) && resident.Name == name,
+                "A returned resident keeps identity and name.");
+            Require(colony.Dispatch(id, route, false), "The same resident can take another expedition.");
+            Require(resident.Die(true) && !resident.Die(true), "A person cannot die twice.");
+            Require(colony.Total == 7 && colony.Lost == 1 && colony.FriendlyFireDeaths == 1,
+                "Death updates population and preserves its cause.");
+            Require(!colony.Dispatch(id, route, false), "A dead resident cannot be dispatched again.");
+
+            for (var index = 0; index < 5; index++)
             {
-                Require(colony.Admit(false), "Refugee must join while capacity remains.");
+                var refugee = colony.CreateRefugee(route);
+                refugee.Move(1);
+                refugee.Enter(new[] { refugee.Position, Vector3.back });
+                refugee.Move(10);
+                Require(colony.Admit(refugee) && !colony.Admit(refugee), "A refugee joins exactly once.");
+                Require(ReferenceEquals(colony.Find(refugee.EntityId), refugee), "Admission keeps the refugee identity.");
             }
 
-            Require(!colony.Admit(false) && colony.Total == 12, "Population cannot exceed capacity.");
-
-            colony.Dispatch();
-            colony.RecordDeath(true, true);
-            colony.RecordDeath(true, true);
-            Require(colony.Total == 11 && colony.Lost == 1 && colony.FriendlyFireDeaths == 1,
-                "A resident death is counted once.");
-
+            Require(colony.Total == 12 && !colony.HasCapacity, "Population respects the capacity.");
             colony.Reset();
-            Require(colony.Total == 8 && colony.Rescued == 0 && colony.Lost == 0,
-                "Population resets without carrying results.");
+            Require(colony.Total == 8 && colony.People.Count == 8 && colony.Lost == 0 && colony.Rescued == 0,
+                "A new run clears old residents and loss history.");
         }
-
         private static void CheckSurvivor()
         {
             var route = new[] { Vector3.zero, Vector3.right, Vector3.right * 2 };
-            var refugee = new SurvivorModel(1, "Анна", false, route);
+            var refugee = new SurvivorModel(1, "Иван", false, route);
             route[1] = Vector3.up * 100;
             refugee.Move(2);
             Require(refugee.State == SurvivorState.Waiting && refugee.Position == Vector3.right * 2,
@@ -124,7 +143,7 @@ namespace _Game.Code.Editor
             resident.Move(100);
             Require(resident.Position == Vector3.forward, "Dead person does not move.");
 
-            var impatient = new SurvivorModel(3, "Вера", false, new[] { Vector3.zero, Vector3.right });
+            var impatient = new SurvivorModel(3, "Павел", false, new[] { Vector3.zero, Vector3.right });
             impatient.Move(1);
             Require(impatient.Leave() && !impatient.Leave(), "Refugee leaves only once.");
         }
@@ -230,7 +249,7 @@ namespace _Game.Code.Editor
             using var stockpile = new StockpileModel(24, 1);
             Require(stockpile.TryUseRound() && !stockpile.TryUseRound(), "Ammo cannot become negative.");
 
-            var person = new SurvivorModel(10, "Анна", true, new[] { Vector3.zero, Vector3.forward });
+            var person = new SurvivorModel(10, "Иван", true, new[] { Vector3.zero, Vector3.forward });
             person.Move(1);
             person.GatherCargo(0.5f, 12, 30);
             Require(person.CargoMetal == 6 && person.CargoRounds == 15, "Partial cargo is carried by the worker.");
@@ -247,7 +266,7 @@ namespace _Game.Code.Editor
                 "A full expedition delivers exactly 12 metal and 30 rounds.");
             Require(!person.UnloadCargo(out _, out _), "The same cargo cannot be unloaded twice.");
 
-            var victim = new SurvivorModel(11, "Вера", true, new[] { Vector3.zero, Vector3.forward });
+            var victim = new SurvivorModel(11, "Павел", true, new[] { Vector3.zero, Vector3.forward });
             victim.Move(1);
             victim.GatherCargo(1, 12, 30);
             victim.Die();
@@ -263,3 +282,4 @@ namespace _Game.Code.Editor
         }
     }
 }
+
